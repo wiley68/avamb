@@ -8,7 +8,7 @@
       @click.prevent="dropdownOpen = !dropdownOpen"
       :aria-expanded="dropdownOpen"
     >
-      <span class="sr-only">{{ store.state.language.notifications }}</span>
+      <span class="sr-only">Съобщения</span>
       <svg
         class="w-4 h-4"
         viewBox="0 0 16 16"
@@ -24,7 +24,7 @@
         />
       </svg>
       <div
-        v-if="getUnseenInboxMessage().length > 0 || getNewMessage().length > 0"
+        v-if="getNewMessage().length > 0"
         class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"
       ></div>
     </button>
@@ -44,39 +44,13 @@
         <div
           class="text-xs font-semibold text-gray-400 uppercase pt-1.5 pb-2 px-4"
         >
-          {{ store.state.language.notifications }}
+          Съобщения
         </div>
         <ul
           ref="dropdown"
           @focusin="dropdownOpen = true"
           @focusout="dropdownOpen = false"
         >
-          <li
-            class="border-b border-gray-200 last:border-0"
-            v-for="inbox_message in getUnseenInboxMessage()"
-            :key="inbox_message.id"
-          >
-            <button
-              class="w-full block py-2 px-4 hover:bg-gray-50"
-              @click="showInboxMessage(inbox_message.id)"
-            >
-              <span class="block text-sm mb-2"
-                ><svg class="w-4 h-4 mr-1 inline-block" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6M12,13C14.67,13 20,14.33 20,17V20H4V17C4,14.33 9.33,13 12,13M12,14.9C9.03,14.9 5.9,16.36 5.9,17V18.1H18.1V17C18.1,16.36 14.97,14.9 12,14.9Z"
-                  />
-                </svg>
-                <span class="font-medium text-gray-800"
-                  >{{ inbox_message.from_email }}:&nbsp;</span
-                >
-                {{ inbox_message.excerpt }}</span
-              >
-              <span class="block text-xs font-medium text-gray-400">{{
-                formatDateTime(inbox_message.date)
-              }}</span>
-            </button>
-          </li>
           <li
             class="border-b border-gray-200 last:border-0"
             v-for="message in getNewMessage()"
@@ -93,9 +67,7 @@
                     d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6M12,13C14.67,13 20,14.33 20,17V20H4V17C4,14.33 9.33,13 12,13M12,14.9C9.03,14.9 5.9,16.36 5.9,17V18.1H18.1V17C18.1,16.36 14.97,14.9 12,14.9Z"
                   />
                 </svg>
-                <span class="font-medium text-gray-800"
-                  >{{ getUserNickname(message.from_user_id) }}:&nbsp;</span
-                >
+                <span class="font-medium text-gray-800">Илко:&nbsp;</span>
                 {{ message.body }}</span
               >
               <span class="block text-xs font-medium text-gray-400">{{
@@ -152,20 +124,8 @@ export default {
       document.removeEventListener('keydown', keyHandler)
     })
 
-    const getUnseenInboxMessage = () => {
-      const unseenInbox = store.state.inbox_messages.filter(
-        (element) => element.isSeen == false
-      )
-      const elements = unseenInbox.length < 2 ? unseenInbox.length : 2
-      return unseenInbox.slice(0, elements)
-    }
-
     const getNewMessage = () => {
-      const unseenMessages = store.state.messages.filter((element) => {
-        return moment(element.created_at).diff(new Date(), 'days') == 0
-      })
-      const elements = unseenMessages.length < 2 ? unseenMessages.length : 2
-      return unseenMessages.slice(0, elements)
+      return []
     }
 
     const formatDateTime = (value) => {
@@ -174,23 +134,9 @@ export default {
       }
     }
 
-    const getUserNickname = (user_id) => {
-      return store.state.users.find((element) => element.id == user_id)
-        ? store.state.users.find((element) => element.id == user_id).nickname
-        : ''
-    }
-
     const showMessage = () => {
       dropdownOpen.value = false
       store.methods.changePage('Messages')
-    }
-
-    const showInboxMessage = (message_id) => {
-      dropdownOpen.value = false
-      store.methods.changePage('Inbox')
-      store.methods.changeInboxMessage(message_id)
-      console.log(message_id)
-      console.log(store.state.current_inbox_message_id)
     }
 
     return {
@@ -198,12 +144,9 @@ export default {
       dropdownOpen,
       trigger,
       dropdown,
-      getUnseenInboxMessage,
       getNewMessage,
       formatDateTime,
-      getUserNickname,
       showMessage,
-      showInboxMessage,
     }
   },
 }
