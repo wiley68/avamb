@@ -62,7 +62,7 @@
           </li>
           <li>
             <a
-              href="/"
+              href="/login/logout.php"
               class="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
               @click="dropdownOpen = false"
               >Изход</a

@@ -362,7 +362,7 @@
             class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
           >
             <a
-              href="/"
+              href="/login/logout.php"
               class="block text-gray-200 truncate transition duration-150 hover:text-lime-500"
             >
               <div class="flex items-center">
