@@ -7,7 +7,7 @@
     >
       <!-- Site header -->
       <Header />
-      <!-- <dashboard v-if="store.state.page == 'Dashboard'"></dashboard> -->
+      <dashboard v-if="store.state.page == 'Dashboard'"></dashboard>
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ import { onMounted, provide } from 'vue'
 import store from './store'
 import Sidebar from './components/includes/Sidebar.vue'
 import Header from './components/includes/Header.vue'
-// import Dashboard from './components/Dashboard.vue'
+import Dashboard from './components/Dashboard.vue'
 
 export default {
   name: 'App',
@@ -25,7 +25,7 @@ export default {
   components: {
     Sidebar,
     Header,
-    // Dashboard,
+    Dashboard,
   },
 
   setup() {
