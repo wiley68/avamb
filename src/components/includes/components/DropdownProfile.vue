@@ -8,15 +8,10 @@
       :aria-expanded="dropdownOpen"
     >
       <img
-        v-if="store.state.user_gravatar != ''"
         class="w-8 h-8 rounded-full mr-2"
-        :src="'https://www.gravatar.com/avatar/' + store.state.user_gravatar"
+        :src="'https://www.gravatar.com/avatar/'"
       />
-      <svg
-        v-if="store.state.user_gravatar == ''"
-        class="w-8 h-8 mr-2"
-        viewBox="0 0 24 24"
-      >
+      <svg v-if="false" class="w-8 h-8 mr-2" viewBox="0 0 24 24">
         <path
           fill="currentColor"
           d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
@@ -25,9 +20,7 @@
       <div class="flex items-center truncate">
         <span
           class="truncate ml-2 text-sm font-medium group-hover:text-gray-800"
-          >{{
-            store.state.display_name ? store.state.display_name : 'No Name'
-          }}</span
+          >Петър</span
         >
         <svg
           class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400"
@@ -51,18 +44,8 @@
         :class="align === 'right' ? 'right-0' : 'left-0'"
       >
         <div class="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200">
-          <div class="font-medium text-gray-800">
-            {{
-              store.state.display_name
-                ? store.state.user_firstname + ' ' + store.state.user_lastname
-                : 'No Name'
-            }}
-          </div>
-          <div class="text-xs text-gray-500 italic">
-            {{
-              store.state.user_role ? store.state.user_role : 'No Role'
-            }}&nbsp;({{ store.state.user_email }})
-          </div>
+          <div class="font-medium text-gray-800">Иван</div>
+          <div class="text-xs text-gray-500 italic">Потребител</div>
         </div>
         <ul
           ref="dropdown"
@@ -74,7 +57,7 @@
               href="#"
               class="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
               @click.prevent="gotToSettings()"
-              >{{ store.state.language.settings }}</a
+              >Настройки</a
             >
           </li>
           <li>
@@ -82,7 +65,7 @@
               href="/"
               class="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
               @click="dropdownOpen = false"
-              >{{ store.state.language.sign_out }}</a
+              >Изход</a
             >
           </li>
         </ul>
@@ -135,7 +118,6 @@ export default {
 
     const gotToSettings = () => {
       dropdownOpen.value = false
-      store.methods.changePage('Settings')
     }
 
     return {

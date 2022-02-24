@@ -3,7 +3,6 @@
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 -mb-px">
         <div class="flex">
-          <button @click.stop="showLog()">log</button>
           <button
             class="text-gray-500 hover:text-gray-600 lg:hidden"
             @click.stop="store.methods.toggleSidebar()"
