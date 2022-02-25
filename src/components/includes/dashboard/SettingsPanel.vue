@@ -43,12 +43,14 @@ export default {
     const store = inject('store')
 
     const showActive = () => {
+      store.state.offers_filter_status = 'No'
       store.state.offers_temp = store.state.offers.filter(
         (element) => element.status == 'No'
       )
     }
 
     const showAll = () => {
+      store.state.offers_filter_status = 'Yes'
       store.state.offers_temp = store.state.offers
       console.log(store.state)
     }

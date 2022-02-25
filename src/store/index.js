@@ -26,11 +26,18 @@ const state = reactive({
   offers: [],
   offers_temp: [],
   tekushta: '01.01.2022 to 25.02.2022',
+  offers_filter_status: 'No',
 })
 
 const methods = {
   closeSidebar() {
     state.sidebarOpen = false
+  },
+  openSidebar() {
+    state.sidebarOpen = true
+  },
+  toggleSidebar() {
+    state.sidebarOpen = !state.sidebarOpen
   },
   changePage(page) {
     state.page = page
@@ -38,9 +45,6 @@ const methods = {
     if (page == 'Dashboard') {
       methods.getOffers()
     }
-  },
-  toggleSidebar() {
-    state.sidebarOpen = !state.sidebarOpen
   },
   loadData() {
     var data = new FormData()

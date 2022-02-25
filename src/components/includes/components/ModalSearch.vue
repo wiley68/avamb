@@ -46,6 +46,7 @@
               class="absolute inset-0 right-auto group"
               type="submit"
               aria-label="Search"
+              @click.stop="clearSearch()"
             >
               <svg
                 class="w-4 h-4 shrink-0 fill-current text-gray-400 group-hover:text-gray-500 ml-4 mr-2"
@@ -62,7 +63,6 @@
             </button>
           </div>
         </div>
-        <div class="py-4 px-2"></div>
       </div>
     </div>
   </transition>
@@ -88,12 +88,14 @@ export default {
       if (!props.modalOpen || modalContent.value.contains(target)) return
       emit('close-modal')
       searchInput.value.value = ''
+      searchFor()
     }
 
     const keyHandler = ({ keyCode }) => {
       if (!props.modalOpen || keyCode !== 27) return
       emit('close-modal')
       searchInput.value.value = ''
+      searchFor()
     }
 
     onMounted(() => {
@@ -113,13 +115,47 @@ export default {
       }
     )
 
-    const searchFor = () => {}
+    const clearSearch = () => {
+      emit('close-modal')
+      searchInput.value.value = ''
+      searchFor()
+    }
+
+    const searchFor = () => {
+      if (searchInput.value.value != '') {
+        if (store.state.offers_filter_status == 'No') {
+          store.state.offers_temp = store.state.offers.filter((element) => {
+            return (
+              element.client_name
+                .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase()) &&
+              element.status == 'No'
+            )
+          })
+        } else {
+          store.state.offers_temp = store.state.offers.filter((element) => {
+            return element.client_name
+              .toLowerCase()
+              .includes(searchInput.value.value.toLowerCase())
+          })
+        }
+      } else {
+        if (store.state.offers_filter_status == 'No') {
+          store.state.offers_temp = store.state.offers.filter((element) => {
+            return element.status == 'No'
+          })
+        } else {
+          store.state.offers_temp = store.state.offers
+        }
+      }
+    }
 
     return {
       store,
       modalContent,
       searchInput,
       searchFor,
+      clearSearch,
     }
   },
 }
