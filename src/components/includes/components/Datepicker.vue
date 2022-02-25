@@ -3,7 +3,7 @@
     <flat-pickr
       class="form-input pl-9 text-gray-500 hover:text-gray-600 font-medium focus:border-gray-300 w-60"
       :config="config"
-      v-model="date"
+      v-model="store.state.tekushta"
     ></flat-pickr>
     <div
       class="absolute inset-0 right-auto flex items-center pointer-events-none"
@@ -19,10 +19,13 @@
 
 <script>
 import flatPickr from 'vue-flatpickr-component'
+import { inject } from 'vue'
 
 export default {
   name: 'Datepicker',
+
   props: ['align'],
+
   data(props) {
     return {
       date: null, // refer to https://github.com/ankurk91/vue-flatpickr-component
@@ -46,12 +49,24 @@ export default {
         },
         onChange: (selectedDates, dateStr, instance) => {
           instance.element.value = dateStr.replace('to', '-')
+          props.changeDate()
         },
       },
     }
   },
+
   components: {
     flatPickr,
+  },
+
+  setup() {
+    const store = inject('store')
+
+    const changeDate = () => {
+      store.methods.getOffers()
+    }
+
+    return { store, changeDate }
   },
 }
 </script>

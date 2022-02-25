@@ -24,6 +24,7 @@ const state = reactive({
   name: '',
   user: {},
   offers: [],
+  tekushta: '01.01.2022 to 25.02.2022',
 })
 
 const methods = {
@@ -71,6 +72,10 @@ const methods = {
     var data = new FormData()
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
+    const tekushta_start = state.tekushta.substring(0, 10)
+    const tekushta_end = state.tekushta.substring(14)
+    data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_end', tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
       'https://dograma.avalonbg.com/function/mobile/get_offers.php'

@@ -1,9 +1,25 @@
 <template>
-  <div
-    v-for="offer in getOffers()"
-    :key="offer.id"
-    class="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-2"
-  ></div>
+  <ul class="mb-6">
+    <li v-for="offer in getOffers()" :key="offer.id" class="-mx-2 mb-1">
+      <button
+        class="w-full p-2 rounded bg-indigo-100 border border-indigo-200"
+        @click.stop="openOffer(offer.id)"
+      >
+        <div class="flex items-center justify-between">
+          <div class="truncate">
+            <span class="text-sm font-medium text-gray-800 mr-1">{{
+              offer.client_name
+            }}</span>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-orange-700">{{
+              offer.idnomber
+            }}</span>
+          </div>
+        </div>
+      </button>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -19,7 +35,9 @@ export default {
       return store.state.offers
     }
 
-    return { store, getOffers }
+    const openOffer = (offer_id) => {}
+
+    return { store, getOffers, openOffer }
   },
 }
 </script>
