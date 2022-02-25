@@ -9,18 +9,12 @@
     >
       <img
         class="w-8 h-8 rounded-full mr-2"
-        :src="'https://www.gravatar.com/avatar/'"
+        :src="'https://www.gravatar.com/avatar/' + store.state.user.gravatar"
       />
-      <svg v-if="false" class="w-8 h-8 mr-2" viewBox="0 0 24 24">
-        <path
-          fill="currentColor"
-          d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
-        />
-      </svg>
       <div class="flex items-center truncate">
         <span
           class="truncate ml-2 text-sm font-medium group-hover:text-gray-800"
-          >Петър</span
+          >{{ store.state.user.id }}</span
         >
         <svg
           class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400"
@@ -44,22 +38,18 @@
         :class="align === 'right' ? 'right-0' : 'left-0'"
       >
         <div class="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200">
-          <div class="font-medium text-gray-800">Иван</div>
-          <div class="text-xs text-gray-500 italic">Потребител</div>
+          <div class="font-medium text-gray-800">
+            {{ store.state.user.username }}
+          </div>
+          <div class="text-xs text-gray-500 italic">
+            {{ store.state.user.dlaznost }}
+          </div>
         </div>
         <ul
           ref="dropdown"
           @focusin="dropdownOpen = true"
           @focusout="dropdownOpen = false"
         >
-          <li>
-            <a
-              href="#"
-              class="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
-              @click.prevent="gotToSettings()"
-              >Настройки</a
-            >
-          </li>
           <li>
             <a
               href="/login/logout.php"
