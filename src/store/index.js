@@ -1,5 +1,9 @@
 import { reactive } from 'vue'
 import moment from 'moment'
+import { useLoading } from 'vue-loading-overlay'
+
+const $loading = useLoading()
+const loader_params = {}
 
 function createCORSRequest(method, url) {
   var xhr = new XMLHttpRequest()
