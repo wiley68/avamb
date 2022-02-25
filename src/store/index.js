@@ -23,6 +23,7 @@ const state = reactive({
   sidebarOpen: false,
   name: '',
   user: {},
+  offers: [],
 })
 
 const methods = {
@@ -32,6 +33,9 @@ const methods = {
   changePage(page) {
     state.page = page
     methods.closeSidebar()
+    if (page == 'Dashboard') {
+      methods.getOffers()
+    }
   },
   toggleSidebar() {
     state.sidebarOpen = !state.sidebarOpen
@@ -58,7 +62,35 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.user = JSON.parse(this.response).user
-        console.log(state)
+        methods.changePage('Dashboard')
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getOffers() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_offers.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.offers = JSON.parse(this.response).offers
       }
     }
     xmlhttpro.send(data)

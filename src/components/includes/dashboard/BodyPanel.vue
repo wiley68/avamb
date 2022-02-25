@@ -1,5 +1,7 @@
 <template>
   <div
+    v-for="offer in getOffers()"
+    :key="offer.id"
     class="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-2"
   ></div>
 </template>
@@ -13,7 +15,11 @@ export default {
   setup() {
     const store = inject('store')
 
-    return { store }
+    const getOffers = () => {
+      return store.state.offers
+    }
+
+    return { store, getOffers }
   },
 }
 </script>
