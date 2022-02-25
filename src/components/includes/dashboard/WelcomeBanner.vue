@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8"
+    class="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-2"
   >
     <div
       class="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block"
