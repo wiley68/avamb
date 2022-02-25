@@ -98,7 +98,9 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.offers = JSON.parse(this.response).offers
-        state.offers_temp = JSON.parse(this.response).offers
+        state.offers_temp = state.offers.filter(
+          (element) => element.status == 'No'
+        )
       }
     }
     xmlhttpro.send(data)

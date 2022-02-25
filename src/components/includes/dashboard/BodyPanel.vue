@@ -2,7 +2,7 @@
   <ul class="mb-6">
     <li v-for="offer in getOffers()" :key="offer.id" class="-mx-2 mb-1">
       <button
-        class="w-full p-2 rounded bg-indigo-100 border border-indigo-200"
+        class="w-full p-2 rounded bg-sky-200 border border-sky-300"
         @click.stop="openOffer(offer.id)"
       >
         <div class="flex items-center justify-between">
