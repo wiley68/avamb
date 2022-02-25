@@ -1,14 +1,19 @@
 <template>
-  <div
-    class="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-2"
-  ></div>
+  <div>
+    <Datepicker />
+  </div>
 </template>
 
 <script>
 import { inject } from 'vue'
+import Datepicker from '../components/Datepicker.vue'
 
 export default {
   name: 'SettingsPanel',
+
+  components: {
+    Datepicker,
+  },
 
   setup() {
     const store = inject('store')

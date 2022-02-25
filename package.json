@@ -8,8 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "flatpickr": "^4.6.9",
     "moment": "^2.29.1",
     "vue": "^3.2.25",
+    "vue-flatpickr-component": "^9.0.5",
     "vue-loading-overlay": "^5.0.3"
   },
   "devDependencies": {
