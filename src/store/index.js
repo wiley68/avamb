@@ -24,6 +24,7 @@ const state = reactive({
   name: '',
   user: {},
   offers: [],
+  offers_temp: [],
   tekushta: '01.01.2022 to 25.02.2022',
 })
 
@@ -72,6 +73,7 @@ const methods = {
     var data = new FormData()
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
     const tekushta_start = state.tekushta.substring(0, 10)
     const tekushta_end = state.tekushta.substring(14)
     data.append('tekushta_start', tekushta_start)
@@ -96,6 +98,7 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.offers = JSON.parse(this.response).offers
+        state.offers_temp = JSON.parse(this.response).offers
       }
     }
     xmlhttpro.send(data)
