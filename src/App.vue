@@ -32,7 +32,7 @@ export default {
     provide('store', store)
 
     onMounted(() => {
-      //store.methods.loadData()
+      store.methods.loadData()
     })
 
     return { store }

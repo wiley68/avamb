@@ -22,6 +22,7 @@ const state = reactive({
   page: 'Dashboard',
   sidebarOpen: false,
   name: '',
+  user: {},
 })
 
 const methods = {
@@ -34,6 +35,33 @@ const methods = {
   },
   toggleSidebar() {
     state.sidebarOpen = !state.sidebarOpen
+  },
+  loadData() {
+    var data = new FormData()
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/getparams.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.user = JSON.parse(this.response).user
+        console.log(state)
+      }
+    }
+    xmlhttpro.send(data)
   },
 }
 
