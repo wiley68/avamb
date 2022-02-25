@@ -65,9 +65,8 @@
     </div>
     <div class="relative">
       <h1 class="text-2xl md:text-3xl text-gray-800 font-bold mb-1">
-        Добре дошъл, Илко&nbsp;Иванов
+        Добре дошъл, {{ store.state.user.username }}
       </h1>
-      <p>как си:</p>
     </div>
   </div>
 </template>
