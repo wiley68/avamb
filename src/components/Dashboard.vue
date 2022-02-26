@@ -1,26 +1,30 @@
 <template>
   <main>
-    <div class="px-4 sm:px-6 lg:px-8 py-4 w-full max-w-9xl mx-auto">
-      <WelcomeBanner />
-      <SettingsPanel />
-      <BodyPanel />
+    <div class="relative flex">
+      <DashboardSidebar />
+      <div
+        class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
+        :class="
+          store.state.dashboardSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
+        "
+      >
+        <DashboardBody />
+      </div>
     </div>
   </main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import WelcomeBanner from './includes/dashboard/WelcomeBanner.vue'
-import SettingsPanel from './includes/dashboard/SettingsPanel.vue'
-import BodyPanel from './includes/dashboard/BodyPanel.vue'
+import DashboardSidebar from './includes/dashboard/DashboardSidebar.vue'
+import DashboardBody from './includes/dashboard/DashboardBody.vue'
 
 export default {
   name: 'Dashboard',
 
   components: {
-    WelcomeBanner,
-    SettingsPanel,
-    BodyPanel,
+    DashboardSidebar,
+    DashboardBody,
   },
 
   setup() {

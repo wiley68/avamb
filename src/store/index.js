@@ -27,6 +27,8 @@ const state = reactive({
   offers_temp: [],
   tekushta: '01.01.2022 to 25.02.2022',
   offers_filter_status: 'No',
+  dashboardSidebarOpen: true,
+  current_dashboard_offer: 0,
 })
 
 const methods = {
@@ -38,6 +40,18 @@ const methods = {
   },
   toggleSidebar() {
     state.sidebarOpen = !state.sidebarOpen
+  },
+  toggleDashboardSidebar() {
+    state.dashboardSidebarOpen = !state.dashboardSidebarOpen
+  },
+  closeDashboardSidebar() {
+    state.dashboardSidebarOpen = false
+  },
+  openDashboardSidebar() {
+    state.dashboardSidebarOpen = true
+  },
+  changeDashboardOffer(offer_id) {
+    state.current_dashboard_offer = offer_id
   },
   changePage(page) {
     state.page = page
