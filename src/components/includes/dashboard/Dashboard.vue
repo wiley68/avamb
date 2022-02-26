@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 import Datepicker from '../components/Datepicker.vue'
 
 export default {
@@ -120,7 +120,10 @@ export default {
       return store.state.offers_temp
     }
 
-    const openOffer = (offer_id) => {}
+    const openOffer = (offer_id) => {
+      store.methods.changeDashboardOffer(offer_id)
+      store.methods.closeDashboardSidebar()
+    }
 
     return {
       store,
