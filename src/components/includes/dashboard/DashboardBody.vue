@@ -73,9 +73,10 @@
               class="flex flex-row justify-center items-center text-sm text-gray-800"
             >
               <div
-                class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+                class="flex flex-row justify-center items-center w-12 h-7 border border-blue-800 text-white"
+                :class="offer().razmeri_broi > 0 ? 'bg-blue-600' : 'bg-white'"
               >
-                1
+                {{ offer().razmeri_broi }}
               </div>
             </div>
           </div>
