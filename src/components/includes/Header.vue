@@ -50,7 +50,8 @@
             @close-modal="searchModalOpen = false"
           />
           <Notifications align="right" />
-          <Help align="right" />
+          <Zadaci align="right" />
+          <Listi align="right" />
           <hr class="w-px h-6 bg-gray-200" />
           <UserMenu align="right" />
         </div>
@@ -63,7 +64,8 @@
 import { ref, inject } from 'vue'
 import SearchModal from './components/ModalSearch.vue'
 import Notifications from './components/DropdownNotifications.vue'
-import Help from './components/DropdownHelp.vue'
+import Zadaci from './components/DropdownZadaci.vue'
+import Listi from './components/DropdownListi.vue'
 import UserMenu from './components/DropdownProfile.vue'
 
 export default {
@@ -72,7 +74,8 @@ export default {
   components: {
     SearchModal,
     Notifications,
-    Help,
+    Zadaci,
+    Listi,
     UserMenu,
   },
 
