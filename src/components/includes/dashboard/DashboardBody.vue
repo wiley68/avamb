@@ -110,7 +110,9 @@
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-5-zdtxt</div>
+          <div class="text-sm text-gray-800 mr-1">
+            №-5-{{ store.state.user.zdtxt }}
+          </div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -121,14 +123,18 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">zdtxt</div>
+        <div class="text-sm text-gray-800 mr-1">
+          {{ store.state.user.zdtxtlong }}
+        </div>
       </div>
       <div
         v-if="store.state.user.etapna6 == '1'"
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-6-odtxt</div>
+          <div class="text-sm text-gray-800 mr-1">
+            №-6-{{ store.state.user.odtxt }}
+          </div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -139,7 +145,9 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">odtxt</div>
+        <div class="text-sm text-gray-800 mr-1">
+          {{ store.state.user.odtxtlong }}
+        </div>
       </div>
       <div
         v-if="
@@ -189,7 +197,9 @@
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-9-dkptxt</div>
+          <div class="text-sm text-gray-800 mr-1">
+            №-9-{{ store.state.user.dkptxt }}
+          </div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -200,14 +210,18 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">dkptxt</div>
+        <div class="text-sm text-gray-800 mr-1">
+          {{ store.state.user.dkptxtlong }}
+        </div>
       </div>
       <div
         v-if="store.state.user.etapna10 == '1'"
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-10-gtxt</div>
+          <div class="text-sm text-gray-800 mr-1">
+            №-10-{{ store.state.user.gtxt }}
+          </div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -218,14 +232,18 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">gtxt</div>
+        <div class="text-sm text-gray-800 mr-1">
+          {{ store.state.user.gtxtlong }}
+        </div>
       </div>
       <div
         v-if="store.state.user.etapna11 == '1'"
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-11-ofptxt</div>
+          <div class="text-sm text-gray-800 mr-1">
+            №-11-{{ store.state.user.ofptxt }}
+          </div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -236,7 +254,9 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">ofptxt</div>
+        <div class="text-sm text-gray-800 mr-1">
+          {{ store.state.user.ofptxtlong }}
+        </div>
       </div>
       <div
         v-if="store.state.user.etapna12 == '1'"
@@ -279,7 +299,9 @@
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-14-rptxt</div>
+          <div class="text-sm text-gray-800 mr-1">
+            №-14-{{ store.state.user.rptxt }}
+          </div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -290,7 +312,9 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">rptxt</div>
+        <div class="text-sm text-gray-800 mr-1">
+          {{ store.state.user.rptxtlong }}
+        </div>
       </div>
       <div
         v-if="store.state.user.etapna15 == '1'"
@@ -345,7 +369,9 @@
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-17-ppptxt</div>
+          <div class="text-sm text-gray-800 mr-1">
+            №-17-{{ store.state.user.ppptxt }}
+          </div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -356,14 +382,18 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">ppptxt</div>
+        <div class="text-sm text-gray-800 mr-1">
+          {{ store.state.user.ppptxtlong }}
+        </div>
       </div>
       <div
         v-if="store.state.user.etapna18 == '1'"
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-18-ctxt</div>
+          <div class="text-sm text-gray-800 mr-1">
+            №-18-{{ store.state.user.ctxt }}
+          </div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -374,7 +404,9 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">ctxt</div>
+        <div class="text-sm text-gray-800 mr-1">
+          {{ store.state.user.ctxtlong }}
+        </div>
       </div>
       <div
         v-if="
