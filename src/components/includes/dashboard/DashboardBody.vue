@@ -41,14 +41,18 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-12 h-7 border border-green-800 text-white mr-2"
+              :class="
+                offer().poseshtenie_broi > 0 ? 'bg-green-600' : 'bg-white'
+              "
             >
-              1
+              {{ offer().poseshtenie_broi }}
             </div>
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-12 h-7 border border-blue-800 text-white"
+              :class="offer().poseshtenie_broi > 0 ? 'bg-blue-600' : 'bg-white'"
             >
-              1
+              {{ offer().poseshtenie_broi }}
             </div>
           </div>
         </div>
