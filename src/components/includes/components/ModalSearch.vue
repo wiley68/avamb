@@ -49,7 +49,7 @@
               @click.stop="clearSearch()"
             >
               <svg
-                class="w-4 h-4 shrink-0 fill-current text-gray-400 group-hover:text-gray-500 ml-4 mr-2"
+                class="w-4 h-4 shrink-0 fill-current text-blue-600 group-hover:text-gray-500 ml-4 mr-2"
                 viewBox="0 0 16 16"
                 xmlns="http://www.w3.org/2000/svg"
               >
