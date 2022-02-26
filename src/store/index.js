@@ -25,7 +25,10 @@ const state = reactive({
   user: {},
   offers: [],
   offers_temp: [],
-  tekushta: '01.01.2022 to 25.02.2022',
+  tekushta:
+    moment().startOf('year').format('DD.MM.YYYY') +
+    ' to ' +
+    moment().format('DD.MM.YYYY'),
   offers_filter_status: 'No',
   dashboardSidebarOpen: true,
   current_dashboard_offer: 0,
