@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row h-screen bg-gray-100">
+  <div class="flex flex-row h-screen bg-white">
     <Sidebar></Sidebar>
     <!-- Content area -->
     <div
