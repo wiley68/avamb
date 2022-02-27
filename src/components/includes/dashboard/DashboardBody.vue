@@ -95,15 +95,17 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
+              :class="offer().otklient_broi > 0 ? 'bg-green-600' : 'bg-white'"
             >
               {{ offer().otklient_broi }}
             </div>
             <div
-              class="flex flex-row justify-center items-center w-20 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
+              :class="offer().tasks_broi > 0 ? 'bg-blue-600' : 'bg-white'"
               :style="{ backgroundColor: colorTasksRaboti() }"
             >
-              {{ offer().tasks_broi }}
+              {{ offer().tasks_broi == 0 ? '' : offer().tasks_broi }}
             </div>
           </div>
         </div>
@@ -123,7 +125,8 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
+              :class="offer().zapitvane_broi > 0 ? 'bg-green-600' : 'bg-white'"
             >
               {{ offer().zapitvane_broi }}
             </div>
@@ -145,7 +148,8 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
+              :class="offer().odostavcik_broi > 0 ? 'bg-green-600' : 'bg-white'"
             >
               {{ offer().odostavcik_broi }}
             </div>
@@ -167,7 +171,8 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
+              :class="offer().oferti_broi > 0 ? 'bg-green-600' : 'bg-white'"
             >
               {{ offer().oferti_broi }}
             </div>
@@ -212,7 +217,8 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
+              :class="offer().pdogovor_broi > 0 ? 'bg-green-600' : 'bg-white'"
             >
               {{ offer().pdogovor_broi }}
             </div>
@@ -236,7 +242,8 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
+              :class="offer().dds_broi > 0 ? 'bg-green-600' : 'bg-white'"
             >
               {{ offer().dds_broi }}
             </div>
@@ -260,7 +267,8 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
+              :class="offer().poffer_broi > 0 ? 'bg-green-600' : 'bg-white'"
             >
               {{ offer().poffer_broi }}
             </div>
