@@ -41,7 +41,7 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
                 offer().poseshtenie_broi > 0 ? 'bg-green-600' : 'bg-white'
               "
@@ -49,7 +49,7 @@
               {{ offer().poseshtenie_broi }}
             </div>
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
               :class="offer().poseshtenie_broi > 0 ? 'bg-blue-600' : 'bg-white'"
             >
               {{ offer().poseshtenie_broi }}
@@ -73,7 +73,7 @@
               class="flex flex-row justify-center items-center text-sm text-gray-800"
             >
               <div
-                class="flex flex-row justify-center items-center w-12 h-7 border border-blue-800 text-white"
+                class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
                 :class="offer().razmeri_broi > 0 ? 'bg-blue-600' : 'bg-white'"
               >
                 {{ offer().razmeri_broi }}
@@ -95,12 +95,12 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white mr-2"
             >
               {{ offer().otklient_broi }}
             </div>
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-blue-600 border border-blue-800 text-white"
               :style="{ backgroundColor: colorTasksRaboti() }"
             >
               {{ offer().tasks_broi }}
@@ -123,7 +123,7 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
             >
               {{ offer().zapitvane_broi }}
             </div>
@@ -145,7 +145,7 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
             >
               {{ offer().odostavcik_broi }}
             </div>
@@ -167,12 +167,12 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white mr-2"
             >
               {{ offer().oferti_broi }}
             </div>
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-blue-600 border border-blue-800 text-white"
             ></div>
           </div>
         </div>
@@ -190,7 +190,7 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center min-w-fit px-1 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 px-1 h-7 bg-blue-600 border border-blue-800 text-white"
             >
               {{ offer().allprice_after_to }}
             </div>
@@ -199,7 +199,9 @@
         <div class="text-sm text-gray-800 mr-1">Договор с клиент</div>
       </div>
       <div
-        v-if="store.state.user.etapna9 == '1'"
+        v-if="
+          store.state.user.etapna9 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -210,9 +212,9 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
             >
-              1
+              {{ offer().pdogovor_broi }}
             </div>
           </div>
         </div>
@@ -221,7 +223,9 @@
         </div>
       </div>
       <div
-        v-if="store.state.user.etapna10 == '1'"
+        v-if="
+          store.state.user.etapna10 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -232,9 +236,9 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
             >
-              1
+              {{ offer().dds_broi }}
             </div>
           </div>
         </div>
@@ -243,7 +247,9 @@
         </div>
       </div>
       <div
-        v-if="store.state.user.etapna11 == '1'"
+        v-if="
+          store.state.user.etapna11 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -254,9 +260,9 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-green-600 border border-green-800 text-white"
             >
-              1
+              {{ offer().poffer_broi }}
             </div>
           </div>
         </div>
@@ -265,7 +271,9 @@
         </div>
       </div>
       <div
-        v-if="store.state.user.etapna12 == '1'"
+        v-if="
+          store.state.user.etapna12 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -274,16 +282,19 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 px-1 h-7 border border-blue-800 text-white"
+              :class="offer().proformi_sum == 0 ? 'bg-white' : 'bg-blue-600'"
             >
-              1
+              {{ offer().proformi_sum == 0 ? '' : offer().proformi_sum }}
             </div>
           </div>
         </div>
         <div class="text-sm text-gray-800 mr-1">Проформа фактура</div>
       </div>
       <div
-        v-if="store.state.user.etapna13 == '1'"
+        v-if="
+          store.state.user.etapna13 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -292,16 +303,23 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 px-1 h-7 border border-blue-800"
+              :class="
+                offer().avansi_sum == 0
+                  ? 'bg-white text-gray-800'
+                  : 'bg-blue-600 text-white'
+              "
             >
-              1
+              {{ offer().avansi_sum }}
             </div>
           </div>
         </div>
         <div class="text-sm text-gray-800 mr-1">Ф. Аванс</div>
       </div>
       <div
-        v-if="store.state.user.etapna14 == '1'"
+        v-if="
+          store.state.user.etapna14 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -312,9 +330,10 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
+              :class="offer().casti_broi == 0 ? 'bg-white' : 'bg-green-600'"
             >
-              1
+              {{ offer().casti_broi == 0 ? '' : offer().casti_broi }}
             </div>
           </div>
         </div>
@@ -323,7 +342,9 @@
         </div>
       </div>
       <div
-        v-if="store.state.user.etapna15 == '1'"
+        v-if="
+          store.state.user.etapna15 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -332,21 +353,31 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
+              :class="
+                offer().poracki_files_broi == 0 ? 'bg-white' : 'bg-green-600'
+              "
             >
-              1
+              {{
+                offer().poracki_files_broi == 0
+                  ? ''
+                  : offer().poracki_files_broi
+              }}
             </div>
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
+              :class="offer().poracki_broi == 0 ? 'bg-white' : 'bg-blue-600'"
             >
-              1
+              {{ offer().poracki_broi == 0 ? '' : offer().poracki_broi }}
             </div>
           </div>
         </div>
         <div class="text-sm text-gray-800 mr-1">Поръчка към доставчик</div>
       </div>
       <div
-        v-if="store.state.user.etapna16 == '1'"
+        v-if="
+          store.state.user.etapna16 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -355,14 +386,16 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
+              :class="offer().pp_files_broi == 0 ? 'bg-white' : 'bg-green-600'"
             >
-              1
+              {{ offer().pp_files_broi == 0 ? '' : offer().pp_files_broi }}
             </div>
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
+              :class="offer().pp_broi == 0 ? 'bg-white' : 'bg-blue-600'"
             >
-              1
+              {{ offer().pp_broi == 0 ? '' : offer().pp_broi }}
             </div>
           </div>
         </div>
@@ -371,7 +404,9 @@
         </div>
       </div>
       <div
-        v-if="store.state.user.etapna17 == '1'"
+        v-if="
+          store.state.user.etapna17 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -382,9 +417,10 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
+              :class="offer().ppr_broi == 0 ? 'bg-white' : 'bg-green-600'"
             >
-              1
+              {{ offer().ppr_broi == 0 ? '' : offer().ppr_broi }}
             </div>
           </div>
         </div>
@@ -404,9 +440,10 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
+              :class="offer().snimki_broi == 0 ? 'bg-white' : 'bg-green-600'"
             >
-              1
+              {{ offer().snimki_broi == 0 ? '' : offer().snimki_broi }}
             </div>
           </div>
         </div>
@@ -426,9 +463,18 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800"
+              :class="
+                offer().fakturi_broi == 0
+                  ? 'bg-white text-gray-800'
+                  : 'bg-green-600 text-white'
+              "
             >
-              1
+              {{
+                offer().fakturi_broi > 0
+                  ? offer().fakturi_broi
+                  : offer().ostatak.toFixed(2)
+              }}
             </div>
           </div>
         </div>
@@ -444,14 +490,16 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white mr-2"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
+              :class="offer().fakturip_broi == 0 ? 'bg-white' : 'bg-green-600'"
             >
-              1
+              {{ offer().fakturip_broi == 0 ? '' : offer().fakturip_broi }}
             </div>
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
+              :class="offer().pokupki_broi == 0 ? 'bg-white' : 'bg-blue-600'"
             >
-              1
+              {{ offer().pokupki_broi == 0 ? '' : offer().pokupki_broi }}
             </div>
           </div>
         </div>
@@ -466,7 +514,7 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-orange-600 border border-orange-800 text-white"
+              class="flex flex-row justify-center items-center w-20 h-7 bg-orange-600 border border-orange-800 text-white"
             >
               {{ offer().idnomber }}
             </div>
