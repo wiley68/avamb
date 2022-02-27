@@ -97,12 +97,13 @@
             <div
               class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white mr-2"
             >
-              1
+              {{ offer().otklient_broi }}
             </div>
             <div
               class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              :style="{ backgroundColor: colorTasksRaboti() }"
             >
-              1
+              {{ offer().tasks_broi }}
             </div>
           </div>
         </div>
@@ -124,7 +125,7 @@
             <div
               class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
             >
-              1
+              {{ offer().zapitvane_broi }}
             </div>
           </div>
         </div>
@@ -146,7 +147,7 @@
             <div
               class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white"
             >
-              1
+              {{ offer().odostavcik_broi }}
             </div>
           </div>
         </div>
@@ -168,19 +169,19 @@
             <div
               class="flex flex-row justify-center items-center w-12 h-7 bg-green-600 border border-green-800 text-white mr-2"
             >
-              1
+              {{ offer().oferti_broi }}
             </div>
             <div
               class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
-            >
-              1
-            </div>
+            ></div>
           </div>
         </div>
         <div class="text-sm text-gray-800 mr-1">Оферти</div>
       </div>
       <div
-        v-if="store.state.user.etapna8 == '1'"
+        v-if="
+          store.state.user.etapna8 == '1' && store.state.user.role != 'sluz'
+        "
         class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
@@ -189,9 +190,9 @@
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
             <div
-              class="flex flex-row justify-center items-center w-12 h-7 bg-blue-600 border border-blue-800 text-white"
+              class="flex flex-row justify-center items-center min-w-fit px-1 h-7 bg-blue-600 border border-blue-800 text-white"
             >
-              1
+              {{ offer().allprice_after_to }}
             </div>
           </div>
         </div>
@@ -494,7 +495,46 @@ export default {
       )
     }
 
-    return { store, offer }
+    const colorTasksRaboti = () => {
+      if (parseInt(store.state.user.tasks_raboti) > 0) {
+        return '#7F7F7F'
+      } else {
+        switch (parseInt(store.state.user.task_status)) {
+          case 0:
+            return '#22B14C'
+            break
+          case 1:
+            return '#7092BE'
+            break
+          case 2:
+            return '#7F7F7F'
+            break
+          case 3:
+            return '#FF7F27'
+            break
+          case 4:
+            return '#00A2E8'
+            break
+          case 5:
+            return '#3F48CC'
+            break
+          case 6:
+            return '#DDA0DD'
+            break
+          case 7:
+            return '#A0522D'
+            break
+          case 8:
+            return '#AFEEEE'
+            break
+          default:
+            return '#22B14C'
+            break
+        }
+      }
+    }
+
+    return { store, offer, colorTasksRaboti }
   },
 }
 </script>
