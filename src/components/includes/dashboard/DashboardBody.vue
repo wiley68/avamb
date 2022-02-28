@@ -592,6 +592,7 @@ export default {
     }
 
     const goToRazmeri = () => {
+      store.methods.getRazmeri(store.state.current_dashboard_offer)
       store.methods.changePage('Razmeri')
     }
 

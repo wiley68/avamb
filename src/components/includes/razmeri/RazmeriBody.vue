@@ -52,12 +52,35 @@
         Екземпляр за вземане на размери
       </div>
     </div>
+    <div
+      v-for="razmer in store.state.razmeri"
+      :key="razmer.id"
+      class="flex flex-row justify-between p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
+    >
+      <div class="">
+        {{ razmer.id }} - {{ razmer.certez_name }} - {{ razmer.opisanie }}
+      </div>
+      <a
+        target="_blanc"
+        :href="
+          '/print_certezi.php?oid=' +
+          offer().id +
+          '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+        "
+      >
+        <svg class="w-8 h-8" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,10.5H13V13.5H12V10.5M7,11.5H8V10.5H7V11.5M20,6V18A2,2 0 0,1 18,20H6A2,2 0 0,1 4,18V6A2,2 0 0,1 6,4H18A2,2 0 0,1 20,6M9.5,10.5A1.5,1.5 0 0,0 8,9H5.5V15H7V13H8A1.5,1.5 0 0,0 9.5,11.5V10.5M14.5,10.5A1.5,1.5 0 0,0 13,9H10.5V15H13A1.5,1.5 0 0,0 14.5,13.5V10.5M18.5,9H15.5V15H17V13H18.5V11.5H17V10.5H18.5V9Z"
+          />
+        </svg>
+      </a>
+    </div>
   </div>
-  <div class=""></div>
 </template>
 
 <script>
-import { inject, onMounted } from 'vue'
+import { inject } from 'vue'
 
 export default {
   name: 'RazmeridBody',
@@ -71,11 +94,7 @@ export default {
       )
     }
 
-    onMounted(() => {
-      store.methods.getRazmeri(offer.id)
-    })
-
-    return { store, offer, razmeri }
+    return { store, offer }
   },
 }
 </script>

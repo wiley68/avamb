@@ -151,6 +151,8 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.razmeri = JSON.parse(this.response).razmeri
+      } else {
+        state.razmeri = []
       }
     }
     xmlhttpro.send(data)
