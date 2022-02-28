@@ -32,6 +32,7 @@ const state = reactive({
   offers_filter_status: 'No',
   dashboardSidebarOpen: true,
   current_dashboard_offer: 0,
+  razmeri: [],
 })
 
 const methods = {
@@ -122,6 +123,34 @@ const methods = {
         state.offers_temp = state.offers.filter(
           (element) => element.status == 'No'
         )
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getRazmeri(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_razmeri.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.razmeri = JSON.parse(this.response).razmeri
       }
     }
     xmlhttpro.send(data)

@@ -7,7 +7,8 @@
     >
       <!-- Site header -->
       <Header />
-      <dashboard v-if="store.state.page == 'Dashboard'"></dashboard>
+      <Dashboard v-if="store.state.page == 'Dashboard'"></Dashboard>
+      <Razmeri v-if="store.state.page == 'Razmeri'"></Razmeri>
     </div>
   </div>
 </template>
@@ -18,6 +19,7 @@ import store from './store'
 import Sidebar from './components/includes/Sidebar.vue'
 import Header from './components/includes/Header.vue'
 import Dashboard from './components/Dashboard.vue'
+import Razmeri from './components/Razmeri.vue'
 
 export default {
   name: 'App',
@@ -26,6 +28,7 @@ export default {
     Sidebar,
     Header,
     Dashboard,
+    Razmeri,
   },
 
   setup() {

@@ -72,12 +72,13 @@
             <div
               class="flex flex-row justify-center items-center text-sm text-gray-800"
             >
-              <div
+              <button
                 class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
                 :class="offer().razmeri_broi > 0 ? 'bg-blue-600' : 'bg-white'"
+                @click.stop="goToRazmeri()"
               >
                 {{ offer().razmeri_broi }}
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -590,7 +591,11 @@ export default {
       }
     }
 
-    return { store, offer, colorTasksRaboti }
+    const goToRazmeri = () => {
+      store.methods.changePage('Razmeri')
+    }
+
+    return { store, offer, colorTasksRaboti, goToRazmeri }
   },
 }
 </script>
