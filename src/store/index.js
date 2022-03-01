@@ -33,6 +33,7 @@ const state = reactive({
   dashboardSidebarOpen: true,
   current_dashboard_offer: 0,
   razmeri: [],
+  otclienti: [],
 })
 
 const methods = {
@@ -153,6 +154,36 @@ const methods = {
         state.razmeri = JSON.parse(this.response).razmeri
       } else {
         state.razmeri = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getOtclienti(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_otclienti.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.otclienti = JSON.parse(this.response).otclienti
+      } else {
+        state.otclienti = []
       }
     }
     xmlhttpro.send(data)

@@ -9,6 +9,7 @@
       <Header />
       <Dashboard v-if="store.state.page == 'Dashboard'"></Dashboard>
       <Razmeri v-if="store.state.page == 'Razmeri'"></Razmeri>
+      <Client v-if="store.state.page == 'Client'"></Client>
     </div>
   </div>
 </template>
@@ -20,6 +21,7 @@ import Sidebar from './components/includes/Sidebar.vue'
 import Header from './components/includes/Header.vue'
 import Dashboard from './components/Dashboard.vue'
 import Razmeri from './components/Razmeri.vue'
+import Client from './components/Client.vue'
 
 export default {
   name: 'App',
@@ -29,6 +31,7 @@ export default {
     Header,
     Dashboard,
     Razmeri,
+    Client,
   },
 
   setup() {

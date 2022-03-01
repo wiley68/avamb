@@ -95,12 +95,13 @@
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
-            <div
+            <button
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="offer().otklient_broi > 0 ? 'bg-green-600' : 'bg-white'"
+              @click.stop="goToOtclienti()"
             >
               {{ offer().otklient_broi }}
-            </div>
+            </button>
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
               :class="offer().tasks_broi > 0 ? 'bg-blue-600' : 'bg-white'"
@@ -596,7 +597,12 @@ export default {
       store.methods.changePage('Razmeri')
     }
 
-    return { store, offer, colorTasksRaboti, goToRazmeri }
+    const goToOtclienti = () => {
+      store.methods.getOtclienti(store.state.current_dashboard_offer)
+      store.methods.changePage('Client')
+    }
+
+    return { store, offer, colorTasksRaboti, goToRazmeri, goToOtclienti }
   },
 }
 </script>
