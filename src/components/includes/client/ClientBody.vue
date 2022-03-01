@@ -59,7 +59,11 @@
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
-          <a target="_blank" :href="otclient.file"
+          <a
+            target="_blank"
+            :href="
+              '/dist/img/files/otklient/' + offer().id + '/' + otclient.file
+            "
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -235,6 +239,7 @@ export default {
 
     const updateClient = (client_id, file, offer_id) => {
       store.methods.saveClient(client_id, file, offer_id)
+      console.log(store.state.otclienti)
     }
 
     const handleFileUpload = async (offer_id) => {
