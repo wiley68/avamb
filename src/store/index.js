@@ -36,6 +36,9 @@ const state = reactive({
   otclienti: [],
   deleteClientModal: false,
   successUpdateClient: false,
+  zapitvania: [],
+  deleteZapitvaneModal: false,
+  successUpdateZapitvane: false,
 })
 
 const methods = {
@@ -77,6 +80,17 @@ const methods = {
   },
   changeSuccessUpdateClient(successUpdateClient) {
     state.successUpdateClient = successUpdateClient
+  },
+  changeDeleteZapitvaneModal(deleteZapitvaneModal) {
+    state.deleteZapitvaneModal = deleteZapitvaneModal
+  },
+  deleteZapitvaneById(id) {
+    state.zapitvania = state.zapitvania.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdateZapitvane(successUpdateZapitvane) {
+    state.successUpdateZapitvane = successUpdateZapitvane
   },
   loadData() {
     var data = new FormData()
@@ -250,7 +264,7 @@ const methods = {
     data.append('description', otclient.description)
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/mobile/save_otclient.php'
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -274,7 +288,7 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  uploadClientFile(files, offer_id) {
+  uploadClientFile(files, offer_id, type) {
     var data = new FormData()
     Object.entries(files).forEach((element) => {
       const [key, value] = element
@@ -284,7 +298,9 @@ const methods = {
       'POST',
       'https://dograma.avalonbg.com/function/submit_doc.php?oid=' +
         offer_id +
-        '&doc=otklient&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+        '&doc=' +
+        type +
+        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -301,7 +317,115 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        methods.getOtclienti(state.current_dashboard_offer)
+        if (type == 'otklient') {
+          methods.getOtclienti(state.current_dashboard_offer)
+        }
+        if (type == 'zapitvane') {
+          methods.getZapitvane(state.current_dashboard_offer)
+        }
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getZapitvane(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_zapitvania.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.zapitvania = JSON.parse(this.response).zapitvania
+      } else {
+        state.zapitvania = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteZapitvane(zapitvane_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', zapitvane_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_zapitvane.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteZapitvaneById(zapitvane_id)
+        state.deleteZapitvaneModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveZapitvane(zapitvane_id, file, offer_id) {
+    var data = new FormData()
+    let zapitvane = {}
+    if (zapitvane_id != 0) {
+      zapitvane = state.zapitvania.find((element) => element.id == zapitvane_id)
+    } else {
+      zapitvane = {
+        id: zapitvane_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', zapitvane.id)
+    data.append('offer_id', offer_id)
+    data.append('filename', zapitvane.file)
+    data.append('description', zapitvane.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateZapitvane(true)
+      } else {
+        methods.changeSuccessUpdateZapitvane(false)
       }
     }
     xmlhttpro.send(data)

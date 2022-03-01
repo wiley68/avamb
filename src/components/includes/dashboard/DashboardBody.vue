@@ -126,12 +126,13 @@
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
-            <div
+            <button
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
               :class="offer().zapitvane_broi > 0 ? 'bg-green-600' : 'bg-white'"
+              @click.stop="goToZapitvane()"
             >
               {{ offer().zapitvane_broi }}
-            </div>
+            </button>
           </div>
         </div>
         <div class="text-sm text-gray-800 mr-1">
@@ -602,7 +603,19 @@ export default {
       store.methods.changePage('Client')
     }
 
-    return { store, offer, colorTasksRaboti, goToRazmeri, goToOtclienti }
+    const goToZapitvane = () => {
+      store.methods.getZapitvane(store.state.current_dashboard_offer)
+      store.methods.changePage('Zapitvane')
+    }
+
+    return {
+      store,
+      offer,
+      colorTasksRaboti,
+      goToRazmeri,
+      goToOtclienti,
+      goToZapitvane,
+    }
   },
 }
 </script>
