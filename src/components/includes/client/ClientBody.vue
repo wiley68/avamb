@@ -69,6 +69,9 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+          @click.stop="
+            updateClient(otclient.id, otclient.file, otclient.offer_id)
+          "
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -78,6 +81,46 @@
           </svg>
           <span class="text-xs">Запиши</span>
         </button>
+        <ModalBlank
+          id="success-modal"
+          :modalOpen="store.state.successUpdateClient"
+          @close-modal="store.methods.changeSuccessUpdateClient(false)"
+        >
+          <div class="p-5 flex space-x-4">
+            <div
+              class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-green-100"
+            >
+              <svg
+                class="w-4 h-4 shrink-0 fill-current text-green-500"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zM7 11.4L3.6 8 5 6.6l2 2 4-4L12.4 6 7 11.4z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="mb-2">
+                <div class="text-lg font-semibold text-gray-800">
+                  Уведомление
+                </div>
+              </div>
+              <div class="text-sm mb-10">
+                <div class="space-y-2">
+                  <p>Успешно записахте промяната.</p>
+                </div>
+              </div>
+              <div class="flex flex-wrap justify-end space-x-2">
+                <button
+                  class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+                  @click.stop="store.methods.changeSuccessUpdateClient(false)"
+                >
+                  Затвори
+                </button>
+              </div>
+            </div>
+          </div>
+        </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           @click.stop="deleteClientCheck()"
@@ -177,7 +220,11 @@ export default {
       store.methods.deleteClient(client_id, file, offer_id)
     }
 
-    return { store, offer, deleteClientCheck, deleteClient }
+    const updateClient = (client_id, file, offer_id) => {
+      store.methods.saveClient(client_id, file, offer_id)
+    }
+
+    return { store, offer, deleteClientCheck, deleteClient, updateClient }
   },
 }
 </script>

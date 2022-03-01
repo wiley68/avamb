@@ -35,6 +35,7 @@ const state = reactive({
   razmeri: [],
   otclienti: [],
   deleteClientModal: false,
+  successUpdateClient: false,
 })
 
 const methods = {
@@ -73,6 +74,9 @@ const methods = {
     state.otclienti = state.otclienti.filter((element) => {
       return element.id != id
     })
+  },
+  changeSuccessUpdateClient(successUpdateClient) {
+    state.successUpdateClient = successUpdateClient
   },
   loadData() {
     var data = new FormData()
@@ -223,6 +227,49 @@ const methods = {
       ) {
         methods.deleteClientById(client_id)
         state.deleteClientModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveClient(client_id, file, offer_id) {
+    var data = new FormData()
+    let otclient = {}
+    if (client_id != 0) {
+      otclient = state.otclienti.find((element) => element.id == client_id)
+    } else {
+      otclient = {
+        id: client_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', otclient.id)
+    data.append('offer_id', offer_id)
+    data.append('filename', otclient.file)
+    data.append('description', otclient.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_otclient.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateClient(true)
+      } else {
+        methods.changeSuccessUpdateClient(false)
       }
     }
     xmlhttpro.send(data)
