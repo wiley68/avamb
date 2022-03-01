@@ -185,10 +185,17 @@
       </div>
       <div class="mt-2">
         <textarea
-          class="w-full border border-gray-200"
+          class="w-full border border-gray-200 p-1"
           rows="5"
           v-model="otclient.description"
         ></textarea>
+      </div>
+    </div>
+    <div
+      class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+    >
+      <div class="w-full flex flex-row justify-between items-center pb-2">
+        butoni
       </div>
     </div>
   </div>
