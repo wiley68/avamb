@@ -70,19 +70,9 @@ const methods = {
     state.deleteClientModal = deleteClientModal
   },
   deleteClientById(id) {
-    state.tasks_temp = state.tasks_temp.filter((element) => {
-      return element.project_id != id
-    })
-    state.projects_temp = state.projects_temp.filter((element) => {
+    state.otclienti = state.otclienti.filter((element) => {
       return element.id != id
     })
-    state.projects = state.projects.filter((element) => {
-      return element.id != id
-    })
-    state.tasks = state.tasks.filter((element) => {
-      return element.project_id != id
-    })
-    state.task_files = []
   },
   loadData() {
     var data = new FormData()
@@ -207,9 +197,11 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  deleteClient(client_id) {
+  deleteClient(client_id, file, offer_id) {
     var data = new FormData()
     data.append('id', client_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
     var xmlhttpro = createCORSRequest(
       'POST',
       'https://dograma.avalonbg.com/function/mobile/delete_otclient.php'
@@ -229,10 +221,8 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        methods.deleteProjectById(project_id)
-        state.deleteProjectModal = false
-        state.current_project_id = state.projects[0] ? state.projects[0].id : 0
-        methods.getTasks(state.current_project_id)
+        methods.deleteClientById(client_id)
+        state.deleteClientModal = false
       }
     }
     xmlhttpro.send(data)

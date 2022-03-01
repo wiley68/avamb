@@ -111,13 +111,13 @@
             <div>
               <div class="mb-2">
                 <div class="text-lg font-semibold text-gray-800">
-                  изтрий файла
+                  Изтриване на файл
                 </div>
               </div>
               <!-- Modal content -->
               <div class="text-sm mb-10">
                 <div class="space-y-2">
-                  <p>ще бъде изтрит</p>
+                  <p>Файлът ще бъде изтрит. Тази операция е невъзвратима!</p>
                 </div>
               </div>
               <div class="flex flex-wrap justify-end space-x-2">
@@ -129,7 +129,9 @@
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteClient(otclient.id)"
+                  @click.stop="
+                    deleteClient(otclient.id, otclient.file, offer().id)
+                  "
                 >
                   Изтрий
                 </button>
@@ -171,8 +173,8 @@ export default {
       store.methods.changeDeleteClientModal(true)
     }
 
-    const deleteClient = (client_id) => {
-      store.methods.deleteClient(client_id)
+    const deleteClient = (client_id, file, offer_id) => {
+      store.methods.deleteClient(client_id, file, offer_id)
     }
 
     return { store, offer, deleteClientCheck, deleteClient }
