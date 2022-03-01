@@ -80,6 +80,7 @@
         </button>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+          @click.stop="deleteClientCheck()"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -89,6 +90,53 @@
           </svg>
           <span class="text-xs">Изтрий</span>
         </button>
+        <ModalBlank
+          id="danger-modal"
+          :modalOpen="store.state.deleteClientModal"
+          @close-modal="store.methods.changeDeleteClientModal(flase)"
+        >
+          <div class="p-5 flex space-x-4">
+            <div
+              class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-red-100"
+            >
+              <svg
+                class="w-4 h-4 shrink-0 fill-current text-red-600"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="mb-2">
+                <div class="text-lg font-semibold text-gray-800">
+                  изтрий файла
+                </div>
+              </div>
+              <!-- Modal content -->
+              <div class="text-sm mb-10">
+                <div class="space-y-2">
+                  <p>ще бъде изтрит</p>
+                </div>
+              </div>
+              <div class="flex flex-wrap justify-end space-x-2">
+                <button
+                  class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+                  @click.stop="store.methods.changeDeleteClientModal(flase)"
+                >
+                  Откажи
+                </button>
+                <button
+                  class="btn-sm bg-red-500 hover:bg-red-600 text-white"
+                  @click.stop="deleteClient(otclient.id)"
+                >
+                  Изтрий
+                </button>
+              </div>
+            </div>
+          </div>
+        </ModalBlank>
       </div>
       <div class="mt-2">
         <textarea
@@ -103,9 +151,12 @@
 
 <script>
 import { inject } from 'vue'
+import ModalBlank from '../components/ModalBlank.vue'
 
 export default {
   name: 'ClientBody',
+
+  components: { ModalBlank },
 
   setup() {
     const store = inject('store')
@@ -116,7 +167,15 @@ export default {
       )
     }
 
-    return { store, offer }
+    const deleteClientCheck = () => {
+      store.methods.changeDeleteClientModal(true)
+    }
+
+    const deleteClient = (client_id) => {
+      store.methods.deleteClient(client_id)
+    }
+
+    return { store, offer, deleteClientCheck, deleteClient }
   },
 }
 </script>

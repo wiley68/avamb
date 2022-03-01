@@ -34,6 +34,7 @@ const state = reactive({
   current_dashboard_offer: 0,
   razmeri: [],
   otclienti: [],
+  deleteClientModal: false,
 })
 
 const methods = {
@@ -64,6 +65,24 @@ const methods = {
     if (page == 'Dashboard') {
       methods.getOffers()
     }
+  },
+  changeDeleteClientModal(deleteClientModal) {
+    state.deleteClientModal = deleteClientModal
+  },
+  deleteClientById(id) {
+    state.tasks_temp = state.tasks_temp.filter((element) => {
+      return element.project_id != id
+    })
+    state.projects_temp = state.projects_temp.filter((element) => {
+      return element.id != id
+    })
+    state.projects = state.projects.filter((element) => {
+      return element.id != id
+    })
+    state.tasks = state.tasks.filter((element) => {
+      return element.project_id != id
+    })
+    state.task_files = []
   },
   loadData() {
     var data = new FormData()
@@ -184,6 +203,36 @@ const methods = {
         state.otclienti = JSON.parse(this.response).otclienti
       } else {
         state.otclienti = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteClient(client_id) {
+    var data = new FormData()
+    data.append('id', client_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_otclient.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteProjectById(project_id)
+        state.deleteProjectModal = false
+        state.current_project_id = state.projects[0] ? state.projects[0].id : 0
+        methods.getTasks(state.current_project_id)
       }
     }
     xmlhttpro.send(data)
