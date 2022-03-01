@@ -195,14 +195,18 @@
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
-        butoni
+        <input
+          ref="file"
+          v-on:change="handleFileUpload(offer().id)"
+          type="file"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
 import ModalBlank from '../components/ModalBlank.vue'
 
 export default {
@@ -212,6 +216,8 @@ export default {
 
   setup() {
     const store = inject('store')
+
+    const file = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -231,7 +237,19 @@ export default {
       store.methods.saveClient(client_id, file, offer_id)
     }
 
-    return { store, offer, deleteClientCheck, deleteClient, updateClient }
+    const handleFileUpload = async (offer_id) => {
+      store.methods.uploadClientFile(file.value.files, offer_id)
+    }
+
+    return {
+      store,
+      offer,
+      deleteClientCheck,
+      deleteClient,
+      updateClient,
+      file,
+      handleFileUpload,
+    }
   },
 }
 </script>

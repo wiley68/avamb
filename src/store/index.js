@@ -274,6 +274,38 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  uploadClientFile(files, offer_id) {
+    var data = new FormData()
+    Object.entries(files).forEach((element) => {
+      const [key, value] = element
+      data.append(key, value)
+    })
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/submit_doc.php?oid=' +
+        offer_id +
+        '&doc=otklient&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.getOtclienti(state.current_dashboard_offer)
+      }
+    }
+    xmlhttpro.send(data)
+  },
 }
 
 export default { state, methods }
