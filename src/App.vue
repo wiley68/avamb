@@ -13,6 +13,7 @@
       <Zapitvane v-if="store.state.page == 'Zapitvane'"></Zapitvane>
       <Otgovor v-if="store.state.page == 'Otgovor'"></Otgovor>
       <Eoffers v-if="store.state.page == 'Eoffers'"></Eoffers>
+      <Pdogovori v-if="store.state.page == 'Pdogovori'"></Pdogovori>
     </div>
   </div>
 </template>
@@ -28,6 +29,7 @@ import Client from './components/Client.vue'
 import Zapitvane from './components/Zapitvane.vue'
 import Otgovor from './components/Otgovor.vue'
 import Eoffers from './components/Eoffers.vue'
+import Pdogovori from './components/Pdogovori.vue'
 
 export default {
   name: 'App',
@@ -41,6 +43,7 @@ export default {
     Zapitvane,
     Otgovor,
     Eoffers,
+    Pdogovori,
   },
 
   setup() {

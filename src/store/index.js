@@ -45,6 +45,9 @@ const state = reactive({
   eoffers: [],
   deleteEofferModal: false,
   successUpdateEoffer: false,
+  pdogovori: [],
+  deletePdogovorModal: false,
+  successUpdatePdogovor: false,
 })
 
 const methods = {
@@ -119,6 +122,17 @@ const methods = {
   },
   changeSuccessUpdateEoffer(successUpdateEoffer) {
     state.successUpdateEoffer = successUpdateEoffer
+  },
+  changeDeletePdogovorModal(deletePdogovorModal) {
+    state.deletePdogovorModal = deletePdogovorModal
+  },
+  deletePdogovorById(id) {
+    state.pdogovori = state.pdogovori.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdatePdogovor(successUpdatePdogovor) {
+    state.successUpdatePdogovor = successUpdatePdogovor
   },
   loadData() {
     var data = new FormData()
@@ -358,6 +372,9 @@ const methods = {
         }
         if (type == 'oferti') {
           methods.getEoffers(state.current_dashboard_offer)
+        }
+        if (type == 'pdogovor') {
+          methods.getPdogovori(state.current_dashboard_offer)
         }
       }
     }
@@ -674,6 +691,111 @@ const methods = {
         methods.changeSuccessUpdateEoffer(true)
       } else {
         methods.changeSuccessUpdateEoffer(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getPdogovori(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'pdogovor')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.pdogovori = JSON.parse(this.response).result
+      } else {
+        state.pdogovori = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deletePdogovor(pdogovor_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', pdogovor_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'pdogovor')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deletePdogovorById(pdogovor_id)
+        state.deletePdogovorModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  savePdogovor(pdogovor_id, file, offer_id) {
+    var data = new FormData()
+    let pdogovor = {}
+    if (pdogovor_id != 0) {
+      pdogovor = state.pdogovori.find((element) => element.id == pdogovor_id)
+    } else {
+      pdogovor = {
+        id: pdogovor_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', pdogovor.id)
+    data.append('offer_id', pdogovor_id)
+    data.append('filename', pdogovor.file)
+    data.append('description', pdogovor.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdatePdogovor(true)
+      } else {
+        methods.changeSuccessUpdatePdogovor(false)
       }
     }
     xmlhttpro.send(data)

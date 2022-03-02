@@ -224,6 +224,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
               :class="offer().pdogovor_broi > 0 ? 'bg-green-600' : 'bg-white'"
+              @click.stop="goToPdogovori()"
             >
               {{ offer().pdogovor_broi }}
             </div>
@@ -620,6 +621,11 @@ export default {
       store.methods.changePage('Eoffers')
     }
 
+    const goToPdogovori = () => {
+      store.methods.getPdogovori(store.state.current_dashboard_offer)
+      store.methods.changePage('Pdogovori')
+    }
+
     return {
       store,
       offer,
@@ -629,6 +635,7 @@ export default {
       goToZapitvane,
       goToOtgovor,
       goToEoffers,
+      goToPdogovori,
     }
   },
 }
