@@ -276,6 +276,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
               :class="offer().poffer_broi > 0 ? 'bg-green-600' : 'bg-white'"
+              @click.stop="goToPoffers()"
             >
               {{ offer().poffer_broi }}
             </div>
@@ -632,6 +633,11 @@ export default {
       store.methods.changePage('Ddsta')
     }
 
+    const goToPoffers = () => {
+      store.methods.getPoffers(store.state.current_dashboard_offer)
+      store.methods.changePage('Poffers')
+    }
+
     return {
       store,
       offer,
@@ -643,6 +649,7 @@ export default {
       goToEoffers,
       goToPdogovori,
       goToDdsta,
+      goToPoffers,
     }
   },
 }

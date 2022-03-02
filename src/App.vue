@@ -15,6 +15,7 @@
       <Eoffers v-if="store.state.page == 'Eoffers'"></Eoffers>
       <Pdogovori v-if="store.state.page == 'Pdogovori'"></Pdogovori>
       <Ddsta v-if="store.state.page == 'Ddsta'"></Ddsta>
+      <Poffers v-if="store.state.page == 'Poffers'"></Poffers>
     </div>
   </div>
 </template>
@@ -32,6 +33,7 @@ import Otgovor from './components/Otgovor.vue'
 import Eoffers from './components/Eoffers.vue'
 import Pdogovori from './components/Pdogovori.vue'
 import Ddsta from './components/Ddsta.vue'
+import Poffers from './components/Poffers.vue'
 
 export default {
   name: 'App',
@@ -47,6 +49,7 @@ export default {
     Eoffers,
     Pdogovori,
     Ddsta,
+    Poffers,
   },
 
   setup() {
