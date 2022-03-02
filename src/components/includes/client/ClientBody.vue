@@ -244,7 +244,7 @@ export default {
     }
 
     const handleFileUpload = async (offer_id) => {
-      store.methods.uploadClientFile(file.value.files, offer_id, 'otklient')
+      store.methods.uploadFile(file.value.files, offer_id, 'otklient')
     }
 
     return {

@@ -42,6 +42,9 @@ const state = reactive({
   otgovori: [],
   deleteOtgovorModal: false,
   successUpdateOtgovor: false,
+  eoffers: [],
+  deleteEofferModal: false,
+  successUpdateEoffer: false,
 })
 
 const methods = {
@@ -105,6 +108,17 @@ const methods = {
   },
   changeSuccessUpdateOtgovor(successUpdateOtgovor) {
     state.successUpdateOtgovor = successUpdateOtgovor
+  },
+  changeDeleteEofferModal(deleteEofferModal) {
+    state.deleteEofferModal = deleteEofferModal
+  },
+  deleteEofferById(id) {
+    state.eoffers = state.eoffers.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdateEoffer(successUpdateEoffer) {
+    state.successUpdateEoffer = successUpdateEoffer
   },
   loadData() {
     var data = new FormData()
@@ -304,7 +318,7 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  uploadClientFile(files, offer_id, type) {
+  uploadFile(files, offer_id, type) {
     var data = new FormData()
     Object.entries(files).forEach((element) => {
       const [key, value] = element
@@ -341,6 +355,9 @@ const methods = {
         }
         if (type == 'odostavcik') {
           methods.getOtgovor(state.current_dashboard_offer)
+        }
+        if (type == 'oferti') {
+          methods.getEoffers(state.current_dashboard_offer)
         }
       }
     }
@@ -552,6 +569,111 @@ const methods = {
         methods.changeSuccessUpdateOtgovor(true)
       } else {
         methods.changeSuccessUpdateOtgovor(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getEoffers(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'oferti')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.eoffers = JSON.parse(this.response).result
+      } else {
+        state.eoffers = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteEoffer(eoffer_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', eoffer_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'oferti')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteEofferById(eoffer_id)
+        state.deleteEofferModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveEoffer(eoffer_id, file, offer_id) {
+    var data = new FormData()
+    let eoffer = {}
+    if (eoffer_id != 0) {
+      eoffer = state.eoffers.find((element) => element.id == eoffer_id)
+    } else {
+      eoffer = {
+        id: eoffer_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', eoffer.id)
+    data.append('offer_id', eoffer_id)
+    data.append('filename', eoffer.file)
+    data.append('description', eoffer.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateEoffer(true)
+      } else {
+        methods.changeSuccessUpdateEoffer(false)
       }
     }
     xmlhttpro.send(data)

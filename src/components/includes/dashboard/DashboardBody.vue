@@ -177,6 +177,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="offer().oferti_broi > 0 ? 'bg-green-600' : 'bg-white'"
+              @click.stop="goToEoffers()"
             >
               {{ offer().oferti_broi }}
             </div>
@@ -614,6 +615,11 @@ export default {
       store.methods.changePage('Otgovor')
     }
 
+    const goToEoffers = () => {
+      store.methods.getEoffers(store.state.current_dashboard_offer)
+      store.methods.changePage('Eoffers')
+    }
+
     return {
       store,
       offer,
@@ -622,6 +628,7 @@ export default {
       goToOtclienti,
       goToZapitvane,
       goToOtgovor,
+      goToEoffers,
     }
   },
 }
