@@ -127,7 +127,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deletePofferCheck()"
+          @click.stop="deletePofferCheck(poffer)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -176,9 +176,7 @@
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="
-                    deletePoffer(poffer.id, poffer.file, poffer.offer_id)
-                  "
+                  @click.stop="deletePoffer()"
                 >
                   Изтрий
                 </button>
@@ -222,6 +220,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
+    const poffer_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -229,12 +228,17 @@ export default {
       )
     }
 
-    const deletePofferCheck = () => {
+    const deletePofferCheck = (_poffer) => {
+      poffer_current.value = _poffer
       store.methods.changeDeletePofferModal(true)
     }
 
-    const deletePoffer = (poffer_id, file, offer_id) => {
-      store.methods.deletePoffer(poffer_id, file, offer_id)
+    const deletePoffer = () => {
+      store.methods.deletePoffer(
+        poffer_current.value.id,
+        poffer_current.value.file,
+        poffer_current.value.offer_id
+      )
     }
 
     const updatePoffer = (poffer_id, file, offer_id) => {

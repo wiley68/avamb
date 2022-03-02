@@ -131,7 +131,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deletePdogovorCheck()"
+          @click.stop="deletePdogovorCheck(pdogovor)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -180,13 +180,7 @@
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="
-                    deletePdogovor(
-                      pdogovor.id,
-                      pdogovor.file,
-                      pdogovor.offer_id
-                    )
-                  "
+                  @click.stop="deletePdogovor()"
                 >
                   Изтрий
                 </button>
@@ -230,6 +224,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
+    const pdogovor_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -237,12 +232,17 @@ export default {
       )
     }
 
-    const deletePdogovorCheck = () => {
+    const deletePdogovorCheck = (_pdogovor) => {
+      pdogovor_current.value = _pdogovor
       store.methods.changeDeletePdogovorModal(true)
     }
 
-    const deletePdogovor = (pdogovor_id, file, offer_id) => {
-      store.methods.deletePdogovor(pdogovor_id, file, offer_id)
+    const deletePdogovor = () => {
+      store.methods.deletePdogovor(
+        pdogovor_current.value.id,
+        pdogovor_current.value.file,
+        pdogovor_current.value.offer_id
+      )
     }
 
     const updatePdogovor = (pdogovor_id, file, offer_id) => {

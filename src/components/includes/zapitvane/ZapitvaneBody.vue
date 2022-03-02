@@ -133,7 +133,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteZapitvaneCheck()"
+          @click.stop="deleteZapitvaneCheck(zapitvane)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -182,13 +182,7 @@
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="
-                    deleteZapitvane(
-                      zapitvane.id,
-                      zapitvane.file,
-                      zapitvane.offer_id
-                    )
-                  "
+                  @click.stop="deleteZapitvane()"
                 >
                   Изтрий
                 </button>
@@ -232,6 +226,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
+    const zapitvane_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -239,12 +234,17 @@ export default {
       )
     }
 
-    const deleteZapitvaneCheck = () => {
+    const deleteZapitvaneCheck = (_zapitvane) => {
+      zapitvane_current.value = _zapitvane
       store.methods.changeDeleteZapitvaneModal(true)
     }
 
-    const deleteZapitvane = (zapitvane_id, file, offer_id) => {
-      store.methods.deleteZapitvane(zapitvane_id, file, offer_id)
+    const deleteZapitvane = () => {
+      store.methods.deleteZapitvane(
+        zapitvane_current.value.id,
+        zapitvane_current.value.file,
+        zapitvane_current.value.offer_id
+      )
     }
 
     const updateZapitvane = (zapitvane_id, file, offer_id) => {

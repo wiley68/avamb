@@ -127,7 +127,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteDdsCheck()"
+          @click.stop="deleteDdsCheck(dds)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -176,7 +176,7 @@
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteDds(dds.id, dds.file, dds.offer_id)"
+                  @click.stop="deleteDds()"
                 >
                   Изтрий
                 </button>
@@ -220,6 +220,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
+    const dds_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -227,12 +228,17 @@ export default {
       )
     }
 
-    const deleteDdsCheck = () => {
+    const deleteDdsCheck = (_dds) => {
+      dds_current.value = _dds
       store.methods.changeDeleteDdsModal(true)
     }
 
-    const deleteDds = (dds_id, file, offer_id) => {
-      store.methods.deleteDds(dds_id, file, offer_id)
+    const deleteDds = () => {
+      store.methods.deleteDds(
+        dds_current.value.id,
+        dds_current.value.file,
+        dds_current.value.offer_id
+      )
     }
 
     const updateDds = (dds_id, file, offer_id) => {

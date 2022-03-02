@@ -410,7 +410,7 @@ const methods = {
           methods.getZapitvane(state.current_dashboard_offer)
         }
         if (type == 'odostavcik') {
-          methods.getOtgovor(state.current_dashboard_offer)
+          methods.getOtgovori(state.current_dashboard_offer)
         }
         if (type == 'oferti') {
           methods.getEoffers(state.current_dashboard_offer)

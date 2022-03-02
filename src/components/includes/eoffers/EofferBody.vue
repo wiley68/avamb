@@ -123,7 +123,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteEofferCheck()"
+          @click.stop="deleteEofferCheck(eoffer)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -172,9 +172,7 @@
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="
-                    deleteEoffer(eoffer.id, eoffer.file, eoffer.offer_id)
-                  "
+                  @click.stop="deleteEoffer()"
                 >
                   Изтрий
                 </button>
@@ -218,6 +216,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
+    const eoffer_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -225,12 +224,17 @@ export default {
       )
     }
 
-    const deleteEofferCheck = () => {
+    const deleteEofferCheck = (_eoffer) => {
+      eoffer_current.value = _eoffer
       store.methods.changeDeleteEofferModal(true)
     }
 
-    const deleteEoffer = (eoffer_id, file, offer_id) => {
-      store.methods.deleteEoffer(eoffer_id, file, offer_id)
+    const deleteEoffer = () => {
+      store.methods.deleteEoffer(
+        eoffer_current.value.id,
+        eoffer_current.value.file,
+        eoffer_current.value.offer_id
+      )
     }
 
     const updateEoffer = (eoffer_id, file, offer_id) => {

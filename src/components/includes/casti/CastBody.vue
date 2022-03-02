@@ -127,7 +127,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteCastCheck()"
+          @click.stop="deleteCastCheck(cast)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -176,7 +176,7 @@
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteCast(cast.id, cast.file, cast.offer_id)"
+                  @click.stop="deleteCast()"
                 >
                   Изтрий
                 </button>
@@ -220,6 +220,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
+    const cast_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -227,12 +228,17 @@ export default {
       )
     }
 
-    const deleteCastCheck = () => {
+    const deleteCastCheck = (_cast) => {
+      cast_current.value = _cast
       store.methods.changeDeleteCastModal(true)
     }
 
-    const deleteCast = (cast_id, file, offer_id) => {
-      store.methods.deleteCast(cast_id, file, offer_id)
+    const deleteCast = () => {
+      store.methods.deleteCast(
+        cast_current.value.id,
+        cast_current.value.file,
+        cast_current.value.offer_id
+      )
     }
 
     const updateCast = (cast_id, file, offer_id) => {

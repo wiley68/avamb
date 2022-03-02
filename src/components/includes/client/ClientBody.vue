@@ -129,7 +129,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteClientCheck()"
+          @click.stop="deleteClientCheck(otclient)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -178,9 +178,7 @@
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="
-                    deleteClient(otclient.id, otclient.file, otclient.offer_id)
-                  "
+                  @click.stop="deleteClient()"
                 >
                   Изтрий
                 </button>
@@ -224,6 +222,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
+    const otclient_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -231,12 +230,17 @@ export default {
       )
     }
 
-    const deleteClientCheck = () => {
+    const deleteClientCheck = (_otclient) => {
+      otclient_current.value = _otclient
       store.methods.changeDeleteClientModal(true)
     }
 
-    const deleteClient = (client_id, file, offer_id) => {
-      store.methods.deleteClient(client_id, file, offer_id)
+    const deleteClient = () => {
+      store.methods.deleteClient(
+        otclient_current.value.id,
+        otclient_current.value.file,
+        otclient_current.value.offer_id
+      )
     }
 
     const updateClient = (client_id, file, offer_id) => {
@@ -245,6 +249,7 @@ export default {
 
     const handleFileUpload = async (offer_id) => {
       store.methods.uploadFile(file.value.files, offer_id, 'otklient')
+      file.value = null
     }
 
     return {
