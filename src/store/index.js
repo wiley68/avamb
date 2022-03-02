@@ -54,6 +54,9 @@ const state = reactive({
   poffers: [],
   deletePofferModal: false,
   successUpdatePoffer: false,
+  casti: [],
+  deleteCastModal: false,
+  successUpdateCast: false,
 })
 
 const methods = {
@@ -161,6 +164,17 @@ const methods = {
   },
   changeSuccessUpdatePoffer(successUpdatePoffer) {
     state.successUpdatePoffer = successUpdatePoffer
+  },
+  changeDeleteCastModal(deleteCastModal) {
+    state.deleteCastModal = deleteCastModal
+  },
+  deleteCastById(id) {
+    state.casti = state.casti.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdateCast(successUpdateCast) {
+    state.successUpdateCast = successUpdateCast
   },
   loadData() {
     var data = new FormData()
@@ -409,6 +423,9 @@ const methods = {
         }
         if (type == 'poffer') {
           methods.getPoffers(state.current_dashboard_offer)
+        }
+        if (type == 'casti') {
+          methods.getCasti(state.current_dashboard_offer)
         }
       }
     }
@@ -1040,6 +1057,111 @@ const methods = {
         methods.changeSuccessUpdatePoffer(true)
       } else {
         methods.changeSuccessUpdatePoffer(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getCasti(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'casti')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.casti = JSON.parse(this.response).result
+      } else {
+        state.casti = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteCast(cast_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', cast_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'casti')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteCastById(cast_id)
+        state.deleteCastModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveCast(cast_id, file, offer_id) {
+    var data = new FormData()
+    let cast = {}
+    if (cast_id != 0) {
+      cast = state.casti.find((element) => element.id == cast_id)
+    } else {
+      cast = {
+        id: cast_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', cast.id)
+    data.append('offer_id', cast_id)
+    data.append('filename', cast.file)
+    data.append('description', cast.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateCast(true)
+      } else {
+        methods.changeSuccessUpdateCast(false)
       }
     }
     xmlhttpro.send(data)

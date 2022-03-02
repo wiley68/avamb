@@ -348,6 +348,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
               :class="offer().casti_broi == 0 ? 'bg-white' : 'bg-green-600'"
+              @click.stop="goToCasti()"
             >
               {{ offer().casti_broi == 0 ? '' : offer().casti_broi }}
             </div>
@@ -638,6 +639,11 @@ export default {
       store.methods.changePage('Poffers')
     }
 
+    const goToCasti = () => {
+      store.methods.getCasti(store.state.current_dashboard_offer)
+      store.methods.changePage('Casti')
+    }
+
     return {
       store,
       offer,
@@ -650,6 +656,7 @@ export default {
       goToPdogovori,
       goToDdsta,
       goToPoffers,
+      goToCasti,
     }
   },
 }
