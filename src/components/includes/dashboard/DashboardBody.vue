@@ -250,6 +250,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
               :class="offer().dds_broi > 0 ? 'bg-green-600' : 'bg-white'"
+              @click.stop="goToDdsta()"
             >
               {{ offer().dds_broi }}
             </div>
@@ -626,6 +627,11 @@ export default {
       store.methods.changePage('Pdogovori')
     }
 
+    const goToDdsta = () => {
+      store.methods.getDdsta(store.state.current_dashboard_offer)
+      store.methods.changePage('Ddsta')
+    }
+
     return {
       store,
       offer,
@@ -636,6 +642,7 @@ export default {
       goToOtgovor,
       goToEoffers,
       goToPdogovori,
+      goToDdsta,
     }
   },
 }

@@ -48,6 +48,9 @@ const state = reactive({
   pdogovori: [],
   deletePdogovorModal: false,
   successUpdatePdogovor: false,
+  ddsta: [],
+  deleteDdsModal: false,
+  successUpdateDds: false,
 })
 
 const methods = {
@@ -133,6 +136,17 @@ const methods = {
   },
   changeSuccessUpdatePdogovor(successUpdatePdogovor) {
     state.successUpdatePdogovor = successUpdatePdogovor
+  },
+  changeDeleteDdsModal(deleteDdsModal) {
+    state.deleteDdsModal = deleteDdsModal
+  },
+  deleteDdsById(id) {
+    state.ddsta = state.ddsta.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdateDds(successUpdateDds) {
+    state.successUpdateDds = successUpdateDds
   },
   loadData() {
     var data = new FormData()
@@ -375,6 +389,9 @@ const methods = {
         }
         if (type == 'pdogovor') {
           methods.getPdogovori(state.current_dashboard_offer)
+        }
+        if (type == 'dds') {
+          methods.getDdsta(state.current_dashboard_offer)
         }
       }
     }
@@ -796,6 +813,111 @@ const methods = {
         methods.changeSuccessUpdatePdogovor(true)
       } else {
         methods.changeSuccessUpdatePdogovor(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getDdsta(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'dds')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.ddsta = JSON.parse(this.response).result
+      } else {
+        state.ddsta = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteDds(dds_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', dds_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'dds')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteDdsById(dds_id)
+        state.deleteDdsModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveDds(dds_id, file, offer_id) {
+    var data = new FormData()
+    let dds = {}
+    if (dds_id != 0) {
+      dds = state.ddsta.find((element) => element.id == dds_id)
+    } else {
+      dds = {
+        id: dds_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', dds.id)
+    data.append('offer_id', dds_id)
+    data.append('filename', dds.file)
+    data.append('description', dds.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateDds(true)
+      } else {
+        methods.changeSuccessUpdateDds(false)
       }
     }
     xmlhttpro.send(data)

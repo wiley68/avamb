@@ -14,6 +14,7 @@
       <Otgovor v-if="store.state.page == 'Otgovor'"></Otgovor>
       <Eoffers v-if="store.state.page == 'Eoffers'"></Eoffers>
       <Pdogovori v-if="store.state.page == 'Pdogovori'"></Pdogovori>
+      <Ddsta v-if="store.state.page == 'Ddsta'"></Ddsta>
     </div>
   </div>
 </template>
@@ -30,6 +31,7 @@ import Zapitvane from './components/Zapitvane.vue'
 import Otgovor from './components/Otgovor.vue'
 import Eoffers from './components/Eoffers.vue'
 import Pdogovori from './components/Pdogovori.vue'
+import Ddsta from './components/Ddsta.vue'
 
 export default {
   name: 'App',
@@ -44,6 +46,7 @@ export default {
     Otgovor,
     Eoffers,
     Pdogovori,
+    Ddsta,
   },
 
   setup() {
