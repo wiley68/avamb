@@ -153,6 +153,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
               :class="offer().odostavcik_broi > 0 ? 'bg-green-600' : 'bg-white'"
+              @click.stop="goToOtgovor()"
             >
               {{ offer().odostavcik_broi }}
             </div>
@@ -608,6 +609,11 @@ export default {
       store.methods.changePage('Zapitvane')
     }
 
+    const goToOtgovor = () => {
+      store.methods.getOtgovori(store.state.current_dashboard_offer)
+      store.methods.changePage('Otgovor')
+    }
+
     return {
       store,
       offer,
@@ -615,6 +621,7 @@ export default {
       goToRazmeri,
       goToOtclienti,
       goToZapitvane,
+      goToOtgovor,
     }
   },
 }

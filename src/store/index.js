@@ -39,6 +39,9 @@ const state = reactive({
   zapitvania: [],
   deleteZapitvaneModal: false,
   successUpdateZapitvane: false,
+  otgovori: [],
+  deleteOtgovorModal: false,
+  successUpdateOtgovor: false,
 })
 
 const methods = {
@@ -91,6 +94,17 @@ const methods = {
   },
   changeSuccessUpdateZapitvane(successUpdateZapitvane) {
     state.successUpdateZapitvane = successUpdateZapitvane
+  },
+  changeDeleteOtgovorModal(deleteOtgovorModal) {
+    state.deleteOtgovorModal = deleteOtgovorModal
+  },
+  deleteOtgovorById(id) {
+    state.otgovori = state.otgovori.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdateOtgovor(successUpdateOtgovor) {
+    state.successUpdateOtgovor = successUpdateOtgovor
   },
   loadData() {
     var data = new FormData()
@@ -189,9 +203,10 @@ const methods = {
     var data = new FormData()
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
+    data.append('type', 'otklient')
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/mobile/get_otclienti.php'
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -208,7 +223,7 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        state.otclienti = JSON.parse(this.response).otclienti
+        state.otclienti = JSON.parse(this.response).result
       } else {
         state.otclienti = []
       }
@@ -220,9 +235,10 @@ const methods = {
     data.append('id', client_id)
     data.append('file', file)
     data.append('offer_id', offer_id)
+    data.append('type', 'otklient')
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/mobile/delete_otclient.php'
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -323,6 +339,9 @@ const methods = {
         if (type == 'zapitvane') {
           methods.getZapitvane(state.current_dashboard_offer)
         }
+        if (type == 'odostavcik') {
+          methods.getOtgovor(state.current_dashboard_offer)
+        }
       }
     }
     xmlhttpro.send(data)
@@ -331,9 +350,10 @@ const methods = {
     var data = new FormData()
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
+    data.append('type', 'zapitvane')
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/mobile/get_zapitvania.php'
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -350,7 +370,7 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        state.zapitvania = JSON.parse(this.response).zapitvania
+        state.zapitvania = JSON.parse(this.response).result
       } else {
         state.zapitvania = []
       }
@@ -362,9 +382,10 @@ const methods = {
     data.append('id', zapitvane_id)
     data.append('file', file)
     data.append('offer_id', offer_id)
+    data.append('type', 'zapitvane')
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/mobile/delete_zapitvane.php'
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -426,6 +447,111 @@ const methods = {
         methods.changeSuccessUpdateZapitvane(true)
       } else {
         methods.changeSuccessUpdateZapitvane(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getOtgovori(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'odostavcik')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.otgovori = JSON.parse(this.response).result
+      } else {
+        state.otgovori = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteOtgovor(otgovor_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', otgovor_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'odostavcik')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteOtgovorById(otgovor_id)
+        state.deleteOtgovorModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveOtgovor(otgovor_id, file, offer_id) {
+    var data = new FormData()
+    let otgovor = {}
+    if (otgovor_id != 0) {
+      otgovor = state.otgovori.find((element) => element.id == otgovor_id)
+    } else {
+      otgovor = {
+        id: otgovor_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', otgovor.id)
+    data.append('offer_id', offer_id)
+    data.append('filename', otgovor.file)
+    data.append('description', otgovor.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateOtgovor(true)
+      } else {
+        methods.changeSuccessUpdateOtgovor(false)
       }
     }
     xmlhttpro.send(data)
