@@ -60,6 +60,9 @@ const state = reactive({
   poracki: [],
   deletePorackaModal: false,
   successUpdatePoracka: false,
+  pps: [],
+  deletePpModal: false,
+  successUpdatePp: false,
 })
 
 const methods = {
@@ -189,6 +192,17 @@ const methods = {
   },
   changeSuccessUpdatePoracka(successUpdatePoracka) {
     state.successUpdatePoracka = successUpdatePoracka
+  },
+  changeDeletePpModal(deletePpModal) {
+    state.deletePpModal = deletePpModal
+  },
+  deletePpById(id) {
+    state.pps = state.pps.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdatePp(successUpdatePp) {
+    state.successUpdatePp = successUpdatePp
   },
   loadData() {
     var data = new FormData()
@@ -443,6 +457,9 @@ const methods = {
         }
         if (type == 'cf') {
           methods.getPoracki(state.current_dashboard_offer)
+        }
+        if (type == 'pp') {
+          methods.getPps(state.current_dashboard_offer)
         }
       }
     }
@@ -1284,6 +1301,111 @@ const methods = {
         methods.changeSuccessUpdatePoracka(true)
       } else {
         methods.changeSuccessUpdatePoracka(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getPps(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'pp')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.pps = JSON.parse(this.response).result
+      } else {
+        state.pps = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deletePp(pp_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', pp_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'pp')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deletePpById(pp_id)
+        state.deletePpModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  savePp(pp_id, file, offer_id) {
+    var data = new FormData()
+    let pp = {}
+    if (pp_id != 0) {
+      pp = state.pps.find((element) => element.id == pp_id)
+    } else {
+      pp = {
+        id: pp_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', pp.id)
+    data.append('offer_id', pp_id)
+    data.append('filename', pp.file)
+    data.append('description', pp.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdatePp(true)
+      } else {
+        methods.changeSuccessUpdatePp(false)
       }
     }
     xmlhttpro.send(data)

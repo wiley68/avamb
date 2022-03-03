@@ -406,6 +406,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="offer().pp_files_broi == 0 ? 'bg-white' : 'bg-green-600'"
+              @click.stop="goToPps()"
             >
               {{ offer().pp_files_broi == 0 ? '' : offer().pp_files_broi }}
             </div>
@@ -650,6 +651,11 @@ export default {
       store.methods.changePage('Poracki')
     }
 
+    const goToPps = () => {
+      store.methods.getPps(store.state.current_dashboard_offer)
+      store.methods.changePage('Pps')
+    }
+
     return {
       store,
       offer,
@@ -664,6 +670,7 @@ export default {
       goToPoffers,
       goToCasti,
       goToPoracki,
+      goToPps,
     }
   },
 }

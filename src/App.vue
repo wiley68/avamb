@@ -18,6 +18,7 @@
       <Poffers v-if="store.state.page == 'Poffers'"></Poffers>
       <Casti v-if="store.state.page == 'Casti'"></Casti>
       <Poracki v-if="store.state.page == 'Poracki'"></Poracki>
+      <Pps v-if="store.state.page == 'Pps'"></Pps>
     </div>
   </div>
 </template>
@@ -38,6 +39,7 @@ import Ddsta from './components/Ddsta.vue'
 import Poffers from './components/Poffers.vue'
 import Casti from './components/Casti.vue'
 import Poracki from './components/Poracki.vue'
+import Pps from './components/Pps.vue'
 
 export default {
   name: 'App',
@@ -56,6 +58,7 @@ export default {
     Poffers,
     Casti,
     Poracki,
+    Pps,
   },
 
   setup() {
