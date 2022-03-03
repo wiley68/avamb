@@ -57,6 +57,9 @@ const state = reactive({
   casti: [],
   deleteCastModal: false,
   successUpdateCast: false,
+  poracki: [],
+  deletePorackaModal: false,
+  successUpdatePoracka: false,
 })
 
 const methods = {
@@ -175,6 +178,17 @@ const methods = {
   },
   changeSuccessUpdateCast(successUpdateCast) {
     state.successUpdateCast = successUpdateCast
+  },
+  changeDeletePorackaModal(deletePorackaModal) {
+    state.deletePorackaModal = deletePorackaModal
+  },
+  deletePorackaById(id) {
+    state.poracki = state.poracki.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdatePoracka(successUpdatePoracka) {
+    state.successUpdatePoracka = successUpdatePoracka
   },
   loadData() {
     var data = new FormData()
@@ -426,6 +440,9 @@ const methods = {
         }
         if (type == 'casti') {
           methods.getCasti(state.current_dashboard_offer)
+        }
+        if (type == 'cf') {
+          methods.getPoracki(state.current_dashboard_offer)
         }
       }
     }
@@ -1162,6 +1179,111 @@ const methods = {
         methods.changeSuccessUpdateCast(true)
       } else {
         methods.changeSuccessUpdateCast(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getPoracki(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'poracki')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.poracki = JSON.parse(this.response).result
+      } else {
+        state.poracki = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deletePoracka(poracka_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', poracka_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'poracki')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deletePorackaById(poracka_id)
+        state.deletePorackaModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  savePoracka(poracka_id, file, offer_id) {
+    var data = new FormData()
+    let poracka = {}
+    if (poracka_id != 0) {
+      poracka = state.poracki.find((element) => element.id == poracka_id)
+    } else {
+      poracka = {
+        id: poracka_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', poracka.id)
+    data.append('offer_id', poracka_id)
+    data.append('filename', poracka.file)
+    data.append('description', poracka.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdatePoracka(true)
+      } else {
+        methods.changeSuccessUpdatePoracka(false)
       }
     }
     xmlhttpro.send(data)

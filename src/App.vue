@@ -17,6 +17,7 @@
       <Ddsta v-if="store.state.page == 'Ddsta'"></Ddsta>
       <Poffers v-if="store.state.page == 'Poffers'"></Poffers>
       <Casti v-if="store.state.page == 'Casti'"></Casti>
+      <Poracki v-if="store.state.page == 'Poracki'"></Poracki>
     </div>
   </div>
 </template>
@@ -36,6 +37,7 @@ import Pdogovori from './components/Pdogovori.vue'
 import Ddsta from './components/Ddsta.vue'
 import Poffers from './components/Poffers.vue'
 import Casti from './components/Casti.vue'
+import Poracki from './components/Poracki.vue'
 
 export default {
   name: 'App',
@@ -53,6 +55,7 @@ export default {
     Ddsta,
     Poffers,
     Casti,
+    Poracki,
   },
 
   setup() {

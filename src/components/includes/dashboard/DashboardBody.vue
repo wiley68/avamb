@@ -374,6 +374,7 @@
               :class="
                 offer().poracki_files_broi == 0 ? 'bg-white' : 'bg-green-600'
               "
+              @click.stop="goToPoracki()"
             >
               {{
                 offer().poracki_files_broi == 0
@@ -644,6 +645,11 @@ export default {
       store.methods.changePage('Casti')
     }
 
+    const goToPoracki = () => {
+      store.methods.getPoracki(store.state.current_dashboard_offer)
+      store.methods.changePage('Poracki')
+    }
+
     return {
       store,
       offer,
@@ -657,6 +663,7 @@ export default {
       goToDdsta,
       goToPoffers,
       goToCasti,
+      goToPoracki,
     }
   },
 }
