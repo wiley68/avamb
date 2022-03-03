@@ -1,15 +1,15 @@
 <template>
-  <main><SnimkaBody /></main>
+  <main><PdogovorBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import SnimkaBody from './includes/etapna/snimki/SnimkaBody.vue'
+import PdogovorBody from './pdogovor/PdogovorBody.vue'
 
 export default {
-  name: 'Snimki',
+  name: 'Pdogovori',
 
-  components: { SnimkaBody },
+  components: { PdogovorBody },
 
   setup() {
     const store = inject('store')

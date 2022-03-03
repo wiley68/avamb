@@ -1,15 +1,15 @@
 <template>
-  <main><OtgovorBody /></main>
+  <main><FakturapBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import OtgovorBody from './includes/etapna/otgovor/OtgovorBody.vue'
+import FakturapBody from './fakturip/FakturapBody.vue'
 
 export default {
-  name: 'Otgovor',
+  name: 'Fakturip',
 
-  components: { OtgovorBody },
+  components: { FakturapBody },
 
   setup() {
     const store = inject('store')

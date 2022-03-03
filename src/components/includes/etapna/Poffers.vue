@@ -1,15 +1,15 @@
 <template>
-  <main><PprBody /></main>
+  <main><PofferBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import PprBody from './includes/etapna/ppr/PprBody.vue'
+import PofferBody from './poffer/PofferBody.vue'
 
 export default {
-  name: 'Pprs',
+  name: 'Poffers',
 
-  components: { PprBody },
+  components: { PofferBody },
 
   setup() {
     const store = inject('store')

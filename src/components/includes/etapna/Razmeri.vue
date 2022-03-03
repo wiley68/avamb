@@ -1,15 +1,17 @@
 <template>
-  <main><PpBody /></main>
+  <main>
+    <RazmeriBody />
+  </main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import PpBody from './includes/etapna/pp/PpBody.vue'
+import RazmeriBody from './razmeri/RazmeriBody.vue'
 
 export default {
-  name: 'Pps',
+  name: 'Razmeri',
 
-  components: { PpBody },
+  components: { RazmeriBody },
 
   setup() {
     const store = inject('store')

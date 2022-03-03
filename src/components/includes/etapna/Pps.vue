@@ -1,15 +1,15 @@
 <template>
-  <main><PorackaBody /></main>
+  <main><PpBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import PorackaBody from './includes/etapna/poracki/PorackaBody.vue'
+import PpBody from './pp/PpBody.vue'
 
 export default {
-  name: 'Poracki',
+  name: 'Pps',
 
-  components: { PorackaBody },
+  components: { PpBody },
 
   setup() {
     const store = inject('store')

@@ -1,15 +1,15 @@
 <template>
-  <main><ClientBody /></main>
+  <main><SnimkaBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import ClientBody from './includes/etapna/client/ClientBody.vue'
+import SnimkaBody from './snimki/SnimkaBody.vue'
 
 export default {
-  name: 'Client',
+  name: 'Snimki',
 
-  components: { ClientBody },
+  components: { SnimkaBody },
 
   setup() {
     const store = inject('store')

@@ -1,15 +1,15 @@
 <template>
-  <main><PofferBody /></main>
+  <main><DdsBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import PofferBody from './includes/etapna/poffer/PofferBody.vue'
+import DdsBody from './dds/DdsBody.vue'
 
 export default {
-  name: 'Poffers',
+  name: 'Ddsta',
 
-  components: { PofferBody },
+  components: { DdsBody },
 
   setup() {
     const store = inject('store')

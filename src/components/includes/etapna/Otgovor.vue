@@ -1,17 +1,15 @@
 <template>
-  <main>
-    <RazmeriBody />
-  </main>
+  <main><OtgovorBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import RazmeriBody from './includes/etapna/razmeri/RazmeriBody.vue'
+import OtgovorBody from './otgovor/OtgovorBody.vue'
 
 export default {
-  name: 'Razmeri',
+  name: 'Otgovor',
 
-  components: { RazmeriBody },
+  components: { OtgovorBody },
 
   setup() {
     const store = inject('store')

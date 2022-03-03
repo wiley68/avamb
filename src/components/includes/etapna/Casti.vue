@@ -1,15 +1,15 @@
 <template>
-  <main><FakturapBody /></main>
+  <main><CastBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import FakturapBody from './includes/etapna/fakturip/FakturapBody.vue'
+import CastBody from './casti/CastBody.vue'
 
 export default {
-  name: 'Fakturip',
+  name: 'Casti',
 
-  components: { FakturapBody },
+  components: { CastBody },
 
   setup() {
     const store = inject('store')

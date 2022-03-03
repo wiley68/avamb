@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import ZapitvaneBody from './includes/etapna/zapitvane/ZapitvaneBody.vue'
+import ZapitvaneBody from './zapitvane/ZapitvaneBody.vue'
 
 export default {
   name: 'Zapitvane',

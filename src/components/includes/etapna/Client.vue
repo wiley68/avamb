@@ -1,15 +1,15 @@
 <template>
-  <main><DdsBody /></main>
+  <main><ClientBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import DdsBody from './includes/etapna/dds/DdsBody.vue'
+import ClientBody from './client/ClientBody.vue'
 
 export default {
-  name: 'Ddsta',
+  name: 'Client',
 
-  components: { DdsBody },
+  components: { ClientBody },
 
   setup() {
     const store = inject('store')

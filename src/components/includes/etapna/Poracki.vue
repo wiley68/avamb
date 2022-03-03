@@ -1,15 +1,15 @@
 <template>
-  <main><CastBody /></main>
+  <main><PorackaBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import CastBody from './includes/etapna/casti/CastBody.vue'
+import PorackaBody from './poracki/PorackaBody.vue'
 
 export default {
-  name: 'Casti',
+  name: 'Poracki',
 
-  components: { CastBody },
+  components: { PorackaBody },
 
   setup() {
     const store = inject('store')

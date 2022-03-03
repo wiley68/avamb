@@ -1,15 +1,15 @@
 <template>
-  <main><PdogovorBody /></main>
+  <main><PprBody /></main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import PdogovorBody from './includes/etapna/pdogovor/PdogovorBody.vue'
+import PprBody from './ppr/PprBody.vue'
 
 export default {
-  name: 'Pdogovori',
+  name: 'Pprs',
 
-  components: { PdogovorBody },
+  components: { PprBody },
 
   setup() {
     const store = inject('store')
