@@ -71,6 +71,7 @@ const state = reactive({
   fakturip: [],
   deleteFakturapModal: false,
   successUpdateFakturap: false,
+  activeConditionFirms: false,
 })
 
 const methods = {

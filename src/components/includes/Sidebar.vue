@@ -129,38 +129,212 @@
             </div>
           </li>
           <!-- Firm -->
-          <li
-            class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
-            :class="store.state.page == 'Firm' ? 'bg-gray-900' : ''"
-          >
-            <div
-              class="block text-gray-200 truncate transition duration-150"
-              :class="
-                store.state.page == 'Firm'
-                  ? 'hover:text-gray-200'
-                  : 'hover:text-white'
+          <SidebarLinkGroup
+            v-slot="parentLink"
+            :activeCondition="store.state.activeConditionFirms"
+            ><a
+              class="block text-gray-200 hover:text-white truncate transition duration-150"
+              :class="store.state.activeConditionFirms && 'hover:text-gray-200'"
+              href="#0"
+              @click.prevent="
+                store.state.sidebarOpen
+                  ? parentLink.handleClick()
+                  : (store.state.sidebarOpen = true)
               "
-              @click="store.methods.changePage('Firm')"
             >
-              <div class="flex items-center">
-                <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
-                  <path
-                    :class="
-                      store.state.page == 'Firm'
-                        ? '!text-lime-500'
-                        : 'text-gray-400'
-                    "
-                    fill="currentColor"
-                    d="M4,18V20H8V18H4M4,14V16H14V14H4M10,18V20H14V18H10M16,14V16H20V14H16M16,18V20H20V18H16M2,22V8L7,12V8L12,12V8L17,12L18,2H21L22,12V22H2Z"
-                  />
-                </svg>
-                <span
-                  class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
-                  >Фирма</span
-                >
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24">
+                    <path
+                      :class="
+                        store.state.page == 'FirmZadaci'
+                          ? '!text-lime-500'
+                          : 'text-gray-400'
+                      "
+                      fill="currentColor"
+                      d="M4,18V20H8V18H4M4,14V16H14V14H4M10,18V20H14V18H10M16,14V16H20V14H16M16,18V20H20V18H16M2,22V8L7,12V8L12,12V8L17,12L18,2H21L22,12V22H2Z"
+                    />
+                  </svg>
+                  <span
+                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                    >Фирма
+                  </span>
+                </div>
+                <!-- Icon -->
+                <div class="flex shrink-0 ml-2">
+                  <svg
+                    class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400"
+                    :class="parentLink.expanded && 'transform rotate-180'"
+                    viewBox="0 0 12 12"
+                  >
+                    <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                  </svg>
+                </div>
               </div>
-            </div>
-          </li>
+            </a>
+            <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+              <ul class="pl-9 mt-1" :class="!parentLink.expanded && 'hidden'">
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Данни</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M14 2H6C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H18C19.11 22 20 21.11 20 20V8L14 2M18 20H6V4H13V9H18V20M17.35 10L15.25 19H13.85L12.05 12.21L10.25 19H8.85L6.65 10H8.15L9.55 16.81L11.35 10H12.65L14.45 16.81L15.85 10H17.35Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Бланки</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M5,11L6.5,6.5H17.5L19,11M17.5,16A1.5,1.5 0 0,1 16,14.5A1.5,1.5 0 0,1 17.5,13A1.5,1.5 0 0,1 19,14.5A1.5,1.5 0 0,1 17.5,16M6.5,16A1.5,1.5 0 0,1 5,14.5A1.5,1.5 0 0,1 6.5,13A1.5,1.5 0 0,1 8,14.5A1.5,1.5 0 0,1 6.5,16M18.92,6C18.72,5.42 18.16,5 17.5,5H6.5C5.84,5 5.28,5.42 5.08,6L3,12V20A1,1 0 0,0 4,21H5A1,1 0 0,0 6,20V19H18V20A1,1 0 0,0 19,21H20A1,1 0 0,0 21,20V12L18.92,6Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >МПС</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M13.07 10.41A5 5 0 0 0 13.07 4.59A3.39 3.39 0 0 1 15 4A3.5 3.5 0 0 1 15 11A3.39 3.39 0 0 1 13.07 10.41M5.5 7.5A3.5 3.5 0 1 1 9 11A3.5 3.5 0 0 1 5.5 7.5M7.5 7.5A1.5 1.5 0 1 0 9 6A1.5 1.5 0 0 0 7.5 7.5M16 17V19H2V17S2 13 9 13 16 17 16 17M14 17C13.86 16.22 12.67 15 9 15S4.07 16.31 4 17M15.95 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Потребители</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                  :class="store.state.page == 'FirmZadaci' ? 'bg-gray-900' : ''"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    :class="
+                      store.state.page == 'FirmZadaci'
+                        ? 'hover:text-gray-200'
+                        : 'hover:text-white'
+                    "
+                    @click="store.methods.changePage('FirmZadaci')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'FirmZadaci'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22A9,9 0 0,0 21,13A9,9 0 0,0 12,4M12.5,8H11V14L15.75,16.85L16.5,15.62L12.5,13.25V8M7.88,3.39L6.6,1.86L2,5.71L3.29,7.24L7.88,3.39M22,5.72L17.4,1.86L16.11,3.39L20.71,7.25L22,5.72Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Задачи</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Статистики</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M6,16.5L3,19.44V11H6M11,14.66L9.43,13.32L8,14.64V7H11M16,13L13,16V3H16M18.81,12.81L17,11H22V16L20.21,14.21L13,21.36L9.53,18.34L5.75,22H3L9.47,15.66L13,18.64"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Отчет</span
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div></SidebarLinkGroup
+          >
           <!-- Nomenklatures -->
           <li
             class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
@@ -401,9 +575,12 @@
 <script>
 import { ref, inject, onMounted, onUnmounted } from 'vue'
 import moment from 'moment'
+import SidebarLinkGroup from './SidebarLinkGroup.vue'
 
 export default {
   name: 'Sidebar',
+
+  components: { SidebarLinkGroup },
 
   setup() {
     const store = inject('store')
@@ -439,7 +616,11 @@ export default {
       document.removeEventListener('keydown', keyHandler)
     })
 
-    return { store, trigger, sidebar }
+    const showMessage = (message) => {
+      alert(message)
+    }
+
+    return { store, trigger, sidebar, showMessage }
   },
 }
 </script>
