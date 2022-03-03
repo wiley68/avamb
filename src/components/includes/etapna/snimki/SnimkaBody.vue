@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">{{ store.state.user.odtxtlong }}</span>
+      <span class="sr-only">{{ store.state.user.ctxtlong }}</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -33,7 +33,7 @@
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
         <div class="text-sm text-gray-800 mr-1">
-          №-6-{{ store.state.user.odtxt }}
+          №-18-{{ store.state.user.ctxt }}
         </div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
@@ -44,30 +44,28 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
-                store.state.otgovori.length > 0 ? 'bg-green-600' : 'bg-white'
+                store.state.snimki.length > 0 ? 'bg-green-600' : 'bg-white'
               "
             >
-              {{ store.state.otgovori.length }}
+              {{ store.state.snimki.length }}
             </div>
           </div>
         </div>
       </div>
       <div class="text-sm text-gray-800 mr-1">
-        {{ store.state.user.odtxtlong }}
+        {{ store.state.user.ctxtlong }}
       </div>
     </div>
     <div
-      v-for="otgovor in store.state.otgovori"
-      :key="otgovor.id"
+      v-for="snimka in store.state.snimki"
+      :key="snimka.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
           <a
             target="_blank"
-            :href="
-              '/dist/img/files/odostavcik/' + offer().id + '/' + otgovor.file
-            "
+            :href="'/dist/img/files/snimki/' + offer().id + '/' + snimka.file"
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -77,61 +75,7 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="
-            updateOtgovor(otgovor.id, otgovor.file, otgovor.offer_id)
-          "
-        >
-          <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"
-            />
-          </svg>
-          <span class="text-xs">Запиши</span>
-        </button>
-        <ModalBlank
-          id="success-modal"
-          :modalOpen="store.state.successUpdateOtgovor"
-          @close-modal="store.methods.changeSuccessUpdateOtgovor(false)"
-        >
-          <div class="p-5 flex space-x-4">
-            <div
-              class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-green-100"
-            >
-              <svg
-                class="w-4 h-4 shrink-0 fill-current text-green-500"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zM7 11.4L3.6 8 5 6.6l2 2 4-4L12.4 6 7 11.4z"
-                />
-              </svg>
-            </div>
-            <div>
-              <div class="mb-2">
-                <div class="text-lg font-semibold text-gray-800">
-                  Уведомление
-                </div>
-              </div>
-              <div class="text-sm mb-10">
-                <div class="space-y-2">
-                  <p>Успешно записахте промяната.</p>
-                </div>
-              </div>
-              <div class="flex flex-wrap justify-end space-x-2">
-                <button
-                  class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeSuccessUpdateOtgovor(false)"
-                >
-                  Затвори
-                </button>
-              </div>
-            </div>
-          </div>
-        </ModalBlank>
-        <button
-          class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteOtgovorCheck(otgovor)"
+          @click.stop="deleteSnimkaCheck(snimka)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -143,8 +87,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deleteOtgovorModal"
-          @close-modal="store.methods.changeDeleteOtgovorModal(false)"
+          :modalOpen="store.state.deleteSnimkaModal"
+          @close-modal="store.methods.changeDeleteSnimkaModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -174,13 +118,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeleteOtgovorModal(false)"
+                  @click.stop="store.methods.changeDeleteSnimkaModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteOtgovor()"
+                  @click.stop="deleteSnimka()"
                 >
                   Изтрий
                 </button>
@@ -188,13 +132,6 @@
             </div>
           </div>
         </ModalBlank>
-      </div>
-      <div class="mt-2">
-        <textarea
-          class="w-full border border-gray-200 p-1"
-          rows="5"
-          v-model="otgovor.description"
-        ></textarea>
       </div>
     </div>
     <div
@@ -213,10 +150,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'OtgovorBody',
+  name: 'SnimkaBody',
 
   components: { ModalBlank },
 
@@ -224,7 +161,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const otgovor_current = ref(null)
+    const snimka_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -232,33 +169,28 @@ export default {
       )
     }
 
-    const deleteOtgovorCheck = (_otgovor) => {
-      otgovor_current.value = _otgovor
-      store.methods.changeDeleteOtgovorModal(true)
+    const deleteSnimkaCheck = (_snimka) => {
+      snimka_current.value = _snimka
+      store.methods.changeDeleteSnimkaModal(true)
     }
 
-    const deleteOtgovor = () => {
-      store.methods.deleteOtgovor(
-        otgovor_current.value.id,
-        otgovor_current.value.file,
-        otgovor_current.value.offer_id
+    const deleteSnimka = () => {
+      store.methods.deleteSnimka(
+        snimka_current.value.id,
+        snimka_current.value.file,
+        snimka_current.value.offer_id
       )
     }
 
-    const updateOtgovor = (otgovor_id, file, offer_id) => {
-      store.methods.saveOtgovor(otgovor_id, file, offer_id)
-    }
-
-    const handleFileUpload = async (offer_id) => {
-      store.methods.uploadFile(file.value.files, offer_id, 'odostavcik')
+    const handleFileUpload = async (snimka_id) => {
+      store.methods.uploadFile(file.value.files, snimka_id, 'snimki')
     }
 
     return {
       store,
       offer,
-      deleteOtgovorCheck,
-      deleteOtgovor,
-      updateOtgovor,
+      deleteSnimkaCheck,
+      deleteSnimka,
       file,
       handleFileUpload,
     }

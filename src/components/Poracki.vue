@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import PorackaBody from './includes/poracki/PorackaBody.vue'
+import PorackaBody from './includes/etapna/poracki/PorackaBody.vue'
 
 export default {
   name: 'Poracki',

@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import PdogovorBody from './includes/pdogovor/PdogovorBody.vue'
+import PdogovorBody from './includes/etapna/pdogovor/PdogovorBody.vue'
 
 export default {
   name: 'Pdogovori',

@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import CastBody from './includes/casti/CastBody.vue'
+import CastBody from './includes/etapna/casti/CastBody.vue'
 
 export default {
   name: 'Casti',

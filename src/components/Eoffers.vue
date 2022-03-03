@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import EofferBody from './includes/eoffers/EofferBody.vue'
+import EofferBody from './includes/etapna/eoffers/EofferBody.vue'
 
 export default {
   name: 'Eoffers',

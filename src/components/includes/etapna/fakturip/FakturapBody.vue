@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">Приемо Предвателен Протокол</span>
+      <span class="sr-only">Фактури за покупки</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -32,7 +32,7 @@
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
-        <div class="text-sm text-gray-800 mr-1">№-16-ППП</div>
+        <div class="text-sm text-gray-800 mr-1">№-20-ФП</div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
         >
@@ -41,25 +41,29 @@
           >
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
-              :class="store.state.pps.length > 0 ? 'bg-green-600' : 'bg-white'"
+              :class="
+                store.state.fakturip.length > 0 ? 'bg-green-600' : 'bg-white'
+              "
             >
-              {{ store.state.pps.length }}
+              {{ store.state.fakturip.length }}
             </div>
           </div>
         </div>
       </div>
-      <div class="text-sm text-gray-800 mr-1">Приемо Предвателен Протокол</div>
+      <div class="text-sm text-gray-800 mr-1">Фактури за покупки</div>
     </div>
     <div
-      v-for="pp in store.state.pps"
-      :key="pp.id"
+      v-for="fakturap in store.state.fakturip"
+      :key="fakturap.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
           <a
             target="_blank"
-            :href="'/dist/img/files/pp/' + offer().id + '/' + pp.file"
+            :href="
+              '/dist/img/files/fakturip/' + offer().id + '/' + fakturap.file
+            "
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -69,7 +73,9 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="updatePp(pp.id, pp.file, pp.offer_id)"
+          @click.stop="
+            updateFakturap(fakturap.id, fakturap.file, fakturap.offer_id)
+          "
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -81,8 +87,8 @@
         </button>
         <ModalBlank
           id="success-modal"
-          :modalOpen="store.state.successUpdatePp"
-          @close-modal="store.methods.changeSuccessUpdatePp(false)"
+          :modalOpen="store.state.successUpdateFakturap"
+          @close-modal="store.methods.changeSuccessUpdateFakturap(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -111,7 +117,7 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeSuccessUpdatePp(false)"
+                  @click.stop="store.methods.changeSuccessUpdateFakturap(false)"
                 >
                   Затвори
                 </button>
@@ -121,7 +127,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deletePpCheck(pp)"
+          @click.stop="deleteFakturapCheck(fakturap)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -133,8 +139,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deletePpModal"
-          @close-modal="store.methods.changeDeletePpModal(false)"
+          :modalOpen="store.state.deleteFakturapModal"
+          @close-modal="store.methods.changeDeleteFakturapModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -164,13 +170,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeletePpModal(false)"
+                  @click.stop="store.methods.changeDeleteFakturapModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deletePp()"
+                  @click.stop="deleteFakturap()"
                 >
                   Изтрий
                 </button>
@@ -183,7 +189,7 @@
         <textarea
           class="w-full border border-gray-200 p-1"
           rows="5"
-          v-model="pp.description"
+          v-model="fakturap.description"
         ></textarea>
       </div>
     </div>
@@ -203,10 +209,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'PpBody',
+  name: 'FakturipBody',
 
   components: { ModalBlank },
 
@@ -214,7 +220,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const pp_current = ref(null)
+    const fakturap_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -222,33 +228,33 @@ export default {
       )
     }
 
-    const deletePpCheck = (_pp) => {
-      pp_current.value = _pp
-      store.methods.changeDeletePpModal(true)
+    const deleteFakturapCheck = (_fakturap) => {
+      fakturap_current.value = _fakturap
+      store.methods.changeDeleteFakturapModal(true)
     }
 
-    const deletePp = () => {
-      store.methods.deletePp(
-        pp_current.value.id,
-        pp_current.value.file,
-        pp_current.value.offer_id
+    const deleteFakturap = () => {
+      store.methods.deleteFakturap(
+        fakturap_current.value.id,
+        fakturap_current.value.file,
+        fakturap_current.value.offer_id
       )
     }
 
-    const updatePp = (pp_id, file, offer_id) => {
-      store.methods.savePp(pp_id, file, offer_id)
+    const updateFakturap = (fakturap_id, file, offer_id) => {
+      store.methods.saveFakturap(fakturap_id, file, offer_id)
     }
 
-    const handleFileUpload = async (pp_id) => {
-      store.methods.uploadFile(file.value.files, pp_id, 'pp')
+    const handleFileUpload = async (fakturap_id) => {
+      store.methods.uploadFile(file.value.files, fakturap_id, 'fakturip')
     }
 
     return {
       store,
       offer,
-      deletePpCheck,
-      deletePp,
-      updatePp,
+      deleteFakturapCheck,
+      deleteFakturap,
+      updateFakturap,
       file,
       handleFileUpload,
     }

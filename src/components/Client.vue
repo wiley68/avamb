@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import ClientBody from './includes/client/ClientBody.vue'
+import ClientBody from './includes/etapna/client/ClientBody.vue'
 
 export default {
   name: 'Client',

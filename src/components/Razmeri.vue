@@ -6,7 +6,7 @@
 
 <script>
 import { inject } from 'vue'
-import RazmeriBody from './includes/razmeri/RazmeriBody.vue'
+import RazmeriBody from './includes/etapna/razmeri/RazmeriBody.vue'
 
 export default {
   name: 'Razmeri',

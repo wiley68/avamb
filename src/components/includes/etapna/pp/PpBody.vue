@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">{{ store.state.user.ctxtlong }}</span>
+      <span class="sr-only">Приемо Предвателен Протокол</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -32,9 +32,7 @@
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
-        <div class="text-sm text-gray-800 mr-1">
-          №-18-{{ store.state.user.ctxt }}
-        </div>
+        <div class="text-sm text-gray-800 mr-1">№-16-ППП</div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
         >
@@ -43,29 +41,25 @@
           >
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
-              :class="
-                store.state.snimki.length > 0 ? 'bg-green-600' : 'bg-white'
-              "
+              :class="store.state.pps.length > 0 ? 'bg-green-600' : 'bg-white'"
             >
-              {{ store.state.snimki.length }}
+              {{ store.state.pps.length }}
             </div>
           </div>
         </div>
       </div>
-      <div class="text-sm text-gray-800 mr-1">
-        {{ store.state.user.ctxtlong }}
-      </div>
+      <div class="text-sm text-gray-800 mr-1">Приемо Предвателен Протокол</div>
     </div>
     <div
-      v-for="snimka in store.state.snimki"
-      :key="snimka.id"
+      v-for="pp in store.state.pps"
+      :key="pp.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
           <a
             target="_blank"
-            :href="'/dist/img/files/snimki/' + offer().id + '/' + snimka.file"
+            :href="'/dist/img/files/pp/' + offer().id + '/' + pp.file"
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -75,7 +69,59 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteSnimkaCheck(snimka)"
+          @click.stop="updatePp(pp.id, pp.file, pp.offer_id)"
+        >
+          <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"
+            />
+          </svg>
+          <span class="text-xs">Запиши</span>
+        </button>
+        <ModalBlank
+          id="success-modal"
+          :modalOpen="store.state.successUpdatePp"
+          @close-modal="store.methods.changeSuccessUpdatePp(false)"
+        >
+          <div class="p-5 flex space-x-4">
+            <div
+              class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-green-100"
+            >
+              <svg
+                class="w-4 h-4 shrink-0 fill-current text-green-500"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zM7 11.4L3.6 8 5 6.6l2 2 4-4L12.4 6 7 11.4z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="mb-2">
+                <div class="text-lg font-semibold text-gray-800">
+                  Уведомление
+                </div>
+              </div>
+              <div class="text-sm mb-10">
+                <div class="space-y-2">
+                  <p>Успешно записахте промяната.</p>
+                </div>
+              </div>
+              <div class="flex flex-wrap justify-end space-x-2">
+                <button
+                  class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+                  @click.stop="store.methods.changeSuccessUpdatePp(false)"
+                >
+                  Затвори
+                </button>
+              </div>
+            </div>
+          </div>
+        </ModalBlank>
+        <button
+          class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+          @click.stop="deletePpCheck(pp)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -87,8 +133,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deleteSnimkaModal"
-          @close-modal="store.methods.changeDeleteSnimkaModal(false)"
+          :modalOpen="store.state.deletePpModal"
+          @close-modal="store.methods.changeDeletePpModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -118,13 +164,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeleteSnimkaModal(false)"
+                  @click.stop="store.methods.changeDeletePpModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteSnimka()"
+                  @click.stop="deletePp()"
                 >
                   Изтрий
                 </button>
@@ -132,6 +178,13 @@
             </div>
           </div>
         </ModalBlank>
+      </div>
+      <div class="mt-2">
+        <textarea
+          class="w-full border border-gray-200 p-1"
+          rows="5"
+          v-model="pp.description"
+        ></textarea>
       </div>
     </div>
     <div
@@ -150,10 +203,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'SnimkaBody',
+  name: 'PpBody',
 
   components: { ModalBlank },
 
@@ -161,7 +214,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const snimka_current = ref(null)
+    const pp_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -169,28 +222,33 @@ export default {
       )
     }
 
-    const deleteSnimkaCheck = (_snimka) => {
-      snimka_current.value = _snimka
-      store.methods.changeDeleteSnimkaModal(true)
+    const deletePpCheck = (_pp) => {
+      pp_current.value = _pp
+      store.methods.changeDeletePpModal(true)
     }
 
-    const deleteSnimka = () => {
-      store.methods.deleteSnimka(
-        snimka_current.value.id,
-        snimka_current.value.file,
-        snimka_current.value.offer_id
+    const deletePp = () => {
+      store.methods.deletePp(
+        pp_current.value.id,
+        pp_current.value.file,
+        pp_current.value.offer_id
       )
     }
 
-    const handleFileUpload = async (snimka_id) => {
-      store.methods.uploadFile(file.value.files, snimka_id, 'snimki')
+    const updatePp = (pp_id, file, offer_id) => {
+      store.methods.savePp(pp_id, file, offer_id)
+    }
+
+    const handleFileUpload = async (pp_id) => {
+      store.methods.uploadFile(file.value.files, pp_id, 'pp')
     }
 
     return {
       store,
       offer,
-      deleteSnimkaCheck,
-      deleteSnimka,
+      deletePpCheck,
+      deletePp,
+      updatePp,
       file,
       handleFileUpload,
     }

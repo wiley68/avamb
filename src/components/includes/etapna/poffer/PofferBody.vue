@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">{{ store.state.user.zdtxtlong }}</span>
+      <span class="sr-only">{{ store.state.user.ofptxtlong }}</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -33,7 +33,7 @@
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
         <div class="text-sm text-gray-800 mr-1">
-          №-5-{{ store.state.user.zdtxt }}
+          №-11-{{ store.state.user.ofptxt }}
         </div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
@@ -44,30 +44,28 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
-                store.state.zapitvania.length > 0 ? 'bg-green-600' : 'bg-white'
+                store.state.poffers.length > 0 ? 'bg-green-600' : 'bg-white'
               "
             >
-              {{ store.state.zapitvania.length }}
+              {{ store.state.poffers.length }}
             </div>
           </div>
         </div>
       </div>
       <div class="text-sm text-gray-800 mr-1">
-        {{ store.state.user.zdtxtlong }}
+        {{ store.state.user.ofptxtlong }}
       </div>
     </div>
     <div
-      v-for="zapitvane in store.state.zapitvania"
-      :key="zapitvane.id"
+      v-for="poffer in store.state.poffers"
+      :key="poffer.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
           <a
             target="_blank"
-            :href="
-              '/dist/img/files/zapitvane/' + offer().id + '/' + zapitvane.file
-            "
+            :href="'/dist/img/files/poffer/' + offer().id + '/' + poffer.file"
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -77,9 +75,7 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="
-            updateZapitvane(zapitvane.id, zapitvane.file, zapitvane.offer_id)
-          "
+          @click.stop="updatePoffer(poffer.id, poffer.file, poffer.offer_id)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -91,8 +87,8 @@
         </button>
         <ModalBlank
           id="success-modal"
-          :modalOpen="store.state.successUpdateZapitvane"
-          @close-modal="store.methods.changeSuccessUpdateZapitvane(false)"
+          :modalOpen="store.state.successUpdatePoffer"
+          @close-modal="store.methods.changeSuccessUpdatePoffer(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -121,9 +117,7 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="
-                    store.methods.changeSuccessUpdateZapitvane(false)
-                  "
+                  @click.stop="store.methods.changeSuccessUpdatePoffer(false)"
                 >
                   Затвори
                 </button>
@@ -133,7 +127,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteZapitvaneCheck(zapitvane)"
+          @click.stop="deletePofferCheck(poffer)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -145,8 +139,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deleteZapitvaneModal"
-          @close-modal="store.methods.changeDeleteZapitvaneModal(false)"
+          :modalOpen="store.state.deletePofferModal"
+          @close-modal="store.methods.changeDeletePofferModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -176,13 +170,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeleteZapitvaneModal(false)"
+                  @click.stop="store.methods.changeDeletePofferModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteZapitvane()"
+                  @click.stop="deletePoffer()"
                 >
                   Изтрий
                 </button>
@@ -195,7 +189,7 @@
         <textarea
           class="w-full border border-gray-200 p-1"
           rows="5"
-          v-model="zapitvane.description"
+          v-model="poffer.description"
         ></textarea>
       </div>
     </div>
@@ -215,10 +209,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'ZapitvaneBody',
+  name: 'PofferBody',
 
   components: { ModalBlank },
 
@@ -226,7 +220,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const zapitvane_current = ref(null)
+    const poffer_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -234,33 +228,33 @@ export default {
       )
     }
 
-    const deleteZapitvaneCheck = (_zapitvane) => {
-      zapitvane_current.value = _zapitvane
-      store.methods.changeDeleteZapitvaneModal(true)
+    const deletePofferCheck = (_poffer) => {
+      poffer_current.value = _poffer
+      store.methods.changeDeletePofferModal(true)
     }
 
-    const deleteZapitvane = () => {
-      store.methods.deleteZapitvane(
-        zapitvane_current.value.id,
-        zapitvane_current.value.file,
-        zapitvane_current.value.offer_id
+    const deletePoffer = () => {
+      store.methods.deletePoffer(
+        poffer_current.value.id,
+        poffer_current.value.file,
+        poffer_current.value.offer_id
       )
     }
 
-    const updateZapitvane = (zapitvane_id, file, offer_id) => {
-      store.methods.saveZapitvane(zapitvane_id, file, offer_id)
+    const updatePoffer = (poffer_id, file, offer_id) => {
+      store.methods.savePoffer(poffer_id, file, offer_id)
     }
 
-    const handleFileUpload = async (offer_id) => {
-      store.methods.uploadFile(file.value.files, offer_id, 'zapitvane')
+    const handleFileUpload = async (poffer_id) => {
+      store.methods.uploadFile(file.value.files, poffer_id, 'poffer')
     }
 
     return {
       store,
       offer,
-      deleteZapitvaneCheck,
-      deleteZapitvane,
-      updateZapitvane,
+      deletePofferCheck,
+      deletePoffer,
+      updatePoffer,
       file,
       handleFileUpload,
     }

@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import SnimkaBody from './includes/snimki/SnimkaBody.vue'
+import SnimkaBody from './includes/etapna/snimki/SnimkaBody.vue'
 
 export default {
   name: 'Snimki',

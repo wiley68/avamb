@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">Поръчка към доставчик</span>
+      <span class="sr-only">Информация получена от клиент</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -32,7 +32,7 @@
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
-        <div class="text-sm text-gray-800 mr-1">№-15-ПД</div>
+        <div class="text-sm text-gray-800 mr-1">№-4-И</div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
         >
@@ -42,26 +42,30 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
-                store.state.poracki.length > 0 ? 'bg-green-600' : 'bg-white'
+                store.state.otclienti.length > 0 ? 'bg-green-600' : 'bg-white'
               "
             >
-              {{ store.state.poracki.length }}
+              {{ store.state.otclienti.length }}
             </div>
           </div>
         </div>
       </div>
-      <div class="text-sm text-gray-800 mr-1">Поръчка към доставчик</div>
+      <div class="text-sm text-gray-800 mr-1">
+        Информация получена от клиент
+      </div>
     </div>
     <div
-      v-for="poracka in store.state.poracki"
-      :key="poracka.id"
+      v-for="otclient in store.state.otclienti"
+      :key="otclient.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
           <a
             target="_blank"
-            :href="'/dist/img/files/poracki/' + offer().id + '/' + poracka.file"
+            :href="
+              '/dist/img/files/otklient/' + offer().id + '/' + otclient.file
+            "
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -72,7 +76,7 @@
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           @click.stop="
-            updatePoracka(poracka.id, poracka.file, poracka.offer_id)
+            updateClient(otclient.id, otclient.file, otclient.offer_id)
           "
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
@@ -85,8 +89,8 @@
         </button>
         <ModalBlank
           id="success-modal"
-          :modalOpen="store.state.successUpdatePoracka"
-          @close-modal="store.methods.changeSuccessUpdatePoracka(false)"
+          :modalOpen="store.state.successUpdateClient"
+          @close-modal="store.methods.changeSuccessUpdateClient(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -115,7 +119,7 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeSuccessUpdatePoracka(false)"
+                  @click.stop="store.methods.changeSuccessUpdateClient(false)"
                 >
                   Затвори
                 </button>
@@ -125,7 +129,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deletePorackaCheck(poracka)"
+          @click.stop="deleteClientCheck(otclient)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -137,8 +141,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deletePorackaModal"
-          @close-modal="store.methods.changeDeletePorackaModal(false)"
+          :modalOpen="store.state.deleteClientModal"
+          @close-modal="store.methods.changeDeleteClientModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -168,13 +172,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeletePorackaModal(false)"
+                  @click.stop="store.methods.changeDeleteClientModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deletePoracka()"
+                  @click.stop="deleteClient()"
                 >
                   Изтрий
                 </button>
@@ -187,7 +191,7 @@
         <textarea
           class="w-full border border-gray-200 p-1"
           rows="5"
-          v-model="poracka.description"
+          v-model="otclient.description"
         ></textarea>
       </div>
     </div>
@@ -207,10 +211,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'PorackaBody',
+  name: 'ClientBody',
 
   components: { ModalBlank },
 
@@ -218,7 +222,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const poracka_current = ref(null)
+    const otclient_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -226,33 +230,34 @@ export default {
       )
     }
 
-    const deletePorackaCheck = (_poracka) => {
-      poracka_current.value = _poracka
-      store.methods.changeDeletePorackaModal(true)
+    const deleteClientCheck = (_otclient) => {
+      otclient_current.value = _otclient
+      store.methods.changeDeleteClientModal(true)
     }
 
-    const deletePoracka = () => {
-      store.methods.deletePoracka(
-        poracka_current.value.id,
-        poracka_current.value.file,
-        poracka_current.value.offer_id
+    const deleteClient = () => {
+      store.methods.deleteClient(
+        otclient_current.value.id,
+        otclient_current.value.file,
+        otclient_current.value.offer_id
       )
     }
 
-    const updatePoracka = (poracka_id, file, offer_id) => {
-      store.methods.savePoracka(poracka_id, file, offer_id)
+    const updateClient = (client_id, file, offer_id) => {
+      store.methods.saveClient(client_id, file, offer_id)
     }
 
-    const handleFileUpload = async (poracka_id) => {
-      store.methods.uploadFile(file.value.files, poracka_id, 'cf')
+    const handleFileUpload = async (offer_id) => {
+      store.methods.uploadFile(file.value.files, offer_id, 'otklient')
+      file.value = null
     }
 
     return {
       store,
       offer,
-      deletePorackaCheck,
-      deletePoracka,
-      updatePoracka,
+      deleteClientCheck,
+      deleteClient,
+      updateClient,
       file,
       handleFileUpload,
     }

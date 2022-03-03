@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import OtgovorBody from './includes/otgovor/OtgovorBody.vue'
+import OtgovorBody from './includes/etapna/otgovor/OtgovorBody.vue'
 
 export default {
   name: 'Otgovor',

@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import PpBody from './includes/pp/PpBody.vue'
+import PpBody from './includes/etapna/pp/PpBody.vue'
 
 export default {
   name: 'Pps',

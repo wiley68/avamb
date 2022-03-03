@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">Фактури за покупки</span>
+      <span class="sr-only">{{ store.state.user.odtxtlong }}</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -32,7 +32,9 @@
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
-        <div class="text-sm text-gray-800 mr-1">№-20-ФП</div>
+        <div class="text-sm text-gray-800 mr-1">
+          №-6-{{ store.state.user.odtxt }}
+        </div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
         >
@@ -42,19 +44,21 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
-                store.state.fakturip.length > 0 ? 'bg-green-600' : 'bg-white'
+                store.state.otgovori.length > 0 ? 'bg-green-600' : 'bg-white'
               "
             >
-              {{ store.state.fakturip.length }}
+              {{ store.state.otgovori.length }}
             </div>
           </div>
         </div>
       </div>
-      <div class="text-sm text-gray-800 mr-1">Фактури за покупки</div>
+      <div class="text-sm text-gray-800 mr-1">
+        {{ store.state.user.odtxtlong }}
+      </div>
     </div>
     <div
-      v-for="fakturap in store.state.fakturip"
-      :key="fakturap.id"
+      v-for="otgovor in store.state.otgovori"
+      :key="otgovor.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
@@ -62,7 +66,7 @@
           <a
             target="_blank"
             :href="
-              '/dist/img/files/fakturip/' + offer().id + '/' + fakturap.file
+              '/dist/img/files/odostavcik/' + offer().id + '/' + otgovor.file
             "
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
@@ -74,7 +78,7 @@
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           @click.stop="
-            updateFakturap(fakturap.id, fakturap.file, fakturap.offer_id)
+            updateOtgovor(otgovor.id, otgovor.file, otgovor.offer_id)
           "
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
@@ -87,8 +91,8 @@
         </button>
         <ModalBlank
           id="success-modal"
-          :modalOpen="store.state.successUpdateFakturap"
-          @close-modal="store.methods.changeSuccessUpdateFakturap(false)"
+          :modalOpen="store.state.successUpdateOtgovor"
+          @close-modal="store.methods.changeSuccessUpdateOtgovor(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -117,7 +121,7 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeSuccessUpdateFakturap(false)"
+                  @click.stop="store.methods.changeSuccessUpdateOtgovor(false)"
                 >
                   Затвори
                 </button>
@@ -127,7 +131,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteFakturapCheck(fakturap)"
+          @click.stop="deleteOtgovorCheck(otgovor)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -139,8 +143,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deleteFakturapModal"
-          @close-modal="store.methods.changeDeleteFakturapModal(false)"
+          :modalOpen="store.state.deleteOtgovorModal"
+          @close-modal="store.methods.changeDeleteOtgovorModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -170,13 +174,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeleteFakturapModal(false)"
+                  @click.stop="store.methods.changeDeleteOtgovorModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteFakturap()"
+                  @click.stop="deleteOtgovor()"
                 >
                   Изтрий
                 </button>
@@ -189,7 +193,7 @@
         <textarea
           class="w-full border border-gray-200 p-1"
           rows="5"
-          v-model="fakturap.description"
+          v-model="otgovor.description"
         ></textarea>
       </div>
     </div>
@@ -209,10 +213,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'FakturipBody',
+  name: 'OtgovorBody',
 
   components: { ModalBlank },
 
@@ -220,7 +224,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const fakturap_current = ref(null)
+    const otgovor_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -228,33 +232,33 @@ export default {
       )
     }
 
-    const deleteFakturapCheck = (_fakturap) => {
-      fakturap_current.value = _fakturap
-      store.methods.changeDeleteFakturapModal(true)
+    const deleteOtgovorCheck = (_otgovor) => {
+      otgovor_current.value = _otgovor
+      store.methods.changeDeleteOtgovorModal(true)
     }
 
-    const deleteFakturap = () => {
-      store.methods.deleteFakturap(
-        fakturap_current.value.id,
-        fakturap_current.value.file,
-        fakturap_current.value.offer_id
+    const deleteOtgovor = () => {
+      store.methods.deleteOtgovor(
+        otgovor_current.value.id,
+        otgovor_current.value.file,
+        otgovor_current.value.offer_id
       )
     }
 
-    const updateFakturap = (fakturap_id, file, offer_id) => {
-      store.methods.saveFakturap(fakturap_id, file, offer_id)
+    const updateOtgovor = (otgovor_id, file, offer_id) => {
+      store.methods.saveOtgovor(otgovor_id, file, offer_id)
     }
 
-    const handleFileUpload = async (fakturap_id) => {
-      store.methods.uploadFile(file.value.files, fakturap_id, 'fakturip')
+    const handleFileUpload = async (offer_id) => {
+      store.methods.uploadFile(file.value.files, offer_id, 'odostavcik')
     }
 
     return {
       store,
       offer,
-      deleteFakturapCheck,
-      deleteFakturap,
-      updateFakturap,
+      deleteOtgovorCheck,
+      deleteOtgovor,
+      updateOtgovor,
       file,
       handleFileUpload,
     }

@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">{{ store.state.user.ofptxtlong }}</span>
+      <span class="sr-only">{{ store.state.user.rptxtlong }}</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -33,7 +33,7 @@
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
         <div class="text-sm text-gray-800 mr-1">
-          №-11-{{ store.state.user.ofptxt }}
+          №-14-{{ store.state.user.rptxt }}
         </div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
@@ -44,28 +44,28 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
-                store.state.poffers.length > 0 ? 'bg-green-600' : 'bg-white'
+                store.state.casti.length > 0 ? 'bg-green-600' : 'bg-white'
               "
             >
-              {{ store.state.poffers.length }}
+              {{ store.state.casti.length }}
             </div>
           </div>
         </div>
       </div>
       <div class="text-sm text-gray-800 mr-1">
-        {{ store.state.user.ofptxtlong }}
+        {{ store.state.user.rptxtlong }}
       </div>
     </div>
     <div
-      v-for="poffer in store.state.poffers"
-      :key="poffer.id"
+      v-for="cast in store.state.casti"
+      :key="cast.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
           <a
             target="_blank"
-            :href="'/dist/img/files/poffer/' + offer().id + '/' + poffer.file"
+            :href="'/dist/img/files/casti/' + offer().id + '/' + cast.file"
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -75,7 +75,7 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="updatePoffer(poffer.id, poffer.file, poffer.offer_id)"
+          @click.stop="updateCast(cast.id, cast.file, cast.offer_id)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -87,8 +87,8 @@
         </button>
         <ModalBlank
           id="success-modal"
-          :modalOpen="store.state.successUpdatePoffer"
-          @close-modal="store.methods.changeSuccessUpdatePoffer(false)"
+          :modalOpen="store.state.successUpdateCast"
+          @close-modal="store.methods.changeSuccessUpdateCast(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -117,7 +117,7 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeSuccessUpdatePoffer(false)"
+                  @click.stop="store.methods.changeSuccessUpdateCast(false)"
                 >
                   Затвори
                 </button>
@@ -127,7 +127,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deletePofferCheck(poffer)"
+          @click.stop="deleteCastCheck(cast)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -139,8 +139,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deletePofferModal"
-          @close-modal="store.methods.changeDeletePofferModal(false)"
+          :modalOpen="store.state.deleteCastModal"
+          @close-modal="store.methods.changeDeleteCastModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -170,13 +170,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeletePofferModal(false)"
+                  @click.stop="store.methods.changeDeleteCastModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deletePoffer()"
+                  @click.stop="deleteCast()"
                 >
                   Изтрий
                 </button>
@@ -189,7 +189,7 @@
         <textarea
           class="w-full border border-gray-200 p-1"
           rows="5"
-          v-model="poffer.description"
+          v-model="cast.description"
         ></textarea>
       </div>
     </div>
@@ -209,10 +209,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'PofferBody',
+  name: 'CastiBody',
 
   components: { ModalBlank },
 
@@ -220,7 +220,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const poffer_current = ref(null)
+    const cast_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -228,33 +228,33 @@ export default {
       )
     }
 
-    const deletePofferCheck = (_poffer) => {
-      poffer_current.value = _poffer
-      store.methods.changeDeletePofferModal(true)
+    const deleteCastCheck = (_cast) => {
+      cast_current.value = _cast
+      store.methods.changeDeleteCastModal(true)
     }
 
-    const deletePoffer = () => {
-      store.methods.deletePoffer(
-        poffer_current.value.id,
-        poffer_current.value.file,
-        poffer_current.value.offer_id
+    const deleteCast = () => {
+      store.methods.deleteCast(
+        cast_current.value.id,
+        cast_current.value.file,
+        cast_current.value.offer_id
       )
     }
 
-    const updatePoffer = (poffer_id, file, offer_id) => {
-      store.methods.savePoffer(poffer_id, file, offer_id)
+    const updateCast = (cast_id, file, offer_id) => {
+      store.methods.saveCast(cast_id, file, offer_id)
     }
 
-    const handleFileUpload = async (poffer_id) => {
-      store.methods.uploadFile(file.value.files, poffer_id, 'poffer')
+    const handleFileUpload = async (cast_id) => {
+      store.methods.uploadFile(file.value.files, cast_id, 'casti')
     }
 
     return {
       store,
       offer,
-      deletePofferCheck,
-      deletePoffer,
-      updatePoffer,
+      deleteCastCheck,
+      deleteCast,
+      updateCast,
       file,
       handleFileUpload,
     }

@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">{{ store.state.user.gtxtlong }}</span>
+      <span class="sr-only">Поръчка към доставчик</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -32,9 +32,7 @@
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
-        <div class="text-sm text-gray-800 mr-1">
-          №-10-{{ store.state.user.gtxt }}
-        </div>
+        <div class="text-sm text-gray-800 mr-1">№-15-ПД</div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
         >
@@ -44,28 +42,26 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
-                store.state.ddsta.length > 0 ? 'bg-green-600' : 'bg-white'
+                store.state.poracki.length > 0 ? 'bg-green-600' : 'bg-white'
               "
             >
-              {{ store.state.ddsta.length }}
+              {{ store.state.poracki.length }}
             </div>
           </div>
         </div>
       </div>
-      <div class="text-sm text-gray-800 mr-1">
-        {{ store.state.user.gtxtlong }}
-      </div>
+      <div class="text-sm text-gray-800 mr-1">Поръчка към доставчик</div>
     </div>
     <div
-      v-for="dds in store.state.ddsta"
-      :key="dds.id"
+      v-for="poracka in store.state.poracki"
+      :key="poracka.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
           <a
             target="_blank"
-            :href="'/dist/img/files/dds/' + offer().id + '/' + dds.file"
+            :href="'/dist/img/files/poracki/' + offer().id + '/' + poracka.file"
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -75,7 +71,9 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="updateDds(dds.id, dds.file, dds.offer_id)"
+          @click.stop="
+            updatePoracka(poracka.id, poracka.file, poracka.offer_id)
+          "
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -87,8 +85,8 @@
         </button>
         <ModalBlank
           id="success-modal"
-          :modalOpen="store.state.successUpdateDds"
-          @close-modal="store.methods.changeSuccessUpdateDds(false)"
+          :modalOpen="store.state.successUpdatePoracka"
+          @close-modal="store.methods.changeSuccessUpdatePoracka(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -117,7 +115,7 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeSuccessUpdateDds(false)"
+                  @click.stop="store.methods.changeSuccessUpdatePoracka(false)"
                 >
                   Затвори
                 </button>
@@ -127,7 +125,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteDdsCheck(dds)"
+          @click.stop="deletePorackaCheck(poracka)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -139,8 +137,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deleteDdsModal"
-          @close-modal="store.methods.changeDeleteDdsModal(false)"
+          :modalOpen="store.state.deletePorackaModal"
+          @close-modal="store.methods.changeDeletePorackaModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -170,13 +168,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeleteDdsModal(false)"
+                  @click.stop="store.methods.changeDeletePorackaModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteDds()"
+                  @click.stop="deletePoracka()"
                 >
                   Изтрий
                 </button>
@@ -189,7 +187,7 @@
         <textarea
           class="w-full border border-gray-200 p-1"
           rows="5"
-          v-model="dds.description"
+          v-model="poracka.description"
         ></textarea>
       </div>
     </div>
@@ -209,10 +207,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'DdsBody',
+  name: 'PorackaBody',
 
   components: { ModalBlank },
 
@@ -220,7 +218,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const dds_current = ref(null)
+    const poracka_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -228,33 +226,33 @@ export default {
       )
     }
 
-    const deleteDdsCheck = (_dds) => {
-      dds_current.value = _dds
-      store.methods.changeDeleteDdsModal(true)
+    const deletePorackaCheck = (_poracka) => {
+      poracka_current.value = _poracka
+      store.methods.changeDeletePorackaModal(true)
     }
 
-    const deleteDds = () => {
-      store.methods.deleteDds(
-        dds_current.value.id,
-        dds_current.value.file,
-        dds_current.value.offer_id
+    const deletePoracka = () => {
+      store.methods.deletePoracka(
+        poracka_current.value.id,
+        poracka_current.value.file,
+        poracka_current.value.offer_id
       )
     }
 
-    const updateDds = (dds_id, file, offer_id) => {
-      store.methods.saveDds(dds_id, file, offer_id)
+    const updatePoracka = (poracka_id, file, offer_id) => {
+      store.methods.savePoracka(poracka_id, file, offer_id)
     }
 
-    const handleFileUpload = async (dds_id) => {
-      store.methods.uploadFile(file.value.files, dds_id, 'dds')
+    const handleFileUpload = async (poracka_id) => {
+      store.methods.uploadFile(file.value.files, poracka_id, 'cf')
     }
 
     return {
       store,
       offer,
-      deleteDdsCheck,
-      deleteDds,
-      updateDds,
+      deletePorackaCheck,
+      deletePoracka,
+      updatePoracka,
       file,
       handleFileUpload,
     }

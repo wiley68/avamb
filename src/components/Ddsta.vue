@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import DdsBody from './includes/dds/DdsBody.vue'
+import DdsBody from './includes/etapna/dds/DdsBody.vue'
 
 export default {
   name: 'Ddsta',

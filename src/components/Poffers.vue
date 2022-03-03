@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import PofferBody from './includes/poffer/PofferBody.vue'
+import PofferBody from './includes/etapna/poffer/PofferBody.vue'
 
 export default {
   name: 'Poffers',

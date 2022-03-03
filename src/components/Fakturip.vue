@@ -4,7 +4,7 @@
 
 <script>
 import { inject } from 'vue'
-import FakturapBody from './includes/fakturip/FakturapBody.vue'
+import FakturapBody from './includes/etapna/fakturip/FakturapBody.vue'
 
 export default {
   name: 'Fakturip',

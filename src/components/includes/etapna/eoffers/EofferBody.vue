@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">{{ store.state.user.dkptxtlong }}</span>
+      <span class="sr-only">Оферти</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -32,9 +32,7 @@
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
-        <div class="text-sm text-gray-800 mr-1">
-          №-9-{{ store.state.user.dkptxt }}
-        </div>
+        <div class="text-sm text-gray-800 mr-1">№-7-ОФ</div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
         >
@@ -44,30 +42,26 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
-                store.state.pdogovori.length > 0 ? 'bg-green-600' : 'bg-white'
+                store.state.eoffers.length > 0 ? 'bg-green-600' : 'bg-white'
               "
             >
-              {{ store.state.pdogovori.length }}
+              {{ store.state.eoffers.length }}
             </div>
           </div>
         </div>
       </div>
-      <div class="text-sm text-gray-800 mr-1">
-        {{ store.state.user.dkptxtlong }}
-      </div>
+      <div class="text-sm text-gray-800 mr-1">Оферти</div>
     </div>
     <div
-      v-for="pdogovor in store.state.pdogovori"
-      :key="pdogovor.id"
+      v-for="eoffer in store.state.eoffers"
+      :key="eoffer.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
         <div class="flex-grow">
           <a
             target="_blank"
-            :href="
-              '/dist/img/files/pdogovor/' + offer().id + '/' + pdogovor.file
-            "
+            :href="'/dist/img/files/oferti/' + offer().id + '/' + eoffer.file"
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -77,9 +71,7 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="
-            updatePdogovor(pdogovor.id, pdogovor.file, pdogovor.offer_id)
-          "
+          @click.stop="updateEoffer(eoffer.id, eoffer.file, eoffer.offer_id)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -91,8 +83,8 @@
         </button>
         <ModalBlank
           id="success-modal"
-          :modalOpen="store.state.successUpdatePdogovor"
-          @close-modal="store.methods.changeSuccessUpdatePdogovor(false)"
+          :modalOpen="store.state.successUpdateEoffer"
+          @close-modal="store.methods.changeSuccessUpdateEoffer(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -121,7 +113,7 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeSuccessUpdatePdogovor(false)"
+                  @click.stop="store.methods.changeSuccessUpdateEoffer(false)"
                 >
                   Затвори
                 </button>
@@ -131,7 +123,7 @@
         </ModalBlank>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deletePdogovorCheck(pdogovor)"
+          @click.stop="deleteEofferCheck(eoffer)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -143,8 +135,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deletePdogovorModal"
-          @close-modal="store.methods.changeDeletePdogovorModal(false)"
+          :modalOpen="store.state.deleteEofferModal"
+          @close-modal="store.methods.changeDeleteEofferModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -174,13 +166,13 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeletePdogovorModal(false)"
+                  @click.stop="store.methods.changeDeleteEofferModal(false)"
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deletePdogovor()"
+                  @click.stop="deleteEoffer()"
                 >
                   Изтрий
                 </button>
@@ -193,7 +185,7 @@
         <textarea
           class="w-full border border-gray-200 p-1"
           rows="5"
-          v-model="pdogovor.description"
+          v-model="eoffer.description"
         ></textarea>
       </div>
     </div>
@@ -213,10 +205,10 @@
 
 <script>
 import { inject, ref } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import ModalBlank from '../../components/ModalBlank.vue'
 
 export default {
-  name: 'PdogovorBody',
+  name: 'EofferBody',
 
   components: { ModalBlank },
 
@@ -224,7 +216,7 @@ export default {
     const store = inject('store')
 
     const file = ref(null)
-    const pdogovor_current = ref(null)
+    const eoffer_current = ref(null)
 
     const offer = () => {
       return store.state.offers.find(
@@ -232,33 +224,33 @@ export default {
       )
     }
 
-    const deletePdogovorCheck = (_pdogovor) => {
-      pdogovor_current.value = _pdogovor
-      store.methods.changeDeletePdogovorModal(true)
+    const deleteEofferCheck = (_eoffer) => {
+      eoffer_current.value = _eoffer
+      store.methods.changeDeleteEofferModal(true)
     }
 
-    const deletePdogovor = () => {
-      store.methods.deletePdogovor(
-        pdogovor_current.value.id,
-        pdogovor_current.value.file,
-        pdogovor_current.value.offer_id
+    const deleteEoffer = () => {
+      store.methods.deleteEoffer(
+        eoffer_current.value.id,
+        eoffer_current.value.file,
+        eoffer_current.value.offer_id
       )
     }
 
-    const updatePdogovor = (pdogovor_id, file, offer_id) => {
-      store.methods.savePdogovor(pdogovor_id, file, offer_id)
+    const updateEoffer = (eoffer_id, file, offer_id) => {
+      store.methods.saveEoffer(eoffer_id, file, offer_id)
     }
 
-    const handleFileUpload = async (pdogovor_id) => {
-      store.methods.uploadFile(file.value.files, pdogovor_id, 'pdogovor')
+    const handleFileUpload = async (eoffer_id) => {
+      store.methods.uploadFile(file.value.files, eoffer_id, 'oferti')
     }
 
     return {
       store,
       offer,
-      deletePdogovorCheck,
-      deletePdogovor,
-      updatePdogovor,
+      deleteEofferCheck,
+      deleteEoffer,
+      updateEoffer,
       file,
       handleFileUpload,
     }
