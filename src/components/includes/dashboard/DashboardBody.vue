@@ -462,6 +462,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white"
               :class="offer().snimki_broi == 0 ? 'bg-white' : 'bg-green-600'"
+              @click.stop="goToSnimki()"
             >
               {{ offer().snimki_broi == 0 ? '' : offer().snimki_broi }}
             </div>
@@ -662,6 +663,11 @@ export default {
       store.methods.changePage('Pprs')
     }
 
+    const goToSnimki = () => {
+      store.methods.getSnimki(store.state.current_dashboard_offer)
+      store.methods.changePage('Snimki')
+    }
+
     return {
       store,
       offer,
@@ -678,6 +684,7 @@ export default {
       goToPoracki,
       goToPps,
       goToPprs,
+      goToSnimki,
     }
   },
 }

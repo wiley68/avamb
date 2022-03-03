@@ -20,6 +20,7 @@
       <Poracki v-if="store.state.page == 'Poracki'"></Poracki>
       <Pps v-if="store.state.page == 'Pps'"></Pps>
       <Pprs v-if="store.state.page == 'Pprs'"></Pprs>
+      <Snimki v-if="store.state.page == 'Snimki'"></Snimki>
     </div>
   </div>
 </template>
@@ -42,6 +43,7 @@ import Casti from './components/Casti.vue'
 import Poracki from './components/Poracki.vue'
 import Pps from './components/Pps.vue'
 import Pprs from './components/Pprs.vue'
+import Snimki from './components/Snimki.vue'
 
 export default {
   name: 'App',
@@ -62,6 +64,7 @@ export default {
     Poracki,
     Pps,
     Pprs,
+    Snimki,
   },
 
   setup() {

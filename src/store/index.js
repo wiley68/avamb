@@ -66,6 +66,8 @@ const state = reactive({
   pprs: [],
   deletePprModal: false,
   successUpdatePpr: false,
+  snimki: [],
+  deleteSnimkaModal: false,
 })
 
 const methods = {
@@ -215,8 +217,16 @@ const methods = {
       return element.id != id
     })
   },
-  changeSuccessUpdatePpr(successUpdatePpr) {
-    state.successUpdatePpr = successUpdatePpr
+  changeSuccessUpdateSnimka(successUpdateSnimka) {
+    state.successUpdateSnimka = successUpdateSnimka
+  },
+  changeDeleteSnimkaModal(deleteSnimkaModal) {
+    state.deleteSnimkaModal = deleteSnimkaModal
+  },
+  deleteSnimkaById(id) {
+    state.snimki = state.snimki.filter((element) => {
+      return element.id != id
+    })
   },
   loadData() {
     var data = new FormData()
@@ -422,14 +432,24 @@ const methods = {
       const [key, value] = element
       data.append(key, value)
     })
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      'https://dograma.avalonbg.com/function/submit_doc.php?oid=' +
-        offer_id +
-        '&doc=' +
-        type +
-        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
-    )
+    if (type == 'snimki') {
+      var xmlhttpro = createCORSRequest(
+        'POST',
+        'https://dograma.avalonbg.com/function/submit_snimki.php?oid=' +
+          offer_id +
+          '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      )
+    } else {
+      var xmlhttpro = createCORSRequest(
+        'POST',
+        'https://dograma.avalonbg.com/function/submit_doc.php?oid=' +
+          offer_id +
+          '&doc=' +
+          type +
+          '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      )
+    }
+
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -477,6 +497,9 @@ const methods = {
         }
         if (type == 'ppr') {
           methods.getPprs(state.current_dashboard_offer)
+        }
+        if (type == 'snimki') {
+          methods.getSnimki(state.current_dashboard_offer)
         }
       }
     }
@@ -1528,6 +1551,68 @@ const methods = {
         methods.changeSuccessUpdatePpr(true)
       } else {
         methods.changeSuccessUpdatePpr(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getSnimki(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'snimki')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.snimki = JSON.parse(this.response).result
+      } else {
+        state.snimki = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteSnimka(snimka_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', snimka_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'snimki')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteSnimkaById(snimka_id)
+        state.deleteSnimkaModal = false
       }
     }
     xmlhttpro.send(data)
