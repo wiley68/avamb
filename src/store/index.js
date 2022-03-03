@@ -72,6 +72,9 @@ const state = reactive({
   deleteFakturapModal: false,
   successUpdateFakturap: false,
   activeConditionFirms: false,
+  rabotni: [],
+  rabotniSidebarOpen: true,
+  current_raboten: 0,
 })
 
 const methods = {
@@ -96,11 +99,26 @@ const methods = {
   changeDashboardOffer(offer_id) {
     state.current_dashboard_offer = offer_id
   },
+  toggleRabotniSidebar() {
+    state.rabotniSidebarOpen = !state.rabotniSidebarOpen
+  },
+  closeRabotniSidebar() {
+    state.rabotniSidebarOpen = false
+  },
+  openRabotniSidebar() {
+    state.rabotniSidebarOpen = true
+  },
+  changeRabotni(id) {
+    state.current_raboten = id
+  },
   changePage(page) {
     state.page = page
     methods.closeSidebar()
     if (page == 'Dashboard') {
       methods.getOffers()
+    }
+    if (page == 'Rabotni') {
+      methods.getRabotni()
     }
   },
   changeDeleteClientModal(deleteClientModal) {
@@ -1736,6 +1754,40 @@ const methods = {
         methods.changeSuccessUpdateFakturap(true)
       } else {
         methods.changeSuccessUpdateFakturap(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getRabotni() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    const tekushta_start = state.tekushta.substring(0, 10)
+    const tekushta_end = state.tekushta.substring(14)
+    data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_end', tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_rabotni.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      console.log(this.response)
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.rabotni = JSON.parse(this.response).rabotni
       }
     }
     xmlhttpro.send(data)
