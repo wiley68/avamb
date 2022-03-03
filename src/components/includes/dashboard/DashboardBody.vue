@@ -32,11 +32,11 @@
         </div>
       </div>
       <div
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium text-white bg-slate-500 border border-orange-200 shadow mb-2"
         v-if="store.state.user.etapna2 == '1'"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-2-ПО</div>
+          <div class="text-sm mr-1">№-2-ПО</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -56,16 +56,16 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">
+        <div class="text-sm mr-1">
           Екземпляр за посещение на работник на обект
         </div>
       </div>
       <div
         v-if="store.state.user.etapna3 == '1'"
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium text-white bg-zinc-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-3-ВР</div>
+          <div class="text-sm mr-1">№-3-ВР</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -82,13 +82,11 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">
-          Екземпляр за вземане на размери
-        </div>
+        <div class="text-sm mr-1">Екземпляр за вземане на размери</div>
       </div>
       <div
         v-if="store.state.user.etapna4 == '1'"
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-stone-400 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">№-4-И</div>
@@ -117,7 +115,7 @@
       </div>
       <div
         v-if="store.state.user.etapna5 == '1'"
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-red-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">
@@ -141,7 +139,7 @@
       </div>
       <div
         v-if="store.state.user.etapna6 == '1'"
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-orange-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">
@@ -167,7 +165,7 @@
         v-if="
           store.state.user.etapna7 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-yellow-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">№-7-ОФ</div>
@@ -192,7 +190,7 @@
         v-if="
           store.state.user.etapna8 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-lime-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">№-8-ДК</div>
@@ -212,7 +210,7 @@
         v-if="
           store.state.user.etapna9 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-green-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">
@@ -238,7 +236,7 @@
         v-if="
           store.state.user.etapna10 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-teal-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">
@@ -264,7 +262,7 @@
         v-if="
           store.state.user.etapna11 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-sky-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">
@@ -290,7 +288,7 @@
         v-if="
           store.state.user.etapna12 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-indigo-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">№-12-ПР</div>
@@ -311,7 +309,7 @@
         v-if="
           store.state.user.etapna13 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-fuchsia-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">№-13-ФА</div>
@@ -336,7 +334,7 @@
         v-if="
           store.state.user.etapna14 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-pink-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">
@@ -362,7 +360,7 @@
         v-if="
           store.state.user.etapna15 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium bg-rose-500 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
           <div class="text-sm text-gray-800 mr-1">№-15-ПД</div>
@@ -396,10 +394,10 @@
         v-if="
           store.state.user.etapna16 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium text-white bg-red-900 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-16-ППП</div>
+          <div class="text-sm mr-1">№-16-ППП</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -418,20 +416,16 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">
-          Приемо Предвателен Протокол
-        </div>
+        <div class="text-sm mr-1">Приемо Предвателен Протокол</div>
       </div>
       <div
         v-if="
           store.state.user.etapna17 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium text-white bg-amber-900 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">
-            №-17-{{ store.state.user.ppptxt }}
-          </div>
+          <div class="text-sm mr-1">№-17-{{ store.state.user.ppptxt }}</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -444,18 +438,16 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">
+        <div class="text-sm mr-1">
           {{ store.state.user.ppptxtlong }}
         </div>
       </div>
       <div
         v-if="store.state.user.etapna18 == '1'"
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium text-white bg-lime-900 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">
-            №-18-{{ store.state.user.ctxt }}
-          </div>
+          <div class="text-sm mr-1">№-18-{{ store.state.user.ctxt }}</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -468,7 +460,7 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">
+        <div class="text-sm mr-1">
           {{ store.state.user.ctxtlong }}
         </div>
       </div>
@@ -476,10 +468,10 @@
         v-if="
           store.state.user.etapna19 == '1' && store.state.user.role != 'sluz'
         "
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium text-white bg-cyan-900 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-19-ИФ</div>
+          <div class="text-sm mr-1">№-19-ИФ</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -499,14 +491,14 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">Изплатена фактура</div>
+        <div class="text-sm mr-1">Изплатена фактура</div>
       </div>
       <div
         v-if="store.state.user.etapna20 == '1'"
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium text-white bg-indigo-900 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-20-ФП</div>
+          <div class="text-sm mr-1">№-20-ФП</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -525,13 +517,13 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">Фактури за покупки</div>
+        <div class="text-sm mr-1">Фактури за покупки</div>
       </div>
       <div
-        class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
+        class="flex flex-col items-center p-2 rounded font-medium text-white bg-slate-800 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-21-№</div>
+          <div class="text-sm mr-1">№-21-№</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -542,9 +534,7 @@
             </div>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">
-          Номер на оферта активирала поръчката
-        </div>
+        <div class="text-sm mr-1">Номер на оферта активирала поръчката</div>
       </div>
     </div>
   </div>
