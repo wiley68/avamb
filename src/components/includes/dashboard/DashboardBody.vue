@@ -513,6 +513,7 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="offer().fakturip_broi == 0 ? 'bg-white' : 'bg-green-600'"
+              @click.stop="goToFakturip()"
             >
               {{ offer().fakturip_broi == 0 ? '' : offer().fakturip_broi }}
             </div>
@@ -668,6 +669,11 @@ export default {
       store.methods.changePage('Snimki')
     }
 
+    const goToFakturip = () => {
+      store.methods.getFakturip(store.state.current_dashboard_offer)
+      store.methods.changePage('Fakturip')
+    }
+
     return {
       store,
       offer,
@@ -685,6 +691,7 @@ export default {
       goToPps,
       goToPprs,
       goToSnimki,
+      goToFakturip,
     }
   },
 }

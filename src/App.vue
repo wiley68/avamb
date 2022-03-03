@@ -21,6 +21,7 @@
       <Pps v-if="store.state.page == 'Pps'"></Pps>
       <Pprs v-if="store.state.page == 'Pprs'"></Pprs>
       <Snimki v-if="store.state.page == 'Snimki'"></Snimki>
+      <Fakturip v-if="store.state.page == 'Fakturip'"></Fakturip>
     </div>
   </div>
 </template>
@@ -44,6 +45,7 @@ import Poracki from './components/Poracki.vue'
 import Pps from './components/Pps.vue'
 import Pprs from './components/Pprs.vue'
 import Snimki from './components/Snimki.vue'
+import Fakturip from './components/Fakturip.vue'
 
 export default {
   name: 'App',
@@ -65,6 +67,7 @@ export default {
     Pps,
     Pprs,
     Snimki,
+    Fakturip,
   },
 
   setup() {

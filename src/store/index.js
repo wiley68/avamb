@@ -68,6 +68,9 @@ const state = reactive({
   successUpdatePpr: false,
   snimki: [],
   deleteSnimkaModal: false,
+  fakturip: [],
+  deleteFakturapModal: false,
+  successUpdateFakturap: false,
 })
 
 const methods = {
@@ -217,8 +220,8 @@ const methods = {
       return element.id != id
     })
   },
-  changeSuccessUpdateSnimka(successUpdateSnimka) {
-    state.successUpdateSnimka = successUpdateSnimka
+  changeSuccessUpdatePpr(successUpdatePpr) {
+    state.successUpdatePpr = successUpdatePpr
   },
   changeDeleteSnimkaModal(deleteSnimkaModal) {
     state.deleteSnimkaModal = deleteSnimkaModal
@@ -227,6 +230,17 @@ const methods = {
     state.snimki = state.snimki.filter((element) => {
       return element.id != id
     })
+  },
+  changeDeleteFakturapModal(deleteFakturapModal) {
+    state.deleteFakturapModal = deleteFakturapModal
+  },
+  deleteFakturapById(id) {
+    state.fakturip = state.fakturip.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdateFakturap(successUpdateFakturap) {
+    state.successUpdateFakturap = successUpdateFakturap
   },
   loadData() {
     var data = new FormData()
@@ -500,6 +514,9 @@ const methods = {
         }
         if (type == 'snimki') {
           methods.getSnimki(state.current_dashboard_offer)
+        }
+        if (type == 'fakturip') {
+          methods.getFakturip(state.current_dashboard_offer)
         }
       }
     }
@@ -1613,6 +1630,111 @@ const methods = {
       ) {
         methods.deleteSnimkaById(snimka_id)
         state.deleteSnimkaModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getFakturip(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'fakturip')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.fakturip = JSON.parse(this.response).result
+      } else {
+        state.fakturip = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteFakturap(fakturap_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', fakturap_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'fakturip')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteFakturapById(fakturap_id)
+        state.deleteFakturapModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveFakturap(fakturap_id, file, offer_id) {
+    var data = new FormData()
+    let fakturap = {}
+    if (fakturap_id != 0) {
+      fakturap = state.fakturip.find((element) => element.id == fakturap_id)
+    } else {
+      fakturap = {
+        id: fakturap_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', fakturap.id)
+    data.append('offer_id', fakturap_id)
+    data.append('filename', fakturap.file)
+    data.append('description', fakturap.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateFakturap(true)
+      } else {
+        methods.changeSuccessUpdateFakturap(false)
       }
     }
     xmlhttpro.send(data)
