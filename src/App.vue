@@ -23,6 +23,7 @@
       <Snimki v-if="store.state.page == 'Snimki'"></Snimki>
       <Fakturip v-if="store.state.page == 'Fakturip'"></Fakturip>
       <FirmZadaci v-if="store.state.page == 'FirmZadaci'"></FirmZadaci>
+      <Rabotni v-if="store.state.page == 'Rabotni'"></Rabotni>
     </div>
   </div>
 </template>
@@ -48,6 +49,7 @@ import Pprs from './components/includes/etapna/Pprs.vue'
 import Snimki from './components/includes/etapna/Snimki.vue'
 import Fakturip from './components/includes/etapna/Fakturip.vue'
 import FirmZadaci from './components/FirmZadaci.vue'
+import Rabotni from './components/Rabotni.vue'
 
 export default {
   name: 'App',
@@ -71,6 +73,7 @@ export default {
     Snimki,
     Fakturip,
     FirmZadaci,
+    Rabotni,
   },
 
   setup() {
