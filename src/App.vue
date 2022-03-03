@@ -19,6 +19,7 @@
       <Casti v-if="store.state.page == 'Casti'"></Casti>
       <Poracki v-if="store.state.page == 'Poracki'"></Poracki>
       <Pps v-if="store.state.page == 'Pps'"></Pps>
+      <Pprs v-if="store.state.page == 'Pprs'"></Pprs>
     </div>
   </div>
 </template>
@@ -40,6 +41,7 @@ import Poffers from './components/Poffers.vue'
 import Casti from './components/Casti.vue'
 import Poracki from './components/Poracki.vue'
 import Pps from './components/Pps.vue'
+import Pprs from './components/Pprs.vue'
 
 export default {
   name: 'App',
@@ -59,6 +61,7 @@ export default {
     Casti,
     Poracki,
     Pps,
+    Pprs,
   },
 
   setup() {

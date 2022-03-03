@@ -63,6 +63,9 @@ const state = reactive({
   pps: [],
   deletePpModal: false,
   successUpdatePp: false,
+  pprs: [],
+  deletePprModal: false,
+  successUpdatePpr: false,
 })
 
 const methods = {
@@ -203,6 +206,17 @@ const methods = {
   },
   changeSuccessUpdatePp(successUpdatePp) {
     state.successUpdatePp = successUpdatePp
+  },
+  changeDeletePprModal(deletePprModal) {
+    state.deletePprModal = deletePprModal
+  },
+  deletePprById(id) {
+    state.pprs = state.pprs.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeSuccessUpdatePpr(successUpdatePpr) {
+    state.successUpdatePpr = successUpdatePpr
   },
   loadData() {
     var data = new FormData()
@@ -460,6 +474,9 @@ const methods = {
         }
         if (type == 'pp') {
           methods.getPps(state.current_dashboard_offer)
+        }
+        if (type == 'ppr') {
+          methods.getPprs(state.current_dashboard_offer)
         }
       }
     }
@@ -1406,6 +1423,111 @@ const methods = {
         methods.changeSuccessUpdatePp(true)
       } else {
         methods.changeSuccessUpdatePp(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getPprs(offer_id) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('offer_id', offer_id)
+    data.append('type', 'ppr')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.pprs = JSON.parse(this.response).result
+      } else {
+        state.pprs = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deletePpr(ppr_id, file, offer_id) {
+    var data = new FormData()
+    data.append('id', ppr_id)
+    data.append('file', file)
+    data.append('offer_id', offer_id)
+    data.append('type', 'ppr')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deletePprById(ppr_id)
+        state.deletePprModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  savePpr(ppr_id, file, offer_id) {
+    var data = new FormData()
+    let ppr = {}
+    if (ppr_id != 0) {
+      ppr = state.pprs.find((element) => element.id == ppr_id)
+    } else {
+      ppr = {
+        id: ppr_id,
+        offer_id: offer_id,
+        file: file,
+        description: '',
+      }
+    }
+    data.append('id', ppr.id)
+    data.append('offer_id', ppr_id)
+    data.append('filename', ppr.file)
+    data.append('description', ppr.description)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/save_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdatePpr(true)
+      } else {
+        methods.changeSuccessUpdatePpr(false)
       }
     }
     xmlhttpro.send(data)
