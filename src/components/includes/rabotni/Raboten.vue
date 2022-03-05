@@ -11,8 +11,12 @@
         />
       </svg>
     </button>
-    <span class="ml-2 font-medium">Работни листи</span>
-    <span class="ml-2 font-medium">Заплата: </span>
+    <span class="mx-2 font-medium">Работни листи</span>
+    <span class="text-gray-300 text-sm">&nbsp;|&nbsp;</span>
+    <span class="ml-2 font-medium">Заплата:</span>&nbsp;<span
+      class="text-red-800"
+      >{{ getZaplati() }}</span
+    >
   </div>
   <ul class="mb-6">
     <li
@@ -23,14 +27,22 @@
       <button class="w-full p-2 rounded bg-sky-200 border border-sky-300">
         <div class="flex items-center justify-between">
           <div class="truncate">
-            <span class="text-sm font-medium text-gray-800 mr-1">{{
-              raboten.id
-            }}</span>
+            <span class="text-sm font-medium text-gray-800 mr-1"
+              >{{ formatDateTime(raboten.dateon) }} -
+              {{ raboten.sluzitel_name }} - {{ raboten.mps_regnomer }}</span
+            >
           </div>
-          <div>
-            <span class="text-sm font-medium text-orange-700">{{
-              raboten.id
-            }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="truncate">
+            <span class="text-sm font-medium text-gray-800 mr-1"
+              >Оферта - {{ raboten.idnomber }}
+            </span>
+          </div>
+          <div class="truncate">
+            <span class="text-sm font-medium text-red-800 mr-1"
+              >{{ raboten.zaplata_all }}
+            </span>
           </div>
         </div>
       </button>
@@ -40,6 +52,7 @@
 
 <script>
 import { inject } from 'vue'
+import moment from 'moment'
 
 export default {
   name: 'Raboten',
@@ -47,8 +60,24 @@ export default {
   setup() {
     const store = inject('store')
 
+    const formatDateTime = (value) => {
+      if (value) {
+        return moment(String(value)).format('DD.MM.YYYY hh:mm')
+      }
+    }
+
+    const getZaplati = () => {
+      let sum = 0
+      store.state.rabotni.forEach((element) => {
+        sum += parseFloat(element.zaplata_all)
+      })
+      return sum.toFixed(2)
+    }
+
     return {
       store,
+      formatDateTime,
+      getZaplati,
     }
   },
 }
