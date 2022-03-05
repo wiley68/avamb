@@ -18,11 +18,12 @@
 
 <script>
 import { inject } from 'vue'
+import Raboten from './Raboten.vue'
 
 export default {
   name: 'RabotniSidebar',
 
-  components: { Dashboard },
+  components: { Raboten },
 
   setup() {
     const store = inject('store')
