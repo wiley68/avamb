@@ -74,7 +74,9 @@ const state = reactive({
   activeConditionFirms: false,
   rabotni: [],
   rabotniSidebarOpen: true,
-  current_raboten: 0,
+  current_raboten_id: 0,
+  poseshtenia: [],
+  current_poseshtenie_id: 0,
 })
 
 const methods = {
@@ -108,8 +110,14 @@ const methods = {
   openRabotniSidebar() {
     state.rabotniSidebarOpen = true
   },
-  changeRabotni(id) {
-    state.current_raboten = id
+  changeRabotni(raboten_id) {
+    state.current_poseshtenie_id = 0
+    state.poseshtenia = []
+    state.current_raboten_id = raboten_id
+    //methods.getPoseshtenia(state.current_poseshtenie_id)
+  },
+  changePoseshtenie(poseshtenie_id) {
+    state.current_poseshtenie_id = poseshtenie_id
   },
   changePage(page) {
     state.page = page
