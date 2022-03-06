@@ -77,6 +77,7 @@ const state = reactive({
   current_raboten_id: 0,
   poseshtenia: [],
   current_poseshtenie_id: 0,
+  successUpdateRaboten: false,
 })
 
 const methods = {
@@ -268,6 +269,9 @@ const methods = {
   },
   changeSuccessUpdateFakturap(successUpdateFakturap) {
     state.successUpdateFakturap = successUpdateFakturap
+  },
+  changeSuccessUpdateRaboten(successUpdateRaboten) {
+    state.successUpdateRaboten = successUpdateRaboten
   },
   loadData() {
     var data = new FormData()
