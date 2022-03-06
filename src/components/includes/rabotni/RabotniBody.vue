@@ -34,7 +34,7 @@
             @click.stop="updateRaboten()"
           >
             <svg
-              class="w-4 h-4 fill-current text-green-500"
+              class="w-4 h-4 fill-current text-green-500 shrink-0"
               viewBox="0 0 16 16"
             >
               <path
@@ -83,11 +83,12 @@
             </div>
           </ModalBlank>
           <button
-            class="flex flex-row justify-center items-center bg-white p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            aria-controls="success-modal"
             @click.stop="newPoseshtenie(raboten.id)"
           >
             <svg
-              class="w-4 h-4 fill-current text-orange-500 mr-1 flex-none"
+              class="w-4 h-4 fill-current text-orange-500 shrink-0"
               viewBox="0 0 24 24"
             >
               <path
@@ -95,16 +96,15 @@
                 d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
               />
             </svg>
-            <span class="text-xs">Ново посещение</span>
           </button>
         </div>
       </div>
     </div>
     <div class="grow p-4">
       <div
-        class="bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 divide-y divide-gray-200"
+        class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 divide-y divide-gray-200"
       >
-        Poseshtenie
+        <Raboten />
       </div>
       <div
         class="bg-orange-50 shadow-lg rounded-sm border border-orange-200 px-6 py-2"
@@ -153,12 +153,13 @@
 <script>
 import { inject, computed } from 'vue'
 import ModalBlank from '../components/ModalBlank.vue'
+import Raboten from './Raboten.vue'
 import moment from 'moment'
 
 export default {
   name: 'RabotniBody',
 
-  components: { ModalBlank },
+  components: { ModalBlank, Raboten },
 
   setup() {
     const store = inject('store')
