@@ -15,21 +15,25 @@
             class="flex items-center bg-white border-b border-gray-200 px-5 h-16"
           >
             <div class="w-full flex items-center justify-between">
-              rabotni
               <button
                 class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
               >
                 <svg
-                  class="w-4 h-4 fill-current text-indigo-500 mr-1 flex-none"
+                  class="w-6 h-6 fill-current text-indigo-500 mr-1 shrink-0"
                   viewBox="0 0 24 24"
                 >
                   <path
                     fill="currentColor"
-                    d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                    d="M19,11H15V15H13V11H9V9H13V5H15V9H19M20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M4,6H2V20A2,2 0 0,0 4,22H18V20H4V6Z"
                   />
                 </svg>
-                <span class="text-xs">Нов работен лист</span>
               </button>
+              <div class="font-medium">Работни листи</div>
+              <div class="font-medium">
+                Заплата:&nbsp;<span class="text-red-600">{{
+                  allZaplata()
+                }}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -62,9 +66,10 @@
                       </div>
                     </div>
                     <div
-                      class="flex text-sm text-gray-500 font-medium truncate"
+                      class="flex justify-between text-sm text-gray-500 font-medium truncate"
                     >
-                      Оферта&nbsp;-&nbsp;
+                      <div>Оферта&nbsp;-&nbsp;{{ raboten.idnomber }}</div>
+                      <div class="text-red-600">{{ raboten.zaplata_all }}</div>
                     </div>
                   </div>
                 </button>
@@ -132,12 +137,22 @@ export default {
       return store.state.poseshtenia
     })
 
+    const allZaplata = () => {
+      return store.state.rabotni
+        .map((element) => element.zaplata_all)
+        .reduce(
+          (prev, curr) => (parseFloat(prev) + parseFloat(curr)).toFixed(2),
+          0
+        )
+    }
+
     return {
       store,
       formatDateTime,
       changeRaboten,
       changePoseshtenie,
       poseshtenia,
+      allZaplata,
     }
   },
 }
