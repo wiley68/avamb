@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6">
+  <div class="py-6 w-full">
     <header class="flex items-start">
       <div class="sm:flex items-start justify-between mb-1">
         <div class="xl:flex items-center mb-2 sm:mb-0">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </header>
-    <div class="flex flex-row items-center text-sm text-gray-800">
+    <div class="flex flex-row items-center text-sm text-gray-800 mb-2">
       <div class="mr-2">Ще шофирате ли днес:</div>
       <div class="flex items-center">
         <div class="form-switch focus-within:shadow-outline">
@@ -36,18 +36,45 @@
       </div>
     </div>
     <div
-      class="flex flex-row items-center text-sm text-gray-800 mt-2"
+      class="flex flex-col justify-start items-start text-sm text-gray-800"
       v-if="raboten.isdriver == '1'"
     >
-      <div class="flex items-center">
+      <div class="flex flex-row items-center w-full mb-1">
+        <div class="w-24">МПС:</div>
         <select
           v-model="raboten.mps_regnomer_id"
-          class="w-full border border-gray-200 p-1 outline-none"
+          class="flex-grow border border-gray-200 p-1 outline-none"
         >
           <option v-for="mps in raboten.mpsta" :key="mps.id" :value="mps.id">
             {{ mps.regnomer }}
           </option>
         </select>
+      </div>
+      <div class="flex flex-row items-center w-full mb-1">
+        <div class="w-24">Цена гориво:</div>
+        <input
+          v-model="raboten.cena_gorivo"
+          type="text"
+          class="flex-grow border border-gray-200 p-1 outline-none"
+        />
+      </div>
+    </div>
+    <div class="flex flex-col justify-start items-start text-sm text-gray-800">
+      <div class="flex flex-row items-center w-full mb-1">
+        <div class="w-24">Аванс:</div>
+        <input
+          v-model="raboten.avans"
+          type="text"
+          class="flex-grow border border-gray-200 p-1 outline-none"
+        />
+      </div>
+      <div class="flex flex-row items-center w-full mb-1">
+        <div class="w-24">Заплащане +:</div>
+        <input
+          v-model="raboten.bonus"
+          type="text"
+          class="flex-grow border border-gray-200 p-1 outline-none"
+        />
       </div>
     </div>
   </div>

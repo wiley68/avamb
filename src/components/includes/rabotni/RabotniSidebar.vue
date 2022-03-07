@@ -19,7 +19,7 @@
                 class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
               >
                 <svg
-                  class="w-6 h-6 fill-current text-indigo-500 mr-1 shrink-0"
+                  class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
                   viewBox="0 0 24 24"
                 >
                   <path
