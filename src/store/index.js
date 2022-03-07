@@ -1804,19 +1804,32 @@ const methods = {
     xmlhttpro.send(data)
   },
   saveRaboten(raboten_id) {
-    const raboten = state.rabotni.find((element) => element.id == raboten_id)
     var data = new FormData()
     var info = []
-    info[0] = 'SAVE'
-    info[1] = raboten_id
-    info[2] = state.user.firm_id
-    info[3] = raboten.dateon
-    info[4] = raboten.sastavil_id
-    info[5] = raboten.isdraiver
-    info[6] = raboten.mps_regnomer_id
-    info[7] = raboten.cena_gorivo
-    info[8] = raboten.avans
-    info[9] = raboten.bonus
+    if (raboten_id > 0) {
+      const raboten = state.rabotni.find((element) => element.id == raboten_id)
+      info[0] = 'SAVE'
+      info[1] = raboten_id
+      info[2] = state.user.firm_id
+      info[3] = raboten.dateon
+      info[4] = raboten.sastavil_id
+      info[5] = raboten.isdriver
+      info[6] = raboten.mps_regnomer_id
+      info[7] = raboten.cena_gorivo
+      info[8] = raboten.avans
+      info[9] = raboten.bonus
+    } else {
+      info[0] = 'SAVE'
+      info[1] = 0
+      info[2] = state.user.firm_id
+      info[3] = moment().format()
+      info[4] = state.user.id
+      info[5] = 0
+      info[6] = 0
+      info[7] = 0.0
+      info[8] = 0.0
+      info[9] = 0.0
+    }
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
@@ -1837,7 +1850,14 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        methods.changeSuccessUpdateRaboten(true)
+        if (raboten_id > 0) {
+          methods.changeSuccessUpdateRaboten(true)
+        } else {
+          const raboten_id = JSON.parse(this.response).newid
+          methods.getRabotni()
+          methods.changeRabotni(raboten_id)
+          methods.closeRabotniSidebar()
+        }
       } else {
         methods.changeSuccessUpdateRaboten(false)
       }

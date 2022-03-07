@@ -17,6 +17,7 @@
             <div class="w-full flex items-center justify-between">
               <button
                 class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+                @click.stop="store.methods.saveRaboten(0)"
               >
                 <svg
                   class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
