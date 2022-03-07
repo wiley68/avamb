@@ -176,7 +176,7 @@ export default {
     })
 
     const updateRaboten = () => {
-      //store.methods.updateProject()
+      //store.methods.updateRaboten()
     }
 
     const newPoseshtenie = (raboten_id) => {

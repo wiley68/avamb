@@ -1803,6 +1803,49 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  saveRaboten() {
+    var data = new FormData()
+    data.append('token', '2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z')
+    const project = state.projects.find(
+      (element) => element.id == state.current_project_id
+    )
+    data.append('id', project.id)
+    data.append('title', project.title)
+    data.append('body', project.body)
+    data.append('status', project.status)
+    data.append('user_id', project.user_id)
+    data.append('last_id', state.user_id)
+    project.updated_at = moment().format()
+    data.append('updated_at', project.updated_at)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://woo.avalontest.eu/wp-admin/admin-ajax.php?action=maxtradeoffice_save_project'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdate(true)
+        state.projects.find(
+          (element) => element.id == state.current_project_id
+        ).last_id = state.user_id
+      } else {
+        methods.changeSuccessUpdate(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
 }
 
 export default { state, methods }
