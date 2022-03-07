@@ -63,11 +63,13 @@
               </div>
               <div>
                 <div class="mb-2">
-                  <div class="text-lg font-semibold text-gray-800">OK</div>
+                  <div class="text-lg font-semibold text-gray-800">
+                    Съобщение
+                  </div>
                 </div>
                 <div class="text-sm mb-10">
                   <div class="space-y-2">
-                    <p>Saved</p>
+                    <p>Промените са записани успешно</p>
                   </div>
                 </div>
                 <div class="flex flex-wrap justify-end space-x-2">
@@ -77,7 +79,7 @@
                       store.methods.changeSuccessUpdateRaboten(false)
                     "
                   >
-                    Close
+                    Затвори
                   </button>
                 </div>
               </div>
