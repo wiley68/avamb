@@ -1803,23 +1803,24 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  saveRaboten() {
+  saveRaboten(raboten_id) {
+    const raboten = state.rabotni.find((element) => element.id == raboten_id)
     var data = new FormData()
-    data.append('token', '2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z')
-    const project = state.projects.find(
-      (element) => element.id == state.current_project_id
-    )
-    data.append('id', project.id)
-    data.append('title', project.title)
-    data.append('body', project.body)
-    data.append('status', project.status)
-    data.append('user_id', project.user_id)
-    data.append('last_id', state.user_id)
-    project.updated_at = moment().format()
-    data.append('updated_at', project.updated_at)
+    var info = []
+    info[0] = 'SAVE'
+    info[1] = raboten_id
+    info[2] = state.user.firm_id
+    info[3] = raboten.dateon
+    info[4] = raboten.sastavil_id
+    info[5] = raboten.isdraiver
+    info[6] = raboten.mps_regnomer_id
+    info[7] = raboten.cena_gorivo
+    info[8] = raboten.avans
+    info[9] = raboten.bonus
+    data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://woo.avalontest.eu/wp-admin/admin-ajax.php?action=maxtradeoffice_save_project'
+      'https://dograma.avalonbg.com/function/poseshtenia.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -1832,16 +1833,12 @@ const methods = {
       loader.hide()
     })
     xmlhttpro.onreadystatechange = function () {
+      console.log(this.response)
       if (
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        methods.changeSuccessUpdate(true)
-        state.projects.find(
-          (element) => element.id == state.current_project_id
-        ).last_id = state.user_id
       } else {
-        methods.changeSuccessUpdate(false)
       }
     }
     xmlhttpro.send(data)

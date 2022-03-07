@@ -27,7 +27,7 @@
           />
           <label class="bg-gray-400" for="toggle-isdriver">
             <span class="bg-white shadow-sm" aria-hidden="true"></span>
-            <span class="sr-only">1111111</span>
+            <span class="sr-only"></span>
           </label>
         </div>
         <div class="text-sm text-gray-400 italic ml-2">
@@ -46,7 +46,7 @@
           class="flex-grow border border-gray-200 p-1 outline-none"
         >
           <option v-for="mps in raboten.mpsta" :key="mps.id" :value="mps.id">
-            {{ mps.regnomer }}
+            {{ mps.marka }} - {{ mps.regnomer }}
           </option>
         </select>
       </div>
