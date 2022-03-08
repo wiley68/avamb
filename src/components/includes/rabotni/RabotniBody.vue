@@ -34,7 +34,7 @@
             @click.stop="updateRaboten(raboten.id)"
           >
             <svg
-              class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
+              class="w-6 h-6 fill-current text-blue-600 shrink-0"
               viewBox="0 0 24 24"
             >
               <path
@@ -87,11 +87,73 @@
           </ModalBlank>
           <button
             class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            aria-controls="danger-modal"
+            @click.stop="deleteRabotenCheck()"
+          >
+            <svg
+              class="w-6 h-6 fill-current text-blue-600 shrink-0"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+              />
+            </svg>
+          </button>
+          <ModalBlank
+            id="danger-modal"
+            :modalOpen="store.state.deleteRabotenModal"
+            @close-modal="store.methods.changeDeleteRabotenModal(flase)"
+          >
+            <div class="p-5 flex space-x-4">
+              <div
+                class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-red-100"
+              >
+                <svg
+                  class="w-4 h-4 shrink-0 fill-current text-red-600"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <div class="mb-2">
+                  <div class="text-lg font-semibold text-gray-800">
+                    Внимание!
+                  </div>
+                </div>
+                <!-- Modal content -->
+                <div class="text-sm mb-10">
+                  <div class="space-y-2">
+                    <p>Желаете ли да изтриете работния лист?</p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap justify-end space-x-2">
+                  <button
+                    class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+                    @click.stop="store.methods.changeDeleteRabotenModal(flase)"
+                  >
+                    Откажи
+                  </button>
+                  <button
+                    class="btn-sm bg-red-500 hover:bg-red-600 text-white"
+                    @click.stop="deleteRaboten()"
+                  >
+                    Изтрий
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ModalBlank>
+          <button
+            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="success-modal"
             @click.stop="newPoseshtenie(raboten.id)"
           >
             <svg
-              class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
+              class="w-6 h-6 fill-current text-blue-600 shrink-0"
               viewBox="0 0 24 24"
             >
               <path
@@ -181,6 +243,15 @@ export default {
       store.methods.saveRaboten(raboten_id)
     }
 
+    const deleteRabotenCheck = () => {
+      store.methods.changeDeleteRabotenModal(true)
+    }
+
+    const deleteRaboten = () => {
+      const deleted_id = raboten.value.id
+      store.methods.deleteRaboten(deleted_id)
+    }
+
     const newPoseshtenie = (raboten_id) => {
       //store.methods.newTask(project_id)
     }
@@ -196,6 +267,8 @@ export default {
       raboten,
       poseshtenia,
       updateRaboten,
+      deleteRabotenCheck,
+      deleteRaboten,
       newPoseshtenie,
       formatDateTime,
     }

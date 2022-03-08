@@ -75,9 +75,10 @@ const state = reactive({
   rabotni: [],
   rabotniSidebarOpen: true,
   current_raboten_id: 0,
+  successUpdateRaboten: false,
+  deleteRabotenModal: false,
   poseshtenia: [],
   current_poseshtenie_id: 0,
-  successUpdateRaboten: false,
 })
 
 const methods = {
@@ -270,8 +271,17 @@ const methods = {
   changeSuccessUpdateFakturap(successUpdateFakturap) {
     state.successUpdateFakturap = successUpdateFakturap
   },
+  changeDeleteRabotenModal(deleteRabotenModal) {
+    state.deleteRabotenModal = deleteRabotenModal
+  },
   changeSuccessUpdateRaboten(successUpdateRaboten) {
     state.successUpdateRaboten = successUpdateRaboten
+  },
+  deleteRabotenById(id) {
+    state.rabotni = state.rabotni.filter((element) => {
+      return element.id != id
+    })
+    state.poseshtenia = []
   },
   loadData() {
     var data = new FormData()
@@ -1856,10 +1866,44 @@ const methods = {
           const raboten_id = JSON.parse(this.response).newid
           methods.getRabotni()
           methods.changeRabotni(raboten_id)
-          methods.closeRabotniSidebar()
+          methods.toggleRabotniSidebar()
         }
       } else {
         methods.changeSuccessUpdateRaboten(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteRaboten(raboten_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'DELETE'
+    info[1] = raboten_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/poseshtenia.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteRabotenById(raboten_id)
+        state.deleteRabotenModal = false
+        state.current_raboten_id = state.rabotni[0] ? state.rabotni[0].id : 0
+        methods.toggleRabotniSidebar()
+        //methods.getPoseshtenia(state.current_raboten_id)
       }
     }
     xmlhttpro.send(data)
