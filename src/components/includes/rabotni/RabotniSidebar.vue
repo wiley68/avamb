@@ -120,13 +120,18 @@ export default {
 
     const formatDateTime = (value) => {
       if (value) {
-        return moment(String(value)).format('DD.MM.YYYY hh:mm')
+        return moment(String(value)).format('DD.MM.YYYY HH:mm')
       }
     }
 
     const changeRaboten = (raboten_id) => {
-      store.methods.changeRabotni(raboten_id)
-      store.methods.closeRabotniSidebar()
+      const raboten = store.state.rabotni.find(
+        (element) => element.id == raboten_id
+      )
+      if (moment(String(raboten.dateon)).isSame(new Date(), 'day')) {
+        store.methods.changeRabotni(raboten_id)
+        store.methods.closeRabotniSidebar()
+      }
     }
 
     const changePoseshtenie = (poseshtenie_id) => {
