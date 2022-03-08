@@ -182,7 +182,7 @@
         </div>
         <div class="flex flex-row w-full justify-between items-center text-sm">
           <div
-            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-cyan-600 p-1"
+            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-blue-300 bg-blue-50 p-1"
           >
             <div v-if="raboten.isdriver == 1">
               Тръгване&nbsp;-&nbsp;{{ poseshtenie.tragvane }}
@@ -195,7 +195,7 @@
           </div>
           <div class="w-1"></div>
           <div
-            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-lime-600 p-1"
+            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-green-300 bg-green-50 p-1"
           >
             <div v-if="raboten.isdriver == 1">
               Пристигане&nbsp;-&nbsp;{{ poseshtenie.pristigane }}

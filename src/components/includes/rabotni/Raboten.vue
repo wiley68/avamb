@@ -1,14 +1,17 @@
 <template>
   <div class="py-6 w-full">
-    <header class="flex items-start">
-      <div class="sm:flex items-start justify-between mb-1">
+    <header class="w-full flex items-start">
+      <div class="w-full sm:flex items-start justify-between mb-1">
         <div class="xl:flex items-center mb-2 sm:mb-0">
           <span class="text-sm font-semibold text-gray-800 text-left truncate">
             Служител&nbsp;-&nbsp;{{ raboten.sluzitel_name }}
           </span>
           <div class="text-sm text-gray-400 hidden xl:block mx-1">·</div>
-          <div class="text-sm">
-            Дата:&nbsp;{{ formatDateTime(raboten.dateon) }}
+          <div
+            class="flex flex-row w-full justify-between items-center text-sm"
+          >
+            <div class="">Дата:&nbsp;{{ formatDateTime(raboten.dateon) }}</div>
+            <div class="text-right">№&nbsp;{{ raboten.id }}</div>
           </div>
         </div>
       </div>
