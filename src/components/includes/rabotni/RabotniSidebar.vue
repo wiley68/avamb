@@ -69,7 +69,11 @@
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
                     >
-                      <div>Оферта&nbsp;-&nbsp;{{ raboten.idnomber }}</div>
+                      <div>
+                        <span class="text-red-600">№&nbsp;{{ raboten.id }}</span
+                        >&nbsp;<span class="text-gray-300">|</span
+                        >&nbsp;Оферта&nbsp;-&nbsp;{{ raboten.idnomber }}
+                      </div>
                       <div class="text-red-600">{{ raboten.zaplata_all }}</div>
                     </div>
                   </div>
