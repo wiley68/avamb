@@ -116,7 +116,7 @@ const methods = {
     state.current_poseshtenie_id = 0
     state.poseshtenia = []
     state.current_raboten_id = raboten_id
-    //methods.getPoseshtenia(state.current_poseshtenie_id)
+    methods.getPoseshtenia(state.current_raboten_id)
   },
   changePoseshtenie(poseshtenie_id) {
     state.current_poseshtenie_id = poseshtenie_id
@@ -1903,7 +1903,36 @@ const methods = {
         state.deleteRabotenModal = false
         state.current_raboten_id = state.rabotni[0] ? state.rabotni[0].id : 0
         methods.toggleRabotniSidebar()
-        //methods.getPoseshtenia(state.current_raboten_id)
+        methods.getPoseshtenia(state.current_raboten_id)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getPoseshtenia(raboten_id) {
+    console.log(raboten_id)
+    var data = new FormData()
+    data.append('pid', raboten_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_poseshtenia.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.poseshtenia = JSON.parse(this.response).poseshtenia
+        console.log(state.poseshtenia)
       }
     }
     xmlhttpro.send(data)
