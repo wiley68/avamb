@@ -167,47 +167,53 @@
     </div>
     <div class="grow p-4">
       <div
-        class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 divide-y divide-gray-200"
+        class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 divide-y divide-gray-200 mb-3"
       >
         <Raboten />
       </div>
       <div
-        class="bg-orange-50 shadow-lg rounded-sm border border-orange-200 px-6 py-2"
-        v-if="poseshtenia.length > 0"
+        class="flex flex-col justify-center items-center bg-orange-50 shadow-lg rounded-sm border border-orange-200 px-2 py-2 mb-3"
+        v-for="poseshtenie in poseshtenia"
+        :key="poseshtenie.id"
       >
-        <div
-          class="flex flex-col border-b border-gray-300 border-dotted mb-2"
-          v-for="poseshtenie in poseshtenia"
-          :key="poseshtenie.id"
-        >
-          <div class="flex flex-row justify-between items-center mb-1">
-            <div
-              class="flex flex-none text-xs text-gray-500 font-medium w-10 pr-1"
-            >
-              {{ poseshtenie.id }}
+        <div class="flex flex-row w-full justify-between items-center text-sm">
+          <div class="">Посещение №:&nbsp;{{ poseshtenie.id }}</div>
+          <div class="">Оферта №:&nbsp;{{ poseshtenie.offer_id }}</div>
+        </div>
+        <div class="flex flex-row w-full justify-between items-center text-sm">
+          <div
+            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-cyan-600 p-1"
+          >
+            <div v-if="raboten.isdriver == 1">
+              Тръгване&nbsp;-&nbsp;{{ poseshtenie.tragvane }}
             </div>
-            <button
-              class="flex flex-grow font-semibold text-sm text-gray-500 hover:text-indigo-600 hover:bg-orange-100"
-              @click.close="store.methods.changePoseshtenie(poseshtenie.id)"
-            >
-              {{ poseshtenie.id }}
-            </button>
+            <div v-if="raboten.isdriver == 1">
+              Км.:&nbsp;{{ poseshtenie.kmtragvane }}
+            </div>
+            <div>{{ poseshtenie.address_tragvane }}</div>
+            <div>Работа старт:&nbsp;{{ poseshtenie.zapocvane }}</div>
           </div>
-          <div class="flex flex-row justify-between items-center mb-1">
-            <div
-              class="flex flex-none text-xs text-gray-500 font-medium w-10"
-            ></div>
-            <div
-              class="flex flex-grow justify-start items-center text-xs font-medium text-gray-500 whitespace-nowrap mb-2 sm:mb-0"
-            >
-              <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24">
-                <path
-                  fill="currentColor"
-                  d="M21,10.12H14.22L16.96,7.3C14.23,4.6 9.81,4.5 7.08,7.2C4.35,9.91 4.35,14.28 7.08,17C9.81,19.7 14.23,19.7 16.96,17C18.32,15.65 19,14.08 19,12.1H21C21,14.08 20.12,16.65 18.36,18.39C14.85,21.87 9.15,21.87 5.64,18.39C2.14,14.92 2.11,9.28 5.62,5.81C9.13,2.34 14.76,2.34 18.27,5.81L21,3V10.12M12.5,8V12.25L16,14.33L15.28,15.54L11,13V8H12.5Z"
-                />
-              </svg>
-              {{ formatDateTime(poseshtenie.dateon) }}
+          <div class="w-1"></div>
+          <div
+            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-lime-600 p-1"
+          >
+            <div v-if="raboten.isdriver == 1">
+              Пристигане&nbsp;-&nbsp;{{ poseshtenie.pristigane }}
             </div>
+            <div v-if="raboten.isdriver == 1">
+              Км.:&nbsp;{{ poseshtenie.kmpristigane }}
+            </div>
+            <div>{{ poseshtenie.address_pristigane }}</div>
+            <div>Работа стоп:&nbsp;{{ poseshtenie.priklucvane }}</div>
+          </div>
+        </div>
+        <div class="flex flex-row w-full justify-between items-center text-sm">
+          <div class="flex-1 flex flex-col justify-end items-startp-1">
+            Работни ч.&nbsp;{{ poseshtenie.vreme_rabota }}
+          </div>
+          <div class="w-1"></div>
+          <div class="flex-1 flex flex-col justify-end items-startp-1">
+            Шофиране ч.&nbsp;{{ poseshtenie.vreme_shofirane }}
           </div>
         </div>
       </div>
