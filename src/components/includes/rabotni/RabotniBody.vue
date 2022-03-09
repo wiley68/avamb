@@ -87,6 +87,21 @@
           </ModalBlank>
           <button
             class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            aria-controls="success-modal"
+            @click.stop="newPoseshtenie(raboten.id)"
+          >
+            <svg
+              class="w-6 h-6 fill-current text-blue-600 shrink-0"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M16,11V9H13V6H11V9H8V11H11V14H13V11H16M17,3A2,2 0 0,1 19,5V15A2,2 0 0,1 17,17H13V19H14A1,1 0 0,1 15,20H22V22H15A1,1 0 0,1 14,23H10A1,1 0 0,1 9,22H2V20H9A1,1 0 0,1 10,19H11V17H7C5.89,17 5,16.1 5,15V5A2,2 0 0,1 7,3H17Z"
+              />
+            </svg>
+          </button>
+          <button
+            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="danger-modal"
             @click.stop="deleteRabotenCheck()"
           >
@@ -96,7 +111,7 @@
             >
               <path
                 fill="currentColor"
-                d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+                d="M17 4V6H3V4H6.5L7.5 3H12.5L13.5 4H17M4 19V7H16V19C16 20.1 15.1 21 14 21H6C4.9 21 4 20.1 4 19M19 15H21V17H19V15M19 7H21V13H19V7Z"
               />
             </svg>
           </button>
@@ -147,21 +162,6 @@
               </div>
             </div>
           </ModalBlank>
-          <button
-            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-            aria-controls="success-modal"
-            @click.stop="newPoseshtenie(raboten.id)"
-          >
-            <svg
-              class="w-6 h-6 fill-current text-blue-600 shrink-0"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M13,9H11V12H8V14H11V17H13V14H16V12H13M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22A9,9 0 0,0 21,13A9,9 0 0,0 12,4M22,5.72L17.4,1.86L16.11,3.39L20.71,7.25M7.88,3.39L6.6,1.86L2,5.71L3.29,7.24L7.88,3.39Z"
-              />
-            </svg>
-          </button>
         </div>
       </div>
     </div>
