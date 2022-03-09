@@ -177,43 +177,71 @@
         :key="poseshtenie.id"
       >
         <div class="flex flex-row w-full justify-between items-center text-sm">
-          <div class="">Посещение №:&nbsp;{{ poseshtenie.id }}</div>
-          <div class="">Оферта №:&nbsp;{{ poseshtenie.offer_id }}</div>
+          <div class="w-full">
+            Посещение №:&nbsp;<span class="font-bold">{{
+              poseshtenie.id
+            }}</span>
+          </div>
+          <div class="w-full">Оферта №:&nbsp;{{ poseshtenie.offer_id }}</div>
         </div>
         <div class="flex flex-row w-full justify-between items-center text-sm">
           <div
             class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-blue-300 bg-blue-50 p-1"
           >
             <div v-if="raboten.isdriver == 1">
-              Тръгване&nbsp;-&nbsp;{{ poseshtenie.tragvane }}
+              Тръгване&nbsp;-&nbsp;<span class="font-bold">{{
+                poseshtenie.tragvane
+              }}</span>
             </div>
             <div v-if="raboten.isdriver == 1">
-              Км.:&nbsp;{{ poseshtenie.kmtragvane }}
+              Км.:&nbsp;<span class="font-bold">{{
+                poseshtenie.kmtragvane
+              }}</span>
             </div>
             <div>{{ poseshtenie.address_tragvane }}</div>
-            <div>Работа старт:&nbsp;{{ poseshtenie.zapocvane }}</div>
+            <div>
+              Работа старт:&nbsp;<span class="font-bold">{{
+                poseshtenie.zapocvane
+              }}</span>
+            </div>
           </div>
           <div class="w-1"></div>
           <div
             class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-green-300 bg-green-50 p-1"
           >
             <div v-if="raboten.isdriver == 1">
-              Пристигане&nbsp;-&nbsp;{{ poseshtenie.pristigane }}
+              Пристигане&nbsp;-&nbsp;<span class="font-bold">{{
+                poseshtenie.pristigane
+              }}</span>
             </div>
             <div v-if="raboten.isdriver == 1">
-              Км.:&nbsp;{{ poseshtenie.kmpristigane }}
+              Км.:&nbsp;<span class="font-bold">{{
+                poseshtenie.kmpristigane
+              }}</span>
             </div>
             <div>{{ poseshtenie.address_pristigane }}</div>
-            <div>Работа стоп:&nbsp;{{ poseshtenie.priklucvane }}</div>
+            <div>
+              Работа стоп:&nbsp;<span class="font-bold">{{
+                poseshtenie.priklucvane
+              }}</span>
+            </div>
           </div>
         </div>
         <div class="flex flex-row w-full justify-between items-center text-sm">
           <div class="flex-1 flex flex-col justify-end items-startp-1">
-            Работни ч.&nbsp;{{ poseshtenie.vreme_rabota }}
+            <div>
+              Работни ч.&nbsp;<span class="font-bold">{{
+                poseshtenie.vreme_rabota
+              }}</span>
+            </div>
           </div>
           <div class="w-1"></div>
           <div class="flex-1 flex flex-col justify-end items-startp-1">
-            Шофиране ч.&nbsp;{{ poseshtenie.vreme_shofirane }}
+            <div>
+              Шофиране ч.&nbsp;<span class="font-bold">{{
+                poseshtenie.vreme_shofirane
+              }}</span>
+            </div>
           </div>
         </div>
       </div>
