@@ -96,10 +96,11 @@
                     "
                   >
                     <button
-                      class="text-sm flex flex-grow whitespace-nowrap overflow-hidden overflow-ellipsis"
+                      class="text-sm flex justify-between flex-grow whitespace-nowrap overflow-hidden overflow-ellipsis"
                       @click.stop="changePoseshtenie(poseshtenie.id)"
                     >
-                      {{ poseshtenie.id }}
+                      <div>Посещение №&nbsp;{{ poseshtenie.id }}</div>
+                      <div>Оферта №&nbsp;{{ poseshtenie.offer_id }}</div>
                     </button>
                   </div>
                 </div>
@@ -139,7 +140,7 @@ export default {
     }
 
     const changePoseshtenie = (poseshtenie_id) => {
-      store.methods.changePoseshtenie(task_id)
+      store.methods.changePoseshtenie(poseshtenie_id)
       store.methods.closeRabotniSidebar()
     }
 
