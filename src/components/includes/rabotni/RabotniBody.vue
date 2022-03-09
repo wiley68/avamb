@@ -190,7 +190,7 @@
           >
             <div v-if="raboten.isdriver == 1">
               Тръгване&nbsp;-&nbsp;<span class="font-bold">{{
-                poseshtenie.tragvane
+                formatHour(poseshtenie.tragvane)
               }}</span>
             </div>
             <div v-if="raboten.isdriver == 1">
@@ -201,7 +201,7 @@
             <div>{{ poseshtenie.address_tragvane }}</div>
             <div>
               Работа старт:&nbsp;<span class="font-bold">{{
-                poseshtenie.zapocvane
+                formatHour(poseshtenie.zapocvane)
               }}</span>
             </div>
           </div>
@@ -211,7 +211,7 @@
           >
             <div v-if="raboten.isdriver == 1">
               Пристигане&nbsp;-&nbsp;<span class="font-bold">{{
-                poseshtenie.pristigane
+                formatHour(poseshtenie.pristigane)
               }}</span>
             </div>
             <div v-if="raboten.isdriver == 1">
@@ -222,7 +222,7 @@
             <div>{{ poseshtenie.address_pristigane }}</div>
             <div>
               Работа стоп:&nbsp;<span class="font-bold">{{
-                poseshtenie.priklucvane
+                formatHour(poseshtenie.priklucvane)
               }}</span>
             </div>
           </div>
@@ -231,7 +231,7 @@
           <div class="flex-1 flex flex-col justify-end items-startp-1">
             <div>
               Работни ч.&nbsp;<span class="font-bold">{{
-                poseshtenie.vreme_rabota
+                formatHour(poseshtenie.vreme_rabota)
               }}</span>
             </div>
           </div>
@@ -296,6 +296,10 @@ export default {
       }
     }
 
+    const formatHour = (value) => {
+      return value.substring(0, 5)
+    }
+
     return {
       store,
       raboten,
@@ -305,6 +309,7 @@ export default {
       deleteRaboten,
       newPoseshtenie,
       formatDateTime,
+      formatHour,
     }
   },
 }
