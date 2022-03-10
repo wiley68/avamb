@@ -177,11 +177,14 @@
         :key="poseshtenie.id"
       >
         <div class="flex flex-row w-full justify-between items-center text-sm">
-          <div class="w-full">
+          <button
+            class="w-full text-left"
+            @click.stop="changePoseshtenie(poseshtenie.id)"
+          >
             Посещение №:&nbsp;<span class="font-bold">{{
               poseshtenie.id
             }}</span>
-          </div>
+          </button>
           <div class="w-full">Оферта №:&nbsp;{{ poseshtenie.offer_id }}</div>
         </div>
         <div class="flex flex-row w-full justify-between items-center text-sm">
@@ -290,6 +293,11 @@ export default {
       //store.methods.newTask(project_id)
     }
 
+    const changePoseshtenie = (poseshtenie_id) => {
+      store.methods.changePoseshtenie(poseshtenie_id)
+      store.methods.closeRabotniSidebar()
+    }
+
     const formatDateTime = (value) => {
       if (value) {
         return moment(String(value)).format('DD.MM.YYYY hh:mm')
@@ -310,6 +318,7 @@ export default {
       newPoseshtenie,
       formatDateTime,
       formatHour,
+      changePoseshtenie,
     }
   },
 }
