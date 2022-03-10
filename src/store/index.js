@@ -79,6 +79,8 @@ const state = reactive({
   deleteRabotenModal: false,
   poseshtenia: [],
   current_poseshtenie_id: 0,
+  successUpdatePoseshtenie: false,
+  deletePoseshtenieModal: false,
 })
 
 const methods = {
@@ -282,6 +284,17 @@ const methods = {
       return element.id != id
     })
     state.poseshtenia = []
+  },
+  changeDeletePoseshtenieModal(deletePoseshtenieModal) {
+    state.deletePoseshtenieModal = deletePoseshtenieModal
+  },
+  changeSuccessUpdatePoseshtenie(successUpdatePoseshtenie) {
+    state.successUpdatePoseshtenie = successUpdatePoseshtenie
+  },
+  deletePoseshtenieById(id) {
+    state.poseshtenia = state.poseshtenia.filter((element) => {
+      return element.id != id
+    })
   },
   loadData() {
     var data = new FormData()
@@ -1909,7 +1922,6 @@ const methods = {
     xmlhttpro.send(data)
   },
   getPoseshtenia(raboten_id) {
-    console.log(raboten_id)
     var data = new FormData()
     data.append('pid', raboten_id)
     var xmlhttpro = createCORSRequest(
@@ -1932,7 +1944,6 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.poseshtenia = JSON.parse(this.response).poseshtenia
-        console.log(state.poseshtenia)
       }
     }
     xmlhttpro.send(data)

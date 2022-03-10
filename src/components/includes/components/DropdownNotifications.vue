@@ -5,7 +5,7 @@
       class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full"
       :class="{ 'bg-gray-200': dropdownOpen }"
       aria-haspopup="true"
-      @click.prevent="dropdownOpen = !dropdownOpen"
+      @click.stop="showLog()"
       :aria-expanded="dropdownOpen"
     >
       <span class="sr-only">Съобщения</span>
@@ -139,6 +139,10 @@ export default {
       store.methods.changePage('Messages')
     }
 
+    const showLog = () => {
+      console.log(store.state)
+    }
+
     return {
       store,
       dropdownOpen,
@@ -147,6 +151,7 @@ export default {
       getNewMessage,
       formatDateTime,
       showMessage,
+      showLog,
     }
   },
 }
