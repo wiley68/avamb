@@ -72,7 +72,7 @@
     </div>
     <div class="grow p-4">
       <div
-        class="bg-orange-50 shadow-lg rounded-t-sm border border-orange-200 px-6 divide-y divide-gray-200"
+        class="bg-orange-50 shadow-lg rounded-t-sm border border-orange-200 p-2 divide-y divide-gray-200"
       >
         <Poseshtenie />
       </div>

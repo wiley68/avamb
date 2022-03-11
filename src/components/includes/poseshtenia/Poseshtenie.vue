@@ -1,80 +1,210 @@
 <template>
-  <div class="py-6">
-    <header class="flex items-start">
-      <svg class="w-12 h-12 shrink-0 mr-3 flex-none" viewBox="0 0 40 40">
-        <path
-          fill="currentColor"
-          d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V20H7L5,20V9H7V11H13V13Z"
-        />
-      </svg>
-      <div class="grow">
-        <div class="sm:flex items-start justify-between mb-0.5">
-          <div class="xl:flex items-center mb-2 sm:mb-0">
-            <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M19,4H18V2H16V4H8V2H6V4H5A2,2 0 0,0 3,6V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V6A2,2 0 0,0 19,4M19,20H5V10H19V20M5,8V6H19V8H5M10.56,18.46L16.5,12.53L15.43,11.47L10.56,16.34L8.45,14.23L7.39,15.29L10.56,18.46Z"
-              />
-            </svg>
-            <span
-              class="text-sm font-semibold text-gray-800 text-left truncate"
-            >
-              {{ raboten.id }}
-            </span>
-            <div class="text-sm text-gray-400 hidden xl:block mx-1">·</div>
-            <div class="text-xs">
-              {{ raboten.id }}
-            </div>
-          </div>
-          <div
-            class="flex text-xs font-medium text-gray-500 whitespace-nowrap mb-2 sm:mb-0"
-          >
-            <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M7,13V11H21V13H7M7,19V17H21V19H7M7,7V5H21V7H7M3,8V5H2V4H4V8H3M2,17V16H5V20H2V19H4V18.5H3V17.5H4V17H2M4.25,10A0.75,0.75 0 0,1 5,10.75C5,10.95 4.92,11.14 4.79,11.27L3.12,13H5V14H2V13.08L4,11H2V10H4.25Z"
-              />
-            </svg>
-            {{ poseshtenie.id }}
-          </div>
-        </div>
-        <div class="sm:flex items-start justify-between mb-0.5">
-          <div class="flex text-xs font-medium text-gray-500">
-            111
-            <div class="text-sm text-gray-400 hidden xl:block mx-1">·</div>
-            <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M10.54,14.53L8.41,12.4L7.35,13.46L10.53,16.64L16.53,10.64L15.47,9.58L10.54,14.53M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22A9,9 0 0,0 21,13A9,9 0 0,0 12,4M7.88,3.39L6.6,1.86L2,5.71L3.29,7.24L7.88,3.39M22,5.72L17.4,1.86L16.11,3.39L20.71,7.25L22,5.72Z"
-              />
-            </svg>
-            {{ formatDateTime(poseshtenie.dateon) }}
-          </div>
-          <div
-            class="flex text-xs font-medium text-gray-500 whitespace-nowrap mb-2 sm:mb-0"
-          >
-            222
-            <div class="text-sm text-gray-400 hidden xl:block mx-1">·</div>
-            <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M21,10.12H14.22L16.96,7.3C14.23,4.6 9.81,4.5 7.08,7.2C4.35,9.91 4.35,14.28 7.08,17C9.81,19.7 14.23,19.7 16.96,17C18.32,15.65 19,14.08 19,12.1H21C21,14.08 20.12,16.65 18.36,18.39C14.85,21.87 9.15,21.87 5.64,18.39C2.14,14.92 2.11,9.28 5.62,5.81C9.13,2.34 14.76,2.34 18.27,5.81L21,3V10.12M12.5,8V12.25L16,14.33L15.28,15.54L11,13V8H12.5Z"
-              />
-            </svg>
-            {{ formatDateTime(poseshtenie.dateon) }}
-          </div>
-        </div>
+  <div class="flex flex-col justify-center">
+    <div class="mb-1">
+      <select
+        class="w-full border rounded-sm border-gray-100 p-1 text-sm"
+        v-model="poseshtenie.offer_id"
+      >
+        <option value="0">Избери оферта</option>
+        <option
+          v-for="offer in store.state.offers"
+          :key="offer.id"
+          :value="offer.idnomber"
+        >
+          {{ offer.client_name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-44">Час на тръгване</span>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
+        v-model="poseshtenie.tragvane"
+      />
+      <div class="w-10"></div>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-44">Километри на тръгване</span>
+      <input
+        type="text"
+        class="flex-grow text-sm border rounded-sm border-gray-100 bg-blue-300 p-1 text-right"
+        v-model="poseshtenie.kmtragvane"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,10.84 21.79,9.69 21.39,8.61L19.79,10.21C19.93,10.8 20,11.4 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.6,4 13.2,4.07 13.79,4.21L15.4,2.6C14.31,2.21 13.16,2 12,2M19,2L15,6V7.5L12.45,10.05C12.3,10 12.15,10 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12C14,11.85 14,11.7 13.95,11.55L16.5,9H18L22,5H19V2M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12H16A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8V6Z"
+          />
+        </svg>
       </div>
-    </header>
-    <div class="text-sm text-gray-800 mt-4 space-y-2">333</div>
-    <div class="flex flex-row items-center text-sm text-gray-800 ml-2 mt-2">
-      <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24">
-        <path
-          fill="currentColor"
-          d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"
-        />
-      </svg>
-      444
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-44">Адрес на тръгване</span>
+      <input
+        type="text"
+        class="flex-grow text-sm border rounded-sm border-gray-100 bg-blue-300 p-1 text-right"
+        v-model="poseshtenie.address_tragvane"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,10.84 21.79,9.69 21.39,8.61L19.79,10.21C19.93,10.8 20,11.4 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.6,4 13.2,4.07 13.79,4.21L15.4,2.6C14.31,2.21 13.16,2 12,2M19,2L15,6V7.5L12.45,10.05C12.3,10 12.15,10 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12C14,11.85 14,11.7 13.95,11.55L16.5,9H18L22,5H19V2M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12H16A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8V6Z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-44">Адрес на пристигане</span>
+      <input
+        type="text"
+        class="flex-grow text-sm border rounded-sm border-gray-100 bg-green-300 p-1 text-right"
+        v-model="poseshtenie.address_pristigane"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,10.84 21.79,9.69 21.39,8.61L19.79,10.21C19.93,10.8 20,11.4 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.6,4 13.2,4.07 13.79,4.21L15.4,2.6C14.31,2.21 13.16,2 12,2M19,2L15,6V7.5L12.45,10.05C12.3,10 12.15,10 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12C14,11.85 14,11.7 13.95,11.55L16.5,9H18L22,5H19V2M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12H16A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8V6Z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-44">Километри на пристигане</span>
+      <input
+        type="text"
+        class="flex-grow text-sm border rounded-sm border-gray-100 bg-green-300 p-1 text-right"
+        v-model="poseshtenie.kmpristigane"
+      />
+      <div class="w-10"></div>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-44">Час на пристигане</span>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.pristigane"
+      />
+      <div class="w-10"></div>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-32">Работен процес</span>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.zapocvane"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z"
+          />
+        </svg>
+      </div>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.priklucvane"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,20A7,7 0 0,1 5,13C5,11.72 5.35,10.5 5.95,9.5L15.5,19.04C14.5,19.65 13.28,20 12,20M3,4L1.75,5.27L4.5,8.03C3.55,9.45 3,11.16 3,13A9,9 0 0,0 12,22C13.84,22 15.55,21.45 17,20.5L19.5,23L20.75,21.73L13.04,14L3,4M11,9.44L13,11.44V8H11M15,1H9V3H15M19.04,4.55L17.62,5.97C16.07,4.74 14.12,4 12,4C10.17,4 8.47,4.55 7.05,5.5L8.5,6.94C9.53,6.35 10.73,6 12,6A7,7 0 0,1 19,13C19,14.27 18.65,15.47 18.06,16.5L19.5,17.94C20.45,16.53 21,14.83 21,13C21,10.88 20.26,8.93 19.03,7.39L20.45,5.97L19.04,4.55Z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-32">Почивка 1</span>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.starttime1"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z"
+          />
+        </svg>
+      </div>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.stoptime1"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,20A7,7 0 0,1 5,13C5,11.72 5.35,10.5 5.95,9.5L15.5,19.04C14.5,19.65 13.28,20 12,20M3,4L1.75,5.27L4.5,8.03C3.55,9.45 3,11.16 3,13A9,9 0 0,0 12,22C13.84,22 15.55,21.45 17,20.5L19.5,23L20.75,21.73L13.04,14L3,4M11,9.44L13,11.44V8H11M15,1H9V3H15M19.04,4.55L17.62,5.97C16.07,4.74 14.12,4 12,4C10.17,4 8.47,4.55 7.05,5.5L8.5,6.94C9.53,6.35 10.73,6 12,6A7,7 0 0,1 19,13C19,14.27 18.65,15.47 18.06,16.5L19.5,17.94C20.45,16.53 21,14.83 21,13C21,10.88 20.26,8.93 19.03,7.39L20.45,5.97L19.04,4.55Z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-32">Почивка 2</span>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.starttime2"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z"
+          />
+        </svg>
+      </div>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.stoptime2"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,20A7,7 0 0,1 5,13C5,11.72 5.35,10.5 5.95,9.5L15.5,19.04C14.5,19.65 13.28,20 12,20M3,4L1.75,5.27L4.5,8.03C3.55,9.45 3,11.16 3,13A9,9 0 0,0 12,22C13.84,22 15.55,21.45 17,20.5L19.5,23L20.75,21.73L13.04,14L3,4M11,9.44L13,11.44V8H11M15,1H9V3H15M19.04,4.55L17.62,5.97C16.07,4.74 14.12,4 12,4C10.17,4 8.47,4.55 7.05,5.5L8.5,6.94C9.53,6.35 10.73,6 12,6A7,7 0 0,1 19,13C19,14.27 18.65,15.47 18.06,16.5L19.5,17.94C20.45,16.53 21,14.83 21,13C21,10.88 20.26,8.93 19.03,7.39L20.45,5.97L19.04,4.55Z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="flex flex-row justify-between items-center mb-1">
+      <span class="p-1 text-sm w-32">Почивка 3</span>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.starttime3"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z"
+          />
+        </svg>
+      </div>
+      <input
+        type="time"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
+        v-model="poseshtenie.stoptime3"
+      />
+      <div class="w-10">
+        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M12,20A7,7 0 0,1 5,13C5,11.72 5.35,10.5 5.95,9.5L15.5,19.04C14.5,19.65 13.28,20 12,20M3,4L1.75,5.27L4.5,8.03C3.55,9.45 3,11.16 3,13A9,9 0 0,0 12,22C13.84,22 15.55,21.45 17,20.5L19.5,23L20.75,21.73L13.04,14L3,4M11,9.44L13,11.44V8H11M15,1H9V3H15M19.04,4.55L17.62,5.97C16.07,4.74 14.12,4 12,4C10.17,4 8.47,4.55 7.05,5.5L8.5,6.94C9.53,6.35 10.73,6 12,6A7,7 0 0,1 19,13C19,14.27 18.65,15.47 18.06,16.5L19.5,17.94C20.45,16.53 21,14.83 21,13C21,10.88 20.26,8.93 19.03,7.39L20.45,5.97L19.04,4.55Z"
+          />
+        </svg>
+      </div>
     </div>
   </div>
 </template>
