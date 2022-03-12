@@ -294,26 +294,26 @@ export default {
         id: -1,
         offer_id: 0,
         raboten_id: store.state.current_raboten_id,
-        tragvane: moment().format('hh:mm'),
-        pristigane: moment().format('hh:mm'),
+        tragvane: moment().format('HH:mm'),
+        pristigane: moment().format('HH:mm'),
         kmtragvane: 0,
         kmpristigane: 0,
         address_tragvane: '',
         address_pristigane: '',
-        zapocvane: moment().format('hh:mm'),
-        priklucvane: moment().format('hh:mm'),
+        zapocvane: moment().format('HH:mm'),
+        priklucvane: moment().format('HH:mm'),
         address_pocivka: '',
         pocivka1: 0,
         pocivka2: 0,
         pocivka3: 0,
         faktura: 0,
         rabota: '',
-        starttime1: moment().format('hh:mm'),
-        stoptime1: moment().format('hh:mm'),
-        starttime2: moment().format('hh:mm'),
-        stoptime2: moment().format('hh:mm'),
-        starttime3: moment().format('hh:mm'),
-        stoptime3: moment().format('hh:mm'),
+        starttime1: moment().format('HH:mm'),
+        stoptime1: moment().format('HH:mm'),
+        starttime2: moment().format('HH:mm'),
+        stoptime2: moment().format('HH:mm'),
+        starttime3: moment().format('HH:mm'),
+        stoptime3: moment().format('HH:mm'),
         zapocvane_status: 0,
         priklucvane_status: 0,
         starttime1_status: 0,
@@ -342,7 +342,7 @@ export default {
 
     const formatDateTime = (value) => {
       if (value) {
-        return moment(String(value)).format('DD.MM.YYYY hh:mm')
+        return moment(String(value)).format('DD.MM.YYYY HH:mm')
       }
     }
 
