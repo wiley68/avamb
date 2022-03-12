@@ -29,6 +29,7 @@
             </svg>
           </button>
           <button
+            v-if="parseInt(poseshtenie.id) > 0"
             class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             @click.stop="deletePoseshtenieCheck()"
           >
@@ -54,7 +55,7 @@
           </button>
           <button
             class="flex flex-row justify-center items-center bg-white p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-            @click.stop="newPoseshtenie(store.state.current_raboten_id)"
+            @click.stop="newPoseshtenie()"
           >
             <svg
               class="w-4 h-4 fill-current text-orange-500 mr-1 flex-none"
@@ -98,11 +99,11 @@
       </div>
       <div>
         <div class="mb-2">
-          <div class="text-lg font-semibold text-gray-800">111</div>
+          <div class="text-lg font-semibold text-gray-800">Съобщение</div>
         </div>
         <div class="text-sm mb-10">
           <div class="space-y-2">
-            <p>222</p>
+            <p>Успешно записахте промените.</p>
           </div>
         </div>
         <div class="flex flex-wrap justify-end space-x-2">
@@ -136,11 +137,11 @@
       </div>
       <div>
         <div class="mb-2">
-          <div class="text-lg font-semibold text-gray-800">111</div>
+          <div class="text-lg font-semibold text-gray-800">Внимание!</div>
         </div>
         <div class="text-sm mb-10">
           <div class="space-y-2">
-            <p>222</p>
+            <p>Желаете ли да изтриете посещението?</p>
           </div>
         </div>
         <div class="flex flex-wrap justify-end space-x-2">
@@ -210,8 +211,50 @@ export default {
       }
     }
 
-    const newPoseshtenie = (raboten_id) => {
-      store.methods.newPoseshtenie(raboten_id)
+    const newPoseshtenie = () => {
+      const new_poseshtenie = {
+        id: -1,
+        offer_id: 0,
+        raboten_id: store.state.current_raboten_id,
+        tragvane: moment().format('hh:mm'),
+        pristigane: moment().format('hh:mm'),
+        kmtragvane: 0,
+        kmpristigane: 0,
+        address_tragvane: '',
+        address_pristigane: '',
+        zapocvane: moment().format('hh:mm'),
+        priklucvane: moment().format('hh:mm'),
+        address_pocivka: '',
+        pocivka1: 0,
+        pocivka2: 0,
+        pocivka3: 0,
+        faktura: 0,
+        rabota: '',
+        starttime1: moment().format('hh:mm'),
+        stoptime1: moment().format('hh:mm'),
+        starttime2: moment().format('hh:mm'),
+        stoptime2: moment().format('hh:mm'),
+        starttime3: moment().format('hh:mm'),
+        stoptime3: moment().format('hh:mm'),
+        zapocvane_status: 0,
+        priklucvane_status: 0,
+        starttime1_status: 0,
+        stoptime1_status: 0,
+        starttime2_status: 0,
+        stoptime2_status: 0,
+        starttime3_status: 0,
+        stoptime3_status: 0,
+        address_tragvane_lat: '00.000000',
+        address_tragvane_long: '00.000000',
+        address_pristigane_lat: '00.000000',
+        address_pristigane_long: '00.000000',
+        address_pocivka_lat: '00.000000',
+        address_pocivka_long: '00.000000',
+        vreme_rabota: '00:00',
+      }
+      store.state.poseshtenia.splice(0, 0, new_poseshtenie)
+      store.state.current_poseshtenie_id = new_poseshtenie.id
+      store.methods.changePoseshtenie(new_poseshtenie.id)
     }
 
     return {

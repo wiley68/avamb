@@ -2028,6 +2028,40 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  deletePoseshtenie(poseshtenie_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'DELETE'
+    info[1] = poseshtenie_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/subposeshtenia.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deletePoseshtenieById(poseshtenie_id)
+        state.deletePoseshtenieModal = false
+        state.current_poseshtenie_id = state.poseshtenia[0]
+          ? state.poseshtenia[0].id
+          : 0
+      }
+    }
+    xmlhttpro.send(data)
+  },
 }
 
 export default { state, methods }
