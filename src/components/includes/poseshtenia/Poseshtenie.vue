@@ -47,14 +47,14 @@
         class="w-7/12 text-sm border rounded-sm border-gray-100 bg-blue-300 p-1 text-right"
         v-model="poseshtenie.address_tragvane"
       />
-      <div class="w-2/12">
+      <button class="w-2/12" @click.stop="getPosition('tragvane')">
         <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,10.84 21.79,9.69 21.39,8.61L19.79,10.21C19.93,10.8 20,11.4 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.6,4 13.2,4.07 13.79,4.21L15.4,2.6C14.31,2.21 13.16,2 12,2M19,2L15,6V7.5L12.45,10.05C12.3,10 12.15,10 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12C14,11.85 14,11.7 13.95,11.55L16.5,9H18L22,5H19V2M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12H16A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8V6Z"
           />
         </svg>
-      </div>
+      </button>
     </div>
     <div class="flex flex-row justify-between items-center mb-1">
       <span class="p-1 text-sm w-3/12">Час на пр.</span>
@@ -81,14 +81,14 @@
         class="w-7/12 text-sm border rounded-sm border-gray-100 bg-green-300 p-1 text-right"
         v-model="poseshtenie.address_pristigane"
       />
-      <div class="w-2/12">
+      <button class="w-2/12" @click.stop="getPosition('pristigane')">
         <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,10.84 21.79,9.69 21.39,8.61L19.79,10.21C19.93,10.8 20,11.4 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.6,4 13.2,4.07 13.79,4.21L15.4,2.6C14.31,2.21 13.16,2 12,2M19,2L15,6V7.5L12.45,10.05C12.3,10 12.15,10 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12C14,11.85 14,11.7 13.95,11.55L16.5,9H18L22,5H19V2M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12H16A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8V6Z"
           />
         </svg>
-      </div>
+      </button>
     </div>
     <div class="flex flex-row justify-center items-center mb-1">
       <span class="p-1 text-sm w-32">Работен процес</span>
@@ -247,12 +247,42 @@ export default {
       poseshtenie.value.kmpristigane = currentKm
     }
 
+    const success_tragvane = (position) => {
+      const latitude = position.coords.latitude
+      const longitude = position.coords.longitude
+      poseshtenie.value.address_tragvane_long = longitude
+      poseshtenie.value.address_tragvane_lat = latitude
+      store.methods.getStreetAddressFrom(latitude, longitude, 'tragvane')
+    }
+
+    const success_pristigane = (position) => {
+      const latitude = position.coords.latitude
+      const longitude = position.coords.longitude
+      poseshtenie.value.address_pristigane_long = longitude
+      poseshtenie.value.address_pristigane_lat = latitude
+      store.methods.getStreetAddressFrom(latitude, longitude, 'pristigane')
+    }
+
+    const error = (err) => {
+      console.log(err)
+    }
+
+    const getPosition = (address) => {
+      if (address == 'tragvane') {
+        navigator.geolocation.getCurrentPosition(success_tragvane, error)
+      }
+      if (address == 'pristigane') {
+        navigator.geolocation.getCurrentPosition(success_pristigane, error)
+      }
+    }
+
     return {
       store,
       poseshtenie,
       raboten,
       formatDateTime,
       getKm,
+      getPosition,
     }
   },
 }

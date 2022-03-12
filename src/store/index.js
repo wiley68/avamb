@@ -2062,6 +2062,45 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  getStreetAddressFrom(lat, long, address) {
+    var xmlhttpro = createCORSRequest(
+      'GET',
+      'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
+        lat +
+        ',' +
+        long +
+        '&key=AIzaSyBdHJScZ3v012SHvqhMZWrT-OV1UgGnvdc'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (this.readyState == 4) {
+        const results = JSON.parse(this.response).results
+        const result_address = results.find(
+          (element) => element.types[0] == 'street_address'
+        ).formatted_address
+        if (address == 'tragvane') {
+          state.poseshtenia.find(
+            (element) => element.id == state.current_poseshtenie_id
+          ).address_tragvane = result_address.replace(/['"]+/g, '')
+        }
+        if (address == 'pristigane') {
+          state.poseshtenia.find(
+            (element) => element.id == state.current_poseshtenie_id
+          ).address_pristigane = result_address.replace(/['"]+/g, '')
+        }
+      }
+    }
+    xmlhttpro.send()
+  },
 }
 
 export default { state, methods }

@@ -189,7 +189,7 @@
         </div>
         <div class="flex flex-row w-full justify-between items-center text-sm">
           <div
-            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-blue-300 bg-blue-50 p-1"
+            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-blue-300 bg-blue-50 p-1 overflow-hidden"
           >
             <div v-if="raboten.isdriver == 1">
               Тръгване&nbsp;-&nbsp;<span class="font-bold">{{
@@ -201,7 +201,7 @@
                 poseshtenie.kmtragvane
               }}</span>
             </div>
-            <div>{{ poseshtenie.address_tragvane }}</div>
+            <div class="">{{ poseshtenie.address_tragvane }}</div>
             <div>
               Работа старт:&nbsp;<span class="font-bold">{{
                 formatHour(poseshtenie.zapocvane)
@@ -210,7 +210,7 @@
           </div>
           <div class="w-1"></div>
           <div
-            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-green-300 bg-green-50 p-1"
+            class="flex-1 flex flex-col h-24 justify-end items-start border rounded border-green-300 bg-green-50 p-1 overflow-hidden"
           >
             <div v-if="raboten.isdriver == 1">
               Пристигане&nbsp;-&nbsp;<span class="font-bold">{{
