@@ -104,7 +104,7 @@
         :disabled="poseshtenie.zapocvane_status == 1"
         class="w-2/12"
         :class="
-          poseshtenie.zapocvane_status == 1 ? 'text-gray-600' : 'text-blue-600'
+          poseshtenie.zapocvane_status == 1 ? 'text-gray-400' : 'text-blue-600'
         "
         @click.stop="zapocvaneStart()"
       >
@@ -126,7 +126,7 @@
         class="w-2/12"
         :class="
           poseshtenie.priklucvane_status == 1
-            ? 'text-gray-600'
+            ? 'text-gray-400'
             : 'text-blue-600'
         "
         @click.stop="priklucvaneStart()"
@@ -144,87 +144,135 @@
     </div>
     <div class="flex flex-row justify-between items-center mb-1">
       <input
+        readonly
         type="time"
         class="w-4/12 text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
         v-model="poseshtenie.starttime1"
       />
-      <div class="w-2/12">
-        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+      <button
+        :disabled="poseshtenie.starttime1_status == 1"
+        @click.stop="starttime1Start()"
+        class="w-2/12"
+        :class="
+          poseshtenie.starttime1_status == 1 ? 'text-gray-400' : 'text-blue-600'
+        "
+      >
+        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z"
           />
         </svg>
-      </div>
+      </button>
       <input
+        readonly
         type="time"
         class="w-4/12 text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
         v-model="poseshtenie.stoptime1"
       />
-      <div class="w-2/12">
-        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+      <button
+        :disabled="poseshtenie.stoptime1_status == 1"
+        @click.stop="stoptime1Start()"
+        class="w-2/12"
+        :class="
+          poseshtenie.stoptime1_status == 1 ? 'text-gray-400' : 'text-blue-600'
+        "
+      >
+        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M12,20A7,7 0 0,1 5,13C5,11.72 5.35,10.5 5.95,9.5L15.5,19.04C14.5,19.65 13.28,20 12,20M3,4L1.75,5.27L4.5,8.03C3.55,9.45 3,11.16 3,13A9,9 0 0,0 12,22C13.84,22 15.55,21.45 17,20.5L19.5,23L20.75,21.73L13.04,14L3,4M11,9.44L13,11.44V8H11M15,1H9V3H15M19.04,4.55L17.62,5.97C16.07,4.74 14.12,4 12,4C10.17,4 8.47,4.55 7.05,5.5L8.5,6.94C9.53,6.35 10.73,6 12,6A7,7 0 0,1 19,13C19,14.27 18.65,15.47 18.06,16.5L19.5,17.94C20.45,16.53 21,14.83 21,13C21,10.88 20.26,8.93 19.03,7.39L20.45,5.97L19.04,4.55Z"
           />
         </svg>
-      </div>
+      </button>
     </div>
     <div class="flex flex-row justify-between items-center mb-1">
       <input
+        readonly
         type="time"
         class="w-4/12 text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
         v-model="poseshtenie.starttime2"
       />
-      <div class="w-2/12">
-        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+      <button
+        :disabled="poseshtenie.starttime2_status == 1"
+        @click.stop="starttime2Start()"
+        class="w-2/12"
+        :class="
+          poseshtenie.starttime2_status == 1 ? 'text-gray-400' : 'text-blue-600'
+        "
+      >
+        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z"
           />
         </svg>
-      </div>
+      </button>
       <input
+        readonly
         type="time"
         class="w-4/12 text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
         v-model="poseshtenie.stoptime2"
       />
-      <div class="w-2/12">
-        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+      <button
+        :disabled="poseshtenie.stoptime2_status == 1"
+        @click.stop="stoptime2Start()"
+        class="w-2/12"
+        :class="
+          poseshtenie.stoptime2_status == 1 ? 'text-gray-400' : 'text-blue-600'
+        "
+      >
+        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M12,20A7,7 0 0,1 5,13C5,11.72 5.35,10.5 5.95,9.5L15.5,19.04C14.5,19.65 13.28,20 12,20M3,4L1.75,5.27L4.5,8.03C3.55,9.45 3,11.16 3,13A9,9 0 0,0 12,22C13.84,22 15.55,21.45 17,20.5L19.5,23L20.75,21.73L13.04,14L3,4M11,9.44L13,11.44V8H11M15,1H9V3H15M19.04,4.55L17.62,5.97C16.07,4.74 14.12,4 12,4C10.17,4 8.47,4.55 7.05,5.5L8.5,6.94C9.53,6.35 10.73,6 12,6A7,7 0 0,1 19,13C19,14.27 18.65,15.47 18.06,16.5L19.5,17.94C20.45,16.53 21,14.83 21,13C21,10.88 20.26,8.93 19.03,7.39L20.45,5.97L19.04,4.55Z"
           />
         </svg>
-      </div>
+      </button>
     </div>
     <div class="flex flex-row justify-between items-center mb-1">
       <input
+        readonly
         type="time"
         class="w-4/12 text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
         v-model="poseshtenie.starttime3"
       />
-      <div class="w-2/12">
-        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+      <button
+        :disabled="poseshtenie.starttime3_status == 1"
+        @click.stop="starttime3Start()"
+        class="w-2/12"
+        :class="
+          poseshtenie.starttime3_status == 1 ? 'text-gray-400' : 'text-blue-600'
+        "
+      >
+        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z"
           />
         </svg>
-      </div>
+      </button>
       <input
+        readonly
         type="time"
         class="w-4/12 text-sm border rounded-sm border-gray-100 p-1 bg-green-300"
         v-model="poseshtenie.stoptime3"
       />
-      <div class="w-2/12">
-        <svg class="w-6 h-6 shrink-0 text-blue-600" viewBox="0 0 24 24">
+      <button
+        :disabled="poseshtenie.stoptime3_status == 1"
+        @click.stop="stoptime3Start()"
+        class="w-2/12"
+        :class="
+          poseshtenie.stoptime3_status == 1 ? 'text-gray-400' : 'text-blue-600'
+        "
+      >
+        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M12,20A7,7 0 0,1 5,13C5,11.72 5.35,10.5 5.95,9.5L15.5,19.04C14.5,19.65 13.28,20 12,20M3,4L1.75,5.27L4.5,8.03C3.55,9.45 3,11.16 3,13A9,9 0 0,0 12,22C13.84,22 15.55,21.45 17,20.5L19.5,23L20.75,21.73L13.04,14L3,4M11,9.44L13,11.44V8H11M15,1H9V3H15M19.04,4.55L17.62,5.97C16.07,4.74 14.12,4 12,4C10.17,4 8.47,4.55 7.05,5.5L8.5,6.94C9.53,6.35 10.73,6 12,6A7,7 0 0,1 19,13C19,14.27 18.65,15.47 18.06,16.5L19.5,17.94C20.45,16.53 21,14.83 21,13C21,10.88 20.26,8.93 19.03,7.39L20.45,5.97L19.04,4.55Z"
           />
         </svg>
-      </div>
+      </button>
     </div>
   </div>
 </template>
@@ -318,6 +366,78 @@ export default {
       }
     }
 
+    const starttime1Start = () => {
+      if (confirm('Start')) {
+        poseshtenie.value.starttime1 = moment().format('HH:mm')
+        poseshtenie.value.starttime1_status = 1
+        if (poseshtenie.value.offer_id != 0) {
+          store.methods.savePoseshtenie(poseshtenie.value)
+        } else {
+          alert('Моля изберете оферта!')
+        }
+      }
+    }
+
+    const stoptime1Start = () => {
+      if (confirm('Start')) {
+        poseshtenie.value.stoptime1 = moment().format('HH:mm')
+        poseshtenie.value.stoptime1_status = 1
+        if (poseshtenie.value.offer_id != 0) {
+          store.methods.savePoseshtenie(poseshtenie.value)
+        } else {
+          alert('Моля изберете оферта!')
+        }
+      }
+    }
+
+    const starttime2Start = () => {
+      if (confirm('Start')) {
+        poseshtenie.value.starttime2 = moment().format('HH:mm')
+        poseshtenie.value.starttime2_status = 1
+        if (poseshtenie.value.offer_id != 0) {
+          store.methods.savePoseshtenie(poseshtenie.value)
+        } else {
+          alert('Моля изберете оферта!')
+        }
+      }
+    }
+
+    const stoptime2Start = () => {
+      if (confirm('Start')) {
+        poseshtenie.value.stoptime2 = moment().format('HH:mm')
+        poseshtenie.value.stoptime2_status = 1
+        if (poseshtenie.value.offer_id != 0) {
+          store.methods.savePoseshtenie(poseshtenie.value)
+        } else {
+          alert('Моля изберете оферта!')
+        }
+      }
+    }
+
+    const starttime3Start = () => {
+      if (confirm('Start')) {
+        poseshtenie.value.starttime3 = moment().format('HH:mm')
+        poseshtenie.value.starttime3_status = 1
+        if (poseshtenie.value.offer_id != 0) {
+          store.methods.savePoseshtenie(poseshtenie.value)
+        } else {
+          alert('Моля изберете оферта!')
+        }
+      }
+    }
+
+    const stoptime3Start = () => {
+      if (confirm('Start')) {
+        poseshtenie.value.stoptime3 = moment().format('HH:mm')
+        poseshtenie.value.stoptime3_status = 1
+        if (poseshtenie.value.offer_id != 0) {
+          store.methods.savePoseshtenie(poseshtenie.value)
+        } else {
+          alert('Моля изберете оферта!')
+        }
+      }
+    }
+
     return {
       store,
       poseshtenie,
@@ -327,6 +447,12 @@ export default {
       getPosition,
       zapocvaneStart,
       priklucvaneStart,
+      starttime1Start,
+      stoptime1Start,
+      starttime2Start,
+      stoptime2Start,
+      starttime3Start,
+      stoptime3Start,
     }
   },
 }
