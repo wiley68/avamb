@@ -41,7 +41,7 @@
           <button
             class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="success-modal"
-            @click.stop="updateTask()"
+            @click.stop="updatePoseshtenie()"
           >
             <svg
               class="w-4 h-4 fill-current text-green-500"
@@ -187,7 +187,11 @@ export default {
     })
 
     const updatePoseshtenie = () => {
-      store.methods.updatePoseshtenie(poseshtenie.value.id)
+      if (poseshtenie.value.offer_id != 0) {
+        store.methods.savePoseshtenie(poseshtenie.value)
+      } else {
+        alert('Моля изберете оферта!')
+      }
     }
 
     const deletePoseshtenieCheck = () => {

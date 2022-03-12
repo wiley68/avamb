@@ -1948,65 +1948,57 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  savePoseshtenie(poseshtenie_id) {
+  savePoseshtenie(poseshtenie) {
     var data = new FormData()
     var info = []
-    if (poseshtenie_id > 0) {
-      const raboten = state.rabotni.find((element) => element.id == raboten_id)
-      info[0] = 'SAVE'
-      info[1] = raboten_id
-      info[2] = state.user.firm_id
-      info[3] = raboten.dateon
-      info[4] = raboten.sastavil_id
-      info[5] = raboten.isdriver
-      info[6] = raboten.mps_regnomer_id
-      info[7] = raboten.cena_gorivo
-      info[8] = raboten.avans
-      info[9] = raboten.bonus
+    info[0] = 'SAVE'
+    if (parseInt(poseshtenie.id) > 0) {
+      info[1] = poseshtenie.id
     } else {
-      info[0] = 'SAVE'
       info[1] = 0
-      info[2] = 0
-      info[3] = state.current_raboten_id
-      info[4] = moment().format('hh:mm')
-      info[5] = moment().format('hh:mm')
-      info[6] = 0
-      info[7] = 0
-      info[8] = ''
-      info[9] = ''
-      info[10] = moment().format('hh:mm')
-      info[11] = moment().format('hh:mm')
-      info[12] = ''
-      info[13] = 0
-      info[14] = 0
-      info[15] = 0
-      info[16] = 0
-      info[17] = ''
-      info[18] = moment().format('hh:mm')
-      info[19] = moment().format('hh:mm')
-      info[20] = moment().format('hh:mm')
-      info[21] = moment().format('hh:mm')
-      info[22] = moment().format('hh:mm')
-      info[23] = moment().format('hh:mm')
-      info[24] = 0
-      info[25] = 0
-      info[26] = 0
-      info[27] = 0
-      info[28] = 0
-      info[29] = 0
-      info[30] = 0
-      info[31] = 0
-      info[32] = '00.000000'
-      info[33] = '00.000000'
-      info[34] = '00.000000'
-      info[35] = '00.000000'
-      info[36] = '00.000000'
-      info[37] = '00.000000'
     }
+    info[2] = state.offers.find(
+      (element) => element.idnomber == poseshtenie.offer_id
+    ).id
+    info[3] = poseshtenie.raboten_id
+    info[4] = poseshtenie.tragvane
+    info[5] = poseshtenie.pristigane
+    info[6] = poseshtenie.kmtragvane
+    info[7] = poseshtenie.kmpristigane
+    info[8] = poseshtenie.address_tragvane
+    info[9] = poseshtenie.address_pristigane
+    info[10] = poseshtenie.zapocvane
+    info[11] = poseshtenie.priklucvane
+    info[12] = poseshtenie.address_pocivka
+    info[13] = poseshtenie.pocivka1
+    info[14] = poseshtenie.pocivka2
+    info[15] = poseshtenie.pocivka3
+    info[16] = poseshtenie.faktura
+    info[17] = poseshtenie.rabota
+    info[18] = poseshtenie.starttime1
+    info[19] = poseshtenie.stoptime1
+    info[20] = poseshtenie.starttime2
+    info[21] = poseshtenie.stoptime2
+    info[22] = poseshtenie.starttime3
+    info[23] = poseshtenie.stoptime3
+    info[24] = poseshtenie.zapocvane_status
+    info[25] = poseshtenie.priklucvane_status
+    info[26] = poseshtenie.starttime1_status
+    info[27] = poseshtenie.stoptime1_status
+    info[28] = poseshtenie.starttime2_status
+    info[29] = poseshtenie.stoptime2_status
+    info[30] = poseshtenie.starttime3_status
+    info[31] = poseshtenie.stoptime3_status
+    info[32] = poseshtenie.address_tragvane_lat
+    info[33] = poseshtenie.address_tragvane_long
+    info[34] = poseshtenie.address_pristigane_lat
+    info[35] = poseshtenie.address_pristigane_long
+    info[36] = poseshtenie.address_pocivka_lat
+    info[37] = poseshtenie.address_pocivka_long
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/poseshtenia.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/subposeshtenia.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2023,16 +2015,15 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        if (raboten_id > 0) {
-          methods.changeSuccessUpdateRaboten(true)
+        if (parseInt(poseshtenie.id) > 0) {
+          methods.changeSuccessUpdatePoseshtenie(true)
         } else {
-          const raboten_id = JSON.parse(this.response).newid
-          methods.getRabotni()
-          methods.changeRabotni(raboten_id)
-          methods.toggleRabotniSidebar()
+          const poseshtenie_id = JSON.parse(this.response).newid
+          methods.getPoseshtenia(state.current_raboten_id)
+          methods.changePoseshtenie(poseshtenie_id)
         }
       } else {
-        methods.changeSuccessUpdateRaboten(false)
+        methods.changeSuccessUpdatePoseshtenie(false)
       }
     }
     xmlhttpro.send(data)
