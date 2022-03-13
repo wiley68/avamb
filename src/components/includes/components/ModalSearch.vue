@@ -87,15 +87,11 @@ export default {
     const clickHandler = ({ target }) => {
       if (!props.modalOpen || modalContent.value.contains(target)) return
       emit('close-modal')
-      searchInput.value.value = ''
-      searchFor()
     }
 
     const keyHandler = ({ keyCode }) => {
       if (!props.modalOpen || keyCode !== 27) return
       emit('close-modal')
-      searchInput.value.value = ''
-      searchFor()
     }
 
     onMounted(() => {
@@ -127,17 +123,26 @@ export default {
           if (store.state.offers_filter_status == 'No') {
             store.state.offers_temp = store.state.offers.filter((element) => {
               return (
-                element.client_name
+                (element.client_name
                   .toLowerCase()
                   .includes(searchInput.value.value.toLowerCase()) &&
-                element.status == 'No'
+                  element.status == 'No') ||
+                (element.idnomber
+                  .toLowerCase()
+                  .includes(searchInput.value.value.toLowerCase()) &&
+                  element.status == 'No')
               )
             })
           } else {
             store.state.offers_temp = store.state.offers.filter((element) => {
-              return element.client_name
-                .toLowerCase()
-                .includes(searchInput.value.value.toLowerCase())
+              return (
+                element.client_name
+                  .toLowerCase()
+                  .includes(searchInput.value.value.toLowerCase()) ||
+                element.idnomber
+                  .toLowerCase()
+                  .includes(searchInput.value.value.toLowerCase())
+              )
             })
           }
         } else {
