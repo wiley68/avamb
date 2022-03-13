@@ -73,6 +73,7 @@ const state = reactive({
   successUpdateFakturap: false,
   activeConditionFirms: false,
   rabotni: [],
+  rabotni_temp: [],
   rabotniSidebarOpen: true,
   current_raboten_id: 0,
   successUpdateRaboten: false,
@@ -281,6 +282,9 @@ const methods = {
   },
   deleteRabotenById(id) {
     state.rabotni = state.rabotni.filter((element) => {
+      return element.id != id
+    })
+    state.rabotni_temp = state.rabotni_temp.filter((element) => {
       return element.id != id
     })
     state.poseshtenia = []
@@ -1822,6 +1826,7 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.rabotni = JSON.parse(this.response).rabotni
+        state.rabotni_temp = JSON.parse(this.response).rabotni
       }
     }
     xmlhttpro.send(data)

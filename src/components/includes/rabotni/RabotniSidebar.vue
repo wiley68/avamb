@@ -42,7 +42,7 @@
           <div class="mt-4">
             <ul class="mb-6">
               <li
-                v-for="raboten in store.state.rabotni"
+                v-for="raboten in store.state.rabotni_temp"
                 :key="raboten.id"
                 class="-mx-2 mb-2"
               >
@@ -130,7 +130,7 @@ export default {
     }
 
     const changeRaboten = (raboten_id) => {
-      const raboten = store.state.rabotni.find(
+      const raboten = store.state.rabotni_temp.find(
         (element) => element.id == raboten_id
       )
       if (moment(String(raboten.dateon)).isSame(new Date(), 'day')) {
@@ -149,7 +149,7 @@ export default {
     })
 
     const allZaplata = () => {
-      return store.state.rabotni
+      return store.state.rabotni_temp
         .map((element) => element.zaplata_all)
         .reduce(
           (prev, curr) => (parseFloat(prev) + parseFloat(curr)).toFixed(2),

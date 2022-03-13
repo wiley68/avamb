@@ -122,30 +122,51 @@ export default {
     }
 
     const searchFor = () => {
-      if (searchInput.value.value != '') {
-        if (store.state.offers_filter_status == 'No') {
-          store.state.offers_temp = store.state.offers.filter((element) => {
-            return (
-              element.client_name
+      if (store.state.page == 'Dashboard') {
+        if (searchInput.value.value != '') {
+          if (store.state.offers_filter_status == 'No') {
+            store.state.offers_temp = store.state.offers.filter((element) => {
+              return (
+                element.client_name
+                  .toLowerCase()
+                  .includes(searchInput.value.value.toLowerCase()) &&
+                element.status == 'No'
+              )
+            })
+          } else {
+            store.state.offers_temp = store.state.offers.filter((element) => {
+              return element.client_name
                 .toLowerCase()
-                .includes(searchInput.value.value.toLowerCase()) &&
-              element.status == 'No'
+                .includes(searchInput.value.value.toLowerCase())
+            })
+          }
+        } else {
+          if (store.state.offers_filter_status == 'No') {
+            store.state.offers_temp = store.state.offers.filter((element) => {
+              return element.status == 'No'
+            })
+          } else {
+            store.state.offers_temp = store.state.offers
+          }
+        }
+      }
+      if (store.state.page == 'Rabotni' && store.state.rabotniSidebarOpen) {
+        if (searchInput.value.value != '') {
+          store.state.rabotni_temp = store.state.rabotni.filter((element) => {
+            return (
+              element.sluzitel_name
+                .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase()) ||
+              element.mps_regnomer
+                .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase()) ||
+              element.id
+                .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase())
             )
           })
         } else {
-          store.state.offers_temp = store.state.offers.filter((element) => {
-            return element.client_name
-              .toLowerCase()
-              .includes(searchInput.value.value.toLowerCase())
-          })
-        }
-      } else {
-        if (store.state.offers_filter_status == 'No') {
-          store.state.offers_temp = store.state.offers.filter((element) => {
-            return element.status == 'No'
-          })
-        } else {
-          store.state.offers_temp = store.state.offers
+          store.state.rabotni_temp = store.state.rabotni
         }
       }
     }

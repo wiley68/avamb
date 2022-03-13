@@ -94,7 +94,7 @@ export default {
     const store = inject('store')
 
     const raboten = computed(() => {
-      return store.state.rabotni.find(
+      return store.state.rabotni_temp.find(
         (element) => element.id == store.state.current_raboten_id
       )
     })
