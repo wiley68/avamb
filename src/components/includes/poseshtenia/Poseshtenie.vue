@@ -11,7 +11,7 @@
           :key="offer.id"
           :value="offer.idnomber"
         >
-          {{ offer.client_name }}
+          {{ offer.idnomber }}&nbsp;-&nbsp;{{ offer.client_name }}
         </option>
       </select>
     </div>
