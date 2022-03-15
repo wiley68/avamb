@@ -118,7 +118,7 @@
           <ModalBlank
             id="danger-modal"
             :modalOpen="store.state.deleteRabotenModal"
-            @close-modal="store.methods.changeDeleteRabotenModal(flase)"
+            @close-modal="store.methods.changeDeleteRabotenModal(false)"
           >
             <div class="p-5 flex space-x-4">
               <div
@@ -148,7 +148,7 @@
                 <div class="flex flex-wrap justify-end space-x-2">
                   <button
                     class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                    @click.stop="store.methods.changeDeleteRabotenModal(flase)"
+                    @click.stop="store.methods.changeDeleteRabotenModal(false)"
                   >
                     Откажи
                   </button>

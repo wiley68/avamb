@@ -298,8 +298,14 @@ const methods = {
   changeDeleteRabotenModal(deleteRabotenModal) {
     state.deleteRabotenModal = deleteRabotenModal
   },
+  changeDeleteZadacaModal(deleteZadacaModal) {
+    state.deleteZadacaModal = deleteZadacaModal
+  },
   changeSuccessUpdateRaboten(successUpdateRaboten) {
     state.successUpdateRaboten = successUpdateRaboten
+  },
+  changeSuccessUpdateZadaca(successUpdateZadaca) {
+    state.successUpdateZadaca = successUpdateZadaca
   },
   deleteRabotenById(id) {
     state.rabotni = state.rabotni.filter((element) => {
