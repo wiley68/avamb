@@ -24,6 +24,7 @@
       <Fakturip v-if="store.state.page == 'Fakturip'"></Fakturip>
       <FirmZadaci v-if="store.state.page == 'FirmZadaci'"></FirmZadaci>
       <Rabotni v-if="store.state.page == 'Rabotni'"></Rabotni>
+      <Zadaci v-if="store.state.page == 'Zadaci'"></Zadaci>
     </div>
   </div>
 </template>
@@ -50,6 +51,7 @@ import Snimki from './components/includes/etapna/Snimki.vue'
 import Fakturip from './components/includes/etapna/Fakturip.vue'
 import FirmZadaci from './components/FirmZadaci.vue'
 import Rabotni from './components/Rabotni.vue'
+import Zadaci from './components/Zadaci.vue'
 
 export default {
   name: 'App',
@@ -74,6 +76,7 @@ export default {
     Fakturip,
     FirmZadaci,
     Rabotni,
+    Zadaci,
   },
 
   setup() {

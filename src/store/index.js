@@ -82,6 +82,12 @@ const state = reactive({
   current_poseshtenie_id: 0,
   successUpdatePoseshtenie: false,
   deletePoseshtenieModal: false,
+  zadaci: [],
+  zadaci_temp: [],
+  zadaciSidebarOpen: true,
+  current_zadaca_id: 0,
+  successUpdateZadaca: false,
+  deleteZadacaModal: false,
 })
 
 const methods = {
@@ -121,6 +127,18 @@ const methods = {
     state.current_raboten_id = raboten_id
     methods.getPoseshtenia(state.current_raboten_id)
   },
+  toggleZadaciSidebar() {
+    state.zadaciSidebarOpen = !state.zadaciSidebarOpen
+  },
+  closeZadaciSidebar() {
+    state.zadaciSidebarOpen = false
+  },
+  openZadaciSidebar() {
+    state.zadaciSidebarOpen = true
+  },
+  changeZadaci(zadaca_id) {
+    state.current_zadaca_id = zadaca_id
+  },
   changePoseshtenie(poseshtenie_id) {
     state.current_poseshtenie_id = poseshtenie_id
   },
@@ -132,6 +150,9 @@ const methods = {
     }
     if (page == 'Rabotni') {
       methods.getRabotni()
+    }
+    if (page == 'Zadaci') {
+      methods.getZadaci()
     }
   },
   changeDeleteClientModal(deleteClientModal) {
@@ -288,6 +309,14 @@ const methods = {
       return element.id != id
     })
     state.poseshtenia = []
+  },
+  deleteZadacaById(id) {
+    state.zadaci = state.zadaci.filter((element) => {
+      return element.id != id
+    })
+    state.zadaci_temp = state.zadaci_temp.filter((element) => {
+      return element.id != id
+    })
   },
   changeDeletePoseshtenieModal(deletePoseshtenieModal) {
     state.deletePoseshtenieModal = deletePoseshtenieModal
@@ -1827,6 +1856,40 @@ const methods = {
       ) {
         state.rabotni = JSON.parse(this.response).rabotni
         state.rabotni_temp = JSON.parse(this.response).rabotni
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getZadaci() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    const tekushta_start = state.tekushta.substring(0, 10)
+    const tekushta_end = state.tekushta.substring(14)
+    data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_end', tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_zadaci.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.zadaci = JSON.parse(this.response).zadaci
+        state.zadaci_temp = JSON.parse(this.response).zadaci
       }
     }
     xmlhttpro.send(data)
