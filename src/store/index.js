@@ -2214,7 +2214,7 @@ const methods = {
       info[7] = 0
       info[8] = ''
       info[9] = state.user.id
-      info[9] = state.user.firm_id
+      info[10] = state.user.firm_id
       info[11] = []
       info[12] = moment().format('HH:mm:ss')
       info[13] = moment().format('HH:mm:ss')
@@ -2254,6 +2254,39 @@ const methods = {
         }
       } else {
         methods.changeSuccessUpdateZadaca(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteZadaca(zadaca_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'DELETE'
+    info[1] = zadaca_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/tasks.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteZadacaById(zadaca_id)
+        state.deleteZadacaModal = false
+        state.current_zadaca_id = state.zadaci[0] ? state.zadaci[0].id : 0
+        methods.toggleZadaciSidebar()
       }
     }
     xmlhttpro.send(data)

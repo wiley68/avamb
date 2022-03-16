@@ -123,7 +123,7 @@
                 <!-- Modal content -->
                 <div class="text-sm mb-10">
                   <div class="space-y-2">
-                    <p>Желаете ли да изтриете работния лист?</p>
+                    <p>Желаете ли да изтриете задачата?</p>
                   </div>
                 </div>
                 <div class="flex flex-wrap justify-end space-x-2">
