@@ -65,13 +65,13 @@
     <div class="flex flex-row justify-between items-center mb-1">
       <select
         class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
-        v-model="zadaca.idnomber"
+        v-model="zadaca.offer_id"
       >
         <option value="0">Избери оферта</option>
         <option
           v-for="offer in store.state.offers"
           :key="offer.id"
-          :value="offer.idnomber"
+          :value="offer.id"
         >
           {{ offer.idnomber }}&nbsp;-&nbsp;{{ offer.client_name }}
         </option>

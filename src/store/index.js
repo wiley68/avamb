@@ -2177,6 +2177,87 @@ const methods = {
     }
     xmlhttpro.send()
   },
+  saveZadaca(zadaca_id) {
+    var data = new FormData()
+    var info = []
+    if (zadaca_id > 0) {
+      const zadaca = state.zadaci_temp.find(
+        (element) => element.id == zadaca_id
+      )
+      info[0] = 'SAVE'
+      info[1] = zadaca_id
+      info[2] = zadaca.subject
+      info[3] = zadaca.description
+      info[4] = moment(zadaca.start).format('YYYY-MM-DD')
+      info[5] = moment(zadaca.stop).format('YYYY-MM-DD')
+      info[6] = zadaca.priority
+      info[7] = zadaca.status
+      info[8] = zadaca.note
+      info[9] = zadaca.created_by
+      info[10] = zadaca.firm_id
+      info[11] = zadaca.currentmembers
+      info[12] = moment(zadaca.start).format('HH:mm:ss')
+      info[13] = moment(zadaca.stop).format('HH:mm:ss')
+      info[14] = zadaca.offer_id
+      info[15] = zadaca.ending
+      info[16] = zadaca.endingtime
+      info[17] = zadaca.reminder
+      info[18] = state.user.id
+    } else {
+      info[0] = 'SAVE'
+      info[1] = 0
+      info[2] = ''
+      info[3] = ''
+      info[4] = moment().format('YYYY-MM-DD')
+      info[5] = moment().add(5, 'days').format('YYYY-MM-DD')
+      info[6] = 1
+      info[7] = 0
+      info[8] = ''
+      info[9] = state.user.id
+      info[9] = state.user.firm_id
+      info[11] = []
+      info[12] = moment().format('HH:mm:ss')
+      info[13] = moment().format('HH:mm:ss')
+      info[14] = 0
+      info[15] = '1970-01-01'
+      info[16] = moment().format('HH:mm:ss')
+      info[17] = 10
+      info[18] = state.user.id
+    }
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/tasks.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        if (zadaca_id > 0) {
+          methods.changeSuccessUpdateZadaca(true)
+        } else {
+          const zadaca_id = JSON.parse(this.response).newid
+          methods.getZadaci()
+          methods.changeZadaci(zadaca_id)
+          methods.toggleZadaciSidebar()
+        }
+      } else {
+        methods.changeSuccessUpdateZadaca(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
 }
 
 export default { state, methods }

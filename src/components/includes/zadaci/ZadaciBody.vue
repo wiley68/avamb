@@ -1,9 +1,7 @@
 <template>
   <div
     class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
-    :class="
-      store.state.zadaciSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
-    "
+    :class="store.state.zadaciSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'"
     v-if="zadaca"
   >
     <div class="sticky top-16">
@@ -75,9 +73,7 @@
                 <div class="flex flex-wrap justify-end space-x-2">
                   <button
                     class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                    @click.stop="
-                      store.methods.changeSuccessUpdateZadaca(false)
-                    "
+                    @click.stop="store.methods.changeSuccessUpdateZadaca(false)"
                   >
                     Затвори
                   </button>
