@@ -1904,7 +1904,9 @@ const methods = {
     var data = new FormData()
     var info = []
     if (raboten_id > 0) {
-      const raboten = state.rabotni.find((element) => element.id == raboten_id)
+      const raboten = state.rabotni_temp.find(
+        (element) => element.id == raboten_id
+      )
       info[0] = 'SAVE'
       info[1] = raboten_id
       info[2] = state.user.firm_id
