@@ -43,11 +43,13 @@
               >
                 <button
                   class="flex w-full p-1 text-left hover:bg-indigo-100 border hover:border-indigo-200"
-                  :class="[
+                  :class="
                     zadaca.id == store.state.current_zadaca_id
                       ? 'bg-indigo-100 border-indigo-200'
-                      : 'bg-gray-100 border-gray-200',
-                  ]"
+                      : zadaca.status == 0 || zadaca.status == 2
+                      ? 'bg-yellow-100 border-yellow-200'
+                      : 'bg-gray-100 border-gray-200'
+                  "
                   @click.stop="changeZadaca(zadaca.id)"
                 >
                   <div class="grow">
