@@ -435,41 +435,273 @@
             </div>
           </li>
           <!-- Documents -->
-          <li
-            class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
-            :class="store.state.page == 'Documents' ? 'bg-gray-900' : ''"
-          >
-            <div
-              class="block text-gray-200 truncate transition duration-150"
+          <SidebarLinkGroup
+            v-slot="parentLink"
+            :activeCondition="store.state.activeConditionDocuments"
+            ><a
+              class="block text-gray-200 hover:text-white truncate transition duration-150"
               :class="
-                store.state.page == 'Documents'
-                  ? 'hover:text-gray-200'
-                  : 'hover:text-white'
+                store.state.activeConditionDocuments && 'hover:text-gray-200'
               "
-              @click="store.methods.changePage('Documents')"
+              href="#0"
+              @click.prevent="
+                store.state.sidebarOpen
+                  ? parentLink.handleClick()
+                  : (store.state.sidebarOpen = true)
+              "
             >
-              <div class="flex items-center">
-                <svg
-                  class="shrink-0 w-6 h-6"
-                  :class="
-                    store.state.page == 'Documents'
-                      ? '!text-lime-500'
-                      : 'text-gray-400'
-                  "
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
-                  />
-                </svg>
-                <span
-                  class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
-                  >Документи</span
-                >
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <svg
+                    class="w-6 h-6 shrink-0"
+                    :class="
+                      store.state.page == 'Documents'
+                        ? '!text-lime-500'
+                        : 'text-gray-400'
+                    "
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
+                    />
+                  </svg>
+                  <span
+                    class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                    >Документи
+                  </span>
+                </div>
+                <!-- Icon -->
+                <div class="flex shrink-0 ml-2">
+                  <svg
+                    class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400"
+                    :class="parentLink.expanded && 'transform rotate-180'"
+                    viewBox="0 0 12 12"
+                  >
+                    <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                  </svg>
+                </div>
               </div>
-            </div>
-          </li>
+            </a>
+            <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+              <ul class="pl-9 mt-1" :class="!parentLink.expanded && 'hidden'">
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'Documents'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Оферти</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'Documents'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M19.7 12.9L14 18.6H11.7V16.3L17.4 10.6L19.7 12.9M23.1 12.1C23.1 12.4 22.8 12.7 22.5 13L20 15.5L19.1 14.6L21.7 12L21.1 11.4L20.4 12.1L18.1 9.8L20.3 7.7C20.5 7.5 20.9 7.5 21.2 7.7L22.6 9.1C22.8 9.3 22.8 9.7 22.6 10C22.4 10.2 22.2 10.4 22.2 10.6C22.2 10.8 22.4 11 22.6 11.2C22.9 11.5 23.2 11.8 23.1 12.1M3 20V4H10V9H15V10.5L17 8.5V8L11 2H3C1.9 2 1 2.9 1 4V20C1 21.1 1.9 22 3 22H15C16.1 22 17 21.1 17 20H3M11 17.1C10.8 17.1 10.6 17.2 10.5 17.2L10 15H8.5L6.4 16.7L7 14H5.5L4.5 19H6L8.9 16.4L9.5 18.7H10.5L11 18.6V17.1Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Договори</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'Documents'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M12.6,12.3H10.6V15.5H12.7C13.3,15.5 13.6,15.3 13.9,15C14.2,14.7 14.3,14.4 14.3,13.9C14.3,13.4 14.2,13.1 13.9,12.8C13.6,12.5 13.2,12.3 12.6,12.3M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M15.2,16C14.6,16.5 14.1,16.7 12.8,16.7H10.6V20H9V11H12.8C14.1,11 14.7,11.3 15.2,11.8C15.8,12.4 16,13 16,13.9C16,14.8 15.8,15.5 15.2,16M13,9V3.5L18.5,9H13Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Проформи</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'Documents'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Авансови фактури</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                  :class="store.state.page == 'FirmZadaci' ? 'bg-gray-900' : ''"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    :class="
+                      store.state.page == 'FirmZadaci'
+                        ? 'hover:text-gray-200'
+                        : 'hover:text-white'
+                    "
+                    @click="store.methods.changePage('FirmZadaci')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'Documents'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M6,2C4.89,2 4,2.89 4,4V20A2,2 0 0,0 6,22H10V20.09L12.09,18H6V16H14.09L16.09,14H6V12H18.09L20,10.09V8L14,2H6M13,3.5L18.5,9H13V3.5M20.15,13C20,13 19.86,13.05 19.75,13.16L18.73,14.18L20.82,16.26L21.84,15.25C22.05,15.03 22.05,14.67 21.84,14.46L20.54,13.16C20.43,13.05 20.29,13 20.15,13M18.14,14.77L12,20.92V23H14.08L20.23,16.85L18.14,14.77Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Фактури (продажби)</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'Documents'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M20 13.09V7C20 4.79 16.42 3 12 3S4 4.79 4 7V17C4 19.21 7.59 21 12 21C12.46 21 12.9 21 13.33 20.94C13.12 20.33 13 19.68 13 19L13 18.95C12.68 19 12.35 19 12 19C8.13 19 6 17.5 6 17V14.77C7.61 15.55 9.72 16 12 16C12.65 16 13.27 15.96 13.88 15.89C14.93 14.16 16.83 13 19 13C19.34 13 19.67 13.04 20 13.09M18 12.45C16.7 13.4 14.42 14 12 14S7.3 13.4 6 12.45V9.64C7.47 10.47 9.61 11 12 11S16.53 10.47 18 9.64V12.45M12 9C8.13 9 6 7.5 6 7S8.13 5 12 5 18 6.5 18 7 15.87 9 12 9M22 18V20H18V22L15 19L18 16V18H22Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Складова разписка</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'Documents'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M4 7C4 4.79 7.58 3 12 3S20 4.79 20 7 16.42 11 12 11 4 9.21 4 7M19.72 13.05C19.9 12.71 20 12.36 20 12V9C20 11.21 16.42 13 12 13S4 11.21 4 9V12C4 14.21 7.58 16 12 16C12.65 16 13.28 15.96 13.88 15.89C14.93 14.16 16.83 13 19 13C19.24 13 19.5 13 19.72 13.05M13.1 17.96C12.74 18 12.37 18 12 18C7.58 18 4 16.21 4 14V17C4 19.21 7.58 21 12 21C12.46 21 12.9 21 13.33 20.94C13.12 20.33 13 19.68 13 19C13 18.64 13.04 18.3 13.1 17.96M23 19L20 16V18H16V20H20V22L23 19Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Експедиционна бележка</span
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li
+                  class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
+                >
+                  <div
+                    class="block text-gray-200 truncate transition duration-150"
+                    @click="showMessage('Не е активно за мобилната версия.')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
+                        <path
+                          :class="
+                            store.state.page == 'Documents'
+                              ? '!text-lime-500'
+                              : 'text-gray-400'
+                          "
+                          fill="currentColor"
+                          d="M19 2V4H12C10.9 4 10 4.89 10 6V9H12V6H19V8L22 5L19 2M19 9V11H14V13H19V15L22 12L19 9M11.05 10C9.94 10 9.04 10.87 9.03 12S9.9 14 11 14C12.11 14 13 13.11 13 12C13 10.91 12.13 10.03 11.05 10M2 11V13H8V11H2M10 15V18C10 19.11 10.9 20 12 20H19V22L22 19L19 16V18H12V15H10Z"
+                        />
+                      </svg>
+                      <span
+                        class="text-sm font-medium ml-3 lg:opacity-0 2xl:opacity-100 duration-200"
+                        >Работни листи</span
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div></SidebarLinkGroup
+          >
           <!-- Register -->
           <li
             class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"

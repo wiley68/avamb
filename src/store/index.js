@@ -72,6 +72,7 @@ const state = reactive({
   deleteFakturapModal: false,
   successUpdateFakturap: false,
   activeConditionFirms: false,
+  activeConditionDocuments: false,
   rabotni: [],
   rabotni_temp: [],
   rabotniSidebarOpen: true,
