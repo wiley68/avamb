@@ -148,12 +148,8 @@ const methods = {
     methods.closeSidebar()
     if (page == 'Dashboard') {
       methods.getOffers()
-    }
-    if (page == 'Rabotni') {
-      methods.getRabotni()
-    }
-    if (page == 'Zadaci') {
       methods.getZadaci()
+      methods.getRabotni()
     }
   },
   changeDeleteClientModal(deleteClientModal) {

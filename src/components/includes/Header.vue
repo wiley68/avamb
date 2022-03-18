@@ -52,7 +52,7 @@
           <Notifications align="right" />
           <button
             class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full"
-            @click.stop="store.methods.changePage('Zadaci')"
+            @click.stop="changePageZadaci()"
           >
             <svg class="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -104,7 +104,12 @@ export default {
 
     const searchModalOpen = ref(false)
 
-    return { store, searchModalOpen, showLog }
+    const changePageZadaci = () => {
+      store.state.zadaci_temp = store.state.zadaci
+      store.methods.changePage('Zadaci')
+    }
+
+    return { store, searchModalOpen, showLog, changePageZadaci }
   },
 }
 </script>

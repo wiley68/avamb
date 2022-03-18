@@ -100,13 +100,14 @@
             >
               {{ offer().otklient_broi }}
             </button>
-            <div
+            <button
               class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
               :class="offer().tasks_broi > 0 ? 'bg-blue-600' : 'bg-white'"
               :style="{ backgroundColor: colorTasksRaboti() }"
+              @click.stop="goToZadaci()"
             >
               {{ offer().tasks_broi == 0 ? '' : offer().tasks_broi }}
-            </div>
+            </button>
           </div>
         </div>
         <div class="text-sm text-gray-800 mr-1">
@@ -604,6 +605,13 @@ export default {
       store.methods.changePage('Client')
     }
 
+    const goToZadaci = () => {
+      store.state.zadaci_temp = store.state.zadaci.filter(
+        (element) => element.offer_id == store.state.current_dashboard_offer
+      )
+      store.methods.changePage('Zadaci')
+    }
+
     const goToZapitvane = () => {
       store.methods.getZapitvane(store.state.current_dashboard_offer)
       store.methods.changePage('Zapitvane')
@@ -682,6 +690,7 @@ export default {
       goToPprs,
       goToSnimki,
       goToFakturip,
+      goToZadaci,
     }
   },
 }
