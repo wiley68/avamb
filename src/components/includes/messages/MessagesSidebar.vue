@@ -35,7 +35,7 @@
                   store.state.user.username
                 }}</span
                 >&nbsp;<span class="text-sm text-gray-400"
-                  >({{ store.state.dlaznost }})</span
+                  >({{ store.state.user.dlaznost }})</span
                 >
               </div>
             </div>
