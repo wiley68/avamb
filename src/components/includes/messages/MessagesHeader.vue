@@ -10,7 +10,7 @@
           aria-controls="messages-sidebar"
           :aria-expanded="msgSidebarOpen"
         >
-          <span class="sr-only">111</span>
+          <span class="sr-only">Затвори</span>
           <svg
             class="w-6 h-6 fill-current"
             viewBox="0 0 24 24"
