@@ -1,8 +1,21 @@
 <template>
   <div class="mt-4">
-    <div class="text-xs font-semibold text-gray-400 uppercase mb-3">111</div>
+    <div class="text-xs font-semibold text-gray-400 uppercase mb-3">
+      <input
+        type="checkbox"
+        class="mr-2 w-5 h-5"
+        title="Смени избраните съвкупно"
+        v-model="checked_all"
+        @click.stop="checkedAll()"
+      />&nbsp;&nbsp;&nbsp;Потребители
+    </div>
     <ul class="mb-6">
-      <li class="-mx-2 mb-1" v-for="user in getUsers" :key="user.id">
+      <li
+        class="flex flex-row justify-center items-center -mx-2 mb-1"
+        v-for="user in getUsers"
+        :key="user.id"
+      >
+        <input type="checkbox" class="mr-2 w-4 h-4" v-model="user.checked" />
         <button
           class="flex items-center justify-between w-full p-2 rounded hover:bg-indigo-100"
           :class="user.id == store.state.user.id ? 'bg-indigo-100' : ''"
@@ -57,7 +70,7 @@
 </template>
 
 <script>
-import { inject, computed } from 'vue'
+import { inject, computed, ref } from 'vue'
 import moment from 'moment'
 
 export default {
@@ -70,8 +83,18 @@ export default {
   setup(props, { emit }) {
     const store = inject('store')
 
+    const checked_all = ref(false)
+
     const changeUser = (user_id) => {
       store.state.current_user_id = user_id
+      store.state.users
+        .filter((element) => {
+          return element.id != store.state.user.id
+        })
+        .forEach((element) => {
+          element.checked = false
+        })
+      store.state.users.find((element) => element.id == user_id).checked = true
       emit('close-msgsidebar')
     }
 
@@ -93,11 +116,36 @@ export default {
       }).length
     }
 
+    const checkedAll = () => {
+      if (checked_all.value) {
+        store.state.users
+          .filter((element) => {
+            return element.id != store.state.user.id
+          })
+          .forEach((element) => {
+            element.checked = false
+          })
+        store.state.users.find(
+          (element) => element.id == store.state.current_user_id
+        ).checked = true
+      } else {
+        store.state.users
+          .filter((element) => {
+            return element.id != store.state.user.id
+          })
+          .forEach((element) => {
+            element.checked = true
+          })
+      }
+    }
+
     return {
       store,
       changeUser,
       getUsers,
       getMessagesByUserLength,
+      checkedAll,
+      checked_all,
     }
   },
 }
