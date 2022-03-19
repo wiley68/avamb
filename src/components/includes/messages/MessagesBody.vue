@@ -4,6 +4,11 @@
       v-for="message in messages_today"
       :key="message.id"
       class="flex items-center mb-4 last:mb-0"
+      :class="
+        message.from_user_id == store.state.current_user_id
+          ? 'justify-end'
+          : 'justify-start'
+      "
     >
       <img
         v-if="
@@ -29,11 +34,7 @@
       </svg>
       <div>
         <div class="text-xs text-gray-500 font-medium">
-          {{
-            store.methods.getUserById(message.from_user_id).first_name +
-            ' ' +
-            store.methods.getUserById(message.from_user_id).last_name
-          }}
+          {{ store.methods.getUserById(message.from_user_id).username }}
         </div>
         <div
           class="text-sm p-3 rounded-lg rounded-tl-none border border-gray-200 shadow-md mb-1 min-w-44"
@@ -57,7 +58,10 @@
               d="M10.402 6.988l1.586 1.586L18.28 2.28a1 1 0 011.414 1.414l-7 7a1 1 0 01-1.414 0L8.988 8.402l-2.293 2.293a1 1 0 01-1.414 0l-3-3A1 1 0 013.695 6.28l2.293 2.293L12.28 2.28a1 1 0 011.414 1.414l-3.293 3.293z"
             />
           </svg>
-          <button @click.stop="deleteMessageCheck(message.id)">
+          <button
+            @click.stop="deleteMessageCheck(message.id)"
+            title="Изтрий избраното съобщение"
+          >
             <svg
               class="w-5 h-5 text-red-400 hover:text-red-600"
               viewBox="0 0 24 24"
@@ -82,6 +86,11 @@
       v-for="message_old in messages_old"
       :key="message_old.id"
       class="flex items-center mb-4 last:mb-0"
+      :class="
+        message_old.from_user_id == store.state.current_user_id
+          ? 'justify-end'
+          : 'justify-start'
+      "
     >
       <img
         v-if="
@@ -109,11 +118,7 @@
       </svg>
       <div>
         <div class="text-xs text-gray-500 font-medium">
-          {{
-            store.methods.getUserById(message_old.from_user_id).first_name +
-            ' ' +
-            store.methods.getUserById(message_old.from_user_id).last_name
-          }}
+          {{ store.methods.getUserById(message_old.from_user_id).username }}
         </div>
         <div
           class="text-sm p-3 rounded-lg rounded-tl-none border border-gray-200 shadow-md mb-1"
@@ -137,7 +142,10 @@
               d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z"
             />
           </svg>
-          <button @click.stop="deleteMessageCheck(message_old.id)">
+          <button
+            @click.stop="deleteMessageCheck(message_old.id)"
+            itle="Изтрий избраното съобщение"
+          >
             <svg
               class="w-5 h-5 text-red-400 hover:text-red-600"
               viewBox="0 0 24 24"
@@ -213,11 +221,16 @@
         </div>
         <div>
           <div class="mb-2">
-            <div class="text-lg font-semibold text-gray-800">222</div>
+            <div class="text-lg font-semibold text-gray-800">
+              Желаете ли да изтриете съобщението?
+            </div>
           </div>
           <div class="text-sm mb-10">
             <div class="space-y-2">
-              <p>333</p>
+              <p>
+                Това съобщение ще бъде изтрито. Тази операция не може да се
+                прекъсне!
+              </p>
             </div>
           </div>
           <div class="flex flex-wrap justify-end space-x-2">
@@ -231,7 +244,7 @@
               class="btn-sm bg-red-500 hover:bg-red-600 text-white"
               @click.stop="deleteMessage()"
             >
-              Изтрий
+              Да, Изтрий го!
             </button>
           </div>
         </div>
@@ -281,7 +294,7 @@ export default {
     })
 
     const today = () => {
-      return moment()
+      return moment().format('dddd, MMMM DD.MM.YYYY HH:mm')
     }
 
     const formatDateTime = (value) => {
