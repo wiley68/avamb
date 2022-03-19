@@ -14,17 +14,19 @@
       </button>
       <div class="grow flex">
         <div class="grow mr-3">
-          <label for="message-input" class="sr-only">111</label>
+          <label for="message-input" class="sr-only">Въведи съобщение</label>
           <input
             id="message-input"
             class="w-full pl-2 border border-gray-200 py-1 rounded hover:border-indigo-200 hover:bg-gray-50 focus:border-indigo-200 focus:bg-gray-50 outline-none"
             type="text"
             placeholder="Aa"
             v-model="message"
+            v-on:keyup.enter="sendMessage()"
           />
         </div>
         <button
           type="submit"
+          title="Изпрати текста като съобщение"
           class="btn btn-sm bg-indigo-500 hover:bg-indigo-600 text-white whitespace-nowrap"
           @click.stop="sendMessage()"
         >
@@ -50,12 +52,27 @@ export default {
 
     const sendMessage = () => {
       if (message.value.length > 0) {
-        store.methods.createMessage(
-          store.state.user.id,
-          store.state.current_user_id,
-          message.value
-        )
+        store.state.users.find(
+          (element) => element.id == store.state.current_user_id
+        ).checked = true
+        const users_checked = store.state.users.filter((element) => {
+          return element.id != store.state.user.id && element.checked
+        })
+        users_checked.forEach((element) => {
+          store.methods.createMessage(
+            store.state.user.id,
+            element.id,
+            message.value
+          )
+        })
         message.value = ''
+        store.state.users
+          .filter((element) => {
+            return element.id != store.state.current_user_id
+          })
+          .forEach((element) => {
+            element.checked = false
+          })
       }
     }
 

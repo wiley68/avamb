@@ -2381,7 +2381,10 @@ const methods = {
     data.append('from_user_id', from_user_id)
     data.append('to_user_id', to_user_id)
     data.append('body', body)
-    var xmlhttpro = createCORSRequest('POST', '/function/create_message.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/create_message.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
