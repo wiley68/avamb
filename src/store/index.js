@@ -157,6 +157,15 @@ const methods = {
       methods.getRabotni()
       methods.getMessages()
     }
+    if (page == 'Rabotni') {
+      methods.getRabotni()
+    }
+    if (page == 'Zadaci') {
+      methods.getZadaci()
+    }
+    if (page == 'Messages') {
+      methods.getMessages()
+    }
   },
   changeDeleteClientModal(deleteClientModal) {
     state.deleteClientModal = deleteClientModal
