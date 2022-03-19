@@ -87,13 +87,6 @@ export default {
 
     const changeUser = (user_id) => {
       store.state.current_user_id = user_id
-      store.state.users
-        .filter((element) => {
-          return element.id != store.state.user.id
-        })
-        .forEach((element) => {
-          element.checked = false
-        })
       store.state.users.find((element) => element.id == user_id).checked = true
       emit('close-msgsidebar')
     }
