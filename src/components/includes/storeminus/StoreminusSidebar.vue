@@ -59,14 +59,14 @@
                           >№&nbsp;{{ storeminus.id }}</span
                         >
                       </div>
-                      <div>111</div>
+                      <div>{{ storeminus.client_name }}</div>
+                      <div>{{ formatDateTime(storeminus.dateon) }}</div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate mb-2"
                     >
                       <div>
-                        <span>Оферта&nbsp;-&nbsp;222</span
-                        ><span class="text-gray-300">&nbsp;|&nbsp;</span>333
+                        <span>Цена:&nbsp;{{ storeminus.price }}</span>
                       </div>
                       <div
                         class="bg-green-600 w-32 flex flex-row justify-center items-center text-white"
@@ -75,32 +75,15 @@
                           backgroundColor: storeminus.stat_bg,
                         }"
                       >
-                        444
+                        {{ storeminus.status_txt }}
                       </div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate mb-2"
                     >
                       <div class="overflow-clip">
-                        <span>666s</span>
+                        <span>Първ. док.:&nbsp;{{ storeminus.parvicen }}</span>
                       </div>
-                      <button @click.stop="show = storeminus.id">
-                        <svg
-                          class="w-6 h-6 shrink text-blue-600"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <div
-                      class="break-all text-sm text-gray-500 font-medium border-t border-indigo-200 border-dot pt-2"
-                      v-if="show == storeminus.id"
-                    >
-                      777
                     </div>
                   </div>
                 </button>
@@ -114,7 +97,7 @@
 </template>
 
 <script>
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 import moment from 'moment'
 
 export default {
@@ -123,18 +106,13 @@ export default {
   setup() {
     const store = inject('store')
 
-    const show = ref(0)
-
     const formatDateTime = (value) => {
       if (value) {
-        return moment(String(value)).format('DD.MM.YYYY HH:mm')
+        return moment(String(value)).format('DD.MM.YYYY')
       }
     }
 
     const changeStoreminus = (storeminus_id) => {
-      const storeminus = store.state.storeminusi_temp.find(
-        (element) => element.id == storeminus_id
-      )
       store.methods.changeStoreminus(storeminus_id)
       store.methods.closeStoreminusSidebar()
     }
@@ -143,7 +121,6 @@ export default {
       store,
       formatDateTime,
       changeStoreminus,
-      show,
     }
   },
 }
