@@ -94,6 +94,12 @@ const state = reactive({
   user_gravatar: '',
   current_user_id: 0,
   deleteMessage: false,
+  storeminusi: [],
+  storeminusi_temp: [],
+  storeminusiSidebarOpen: true,
+  current_storeminus_id: 0,
+  successUpdateStoreminus: false,
+  deleteStoreminusModal: false,
 })
 
 const methods = {
@@ -156,6 +162,7 @@ const methods = {
       methods.getZadaci()
       methods.getRabotni()
       methods.getMessages()
+      methods.getStoreminusi()
     }
     if (page == 'Rabotni') {
       methods.getRabotni()
@@ -165,6 +172,9 @@ const methods = {
     }
     if (page == 'Messages') {
       methods.getMessages()
+    }
+    if (page == 'Storeminusi') {
+      methods.getStoreminusi()
     }
   },
   changeDeleteClientModal(deleteClientModal) {
@@ -357,6 +367,20 @@ const methods = {
   },
   deleteMessageById(id) {
     state.messages = state.messages.filter((element) => {
+      return element.id != id
+    })
+  },
+  changeDeleteStoreminusModal(deleteStoreminusModal) {
+    state.deleteStoreminusModal = deleteStoreminusModal
+  },
+  changeSuccessUpdateStoreminus(successUpdateStoreminus) {
+    state.successUpdateStoreminus = successUpdateStoreminus
+  },
+  deleteStoreminusById(id) {
+    state.storeminusi = state.storeminusi.filter((element) => {
+      return element.id != id
+    })
+    state.storeminusi_temp = state.storeminusi_temp.filter((element) => {
       return element.id != id
     })
   },
@@ -2409,6 +2433,41 @@ const methods = {
           updated_at: JSON.parse(this.response).updated_at,
         }
         state.messages.splice(0, 0, newMessage)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getStoreminusi() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    const tekushta_start = state.tekushta.substring(0, 10)
+    const tekushta_end = state.tekushta.substring(14)
+    data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_end', tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_storeminusi.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.storeminusi = JSON.parse(this.response).storeminusi
+        state.storeminusi_temp = JSON.parse(this.response).storeminusi
+        console.log(state)
       }
     }
     xmlhttpro.send(data)
