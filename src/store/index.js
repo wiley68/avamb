@@ -90,6 +90,10 @@ const state = reactive({
   successUpdateZadaca: false,
   deleteZadacaModal: false,
   messages: [],
+  users: [],
+  user_gravatar: '',
+  current_user_id: 0,
+  deleteMessage: false,
 })
 
 const methods = {
@@ -333,6 +337,14 @@ const methods = {
     state.poseshtenia = state.poseshtenia.filter((element) => {
       return element.id != id
     })
+  },
+  getUserById(user_id) {
+    return state.users.find((element) => {
+      return element.id == user_id
+    })
+  },
+  changeDeleteMessage(deleteMessage) {
+    state.deleteMessage = deleteMessage
   },
   loadData() {
     var data = new FormData()
@@ -2296,7 +2308,7 @@ const methods = {
     data.append('user_id', state.user.id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/get_messages.php'
+      'https://dograma.avalonbg.com/function/get_messages.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2309,12 +2321,74 @@ const methods = {
       loader.hide()
     })
     xmlhttpro.onreadystatechange = function () {
-      console.log(this.response)
       if (
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
         state.messages = JSON.parse(this.response).messages
+        state.users = JSON.parse(this.response).users
+        state.user_gravatar = JSON.parse(this.response).user_gravatar
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteMessage(message_id) {
+    var data = new FormData()
+    data.append('token', '2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z')
+    data.append('id', message_id)
+    var xmlhttpro = createCORSRequest('POST', '/function/delete_message.php')
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteMessageById(message_id)
+        state.deleteMessage = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  createMessage(from_user_id, to_user_id, body) {
+    var data = new FormData()
+    data.append('token', '2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z')
+    data.append('from_user_id', from_user_id)
+    data.append('to_user_id', to_user_id)
+    data.append('body', body)
+    var xmlhttpro = createCORSRequest('POST', '/function/create_message.php')
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        const newMessage = {
+          id: JSON.parse(this.response).id,
+          from_user_id: JSON.parse(this.response).from_user_id,
+          to_user_id: JSON.parse(this.response).to_user_id,
+          body: JSON.parse(this.response).body,
+          created_at: JSON.parse(this.response).created_at,
+          updated_at: JSON.parse(this.response).updated_at,
+        }
+        state.messages.splice(0, 0, newMessage)
       }
     }
     xmlhttpro.send(data)

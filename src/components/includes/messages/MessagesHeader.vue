@@ -10,7 +10,7 @@
           aria-controls="messages-sidebar"
           :aria-expanded="msgSidebarOpen"
         >
-          <span class="sr-only">{{ store.state.language.close_sidebar }}</span>
+          <span class="sr-only">111</span>
           <svg
             class="w-6 h-6 fill-current"
             viewBox="0 0 24 24"
@@ -33,11 +33,6 @@
       <div class="flex">
         <button
           class="p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          :title="
-            store.state.options.show_help == 'On'
-              ? store.state.language.messages_close
-              : ''
-          "
           @click.stop="store.state.page = 'Dashboard'"
         >
           <svg class="w-4 h-4 fill-current text-red-500" viewBox="0 0 24 24">

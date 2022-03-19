@@ -5,7 +5,7 @@
       <li class="-mx-2 mb-1" v-for="user in getUsers" :key="user.id">
         <button
           class="flex items-center justify-between w-full p-2 rounded hover:bg-indigo-100"
-          :class="user.id == store.state.current_user_id ? 'bg-indigo-100' : ''"
+          :class="user.id == store.state.user.id ? 'bg-indigo-100' : ''"
           @click.stop="changeUser(user.id)"
         >
           <div class="flex items-center truncate">
@@ -26,9 +26,9 @@
             </svg>
             <div class="truncate">
               <span class="text-sm font-medium text-gray-800"
-                >{{ user.first_name }} {{ user.last_name }}
+                >{{ user.username }}
                 <span class="text-xs text-gray-400"
-                  >({{ user.nickname }})</span
+                  >({{ user.dlaznost }})</span
                 ></span
               >
             </div>
@@ -77,7 +77,7 @@ export default {
 
     const getUsers = computed(() => {
       return store.state.users.filter((element) => {
-        return element.id != store.state.user_id
+        return element.id != store.state.user.id
       })
     })
 
@@ -86,9 +86,9 @@ export default {
         return (
           moment(element.created_at).date() == moment().date() &&
           ((element.from_user_id == user_id &&
-            element.to_user_id == store.state.user_id) ||
+            element.to_user_id == store.state.user.id) ||
             (element.to_user_id == user_id &&
-              element.from_user_id == store.state.user_id))
+              element.from_user_id == store.state.user.id))
         )
       }).length
     }

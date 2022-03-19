@@ -31,16 +31,11 @@
                 />
               </svg>
               <div class="truncate">
-                <span class="font-semibold text-gray-800"
-                  >{{ store.state.user_firstname }}&nbsp;{{
-                    store.state.user_lastname
-                  }}</span
+                <span class="font-semibold text-gray-800">{{
+                  store.state.user.username
+                }}</span
                 >&nbsp;<span class="text-sm text-gray-400"
-                  >({{
-                    store.state.display_name
-                      ? store.state.display_name
-                      : 'No Name'
-                  }})</span
+                  >({{ store.state.dlaznost }})</span
                 >
               </div>
             </div>

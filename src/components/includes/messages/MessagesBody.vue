@@ -57,14 +57,7 @@
               d="M10.402 6.988l1.586 1.586L18.28 2.28a1 1 0 011.414 1.414l-7 7a1 1 0 01-1.414 0L8.988 8.402l-2.293 2.293a1 1 0 01-1.414 0l-3-3A1 1 0 013.695 6.28l2.293 2.293L12.28 2.28a1 1 0 011.414 1.414l-3.293 3.293z"
             />
           </svg>
-          <button
-            @click.stop="deleteMessageCheck(message.id)"
-            :title="
-              store.state.options.show_help == 'On'
-                ? store.state.language.inbox_delete
-                : ''
-            "
-          >
+          <button @click.stop="deleteMessageCheck(message.id)">
             <svg
               class="w-5 h-5 text-red-400 hover:text-red-600"
               viewBox="0 0 24 24"
@@ -144,14 +137,7 @@
               d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z"
             />
           </svg>
-          <button
-            @click.stop="deleteMessageCheck(message_old.id)"
-            :title="
-              store.state.options.show_help == 'On'
-                ? store.state.language.inbox_delete
-                : ''
-            "
-          >
+          <button @click.stop="deleteMessageCheck(message_old.id)">
             <svg
               class="w-5 h-5 text-red-400 hover:text-red-600"
               viewBox="0 0 24 24"
@@ -227,15 +213,11 @@
         </div>
         <div>
           <div class="mb-2">
-            <div class="text-lg font-semibold text-gray-800">
-              {{ store.state.language.delete_message_question }}
-            </div>
+            <div class="text-lg font-semibold text-gray-800">222</div>
           </div>
           <div class="text-sm mb-10">
             <div class="space-y-2">
-              <p>
-                {{ store.state.language.delete_message_response }}
-              </p>
+              <p>333</p>
             </div>
           </div>
           <div class="flex flex-wrap justify-end space-x-2">
@@ -243,13 +225,13 @@
               class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
               @click.stop="store.methods.changeDeleteMessage(false)"
             >
-              {{ store.state.language.cancel }}
+              Откажи
             </button>
             <button
               class="btn-sm bg-red-500 hover:bg-red-600 text-white"
               @click.stop="deleteMessage()"
             >
-              {{ store.state.language.yes_delete }}
+              Изтрий
             </button>
           </div>
         </div>
@@ -279,9 +261,9 @@ export default {
         return (
           moment(element.created_at).date() == moment().date() &&
           ((element.from_user_id == store.state.current_user_id &&
-            element.to_user_id == store.state.user_id) ||
+            element.to_user_id == store.state.user.id) ||
             (element.to_user_id == store.state.current_user_id &&
-              element.from_user_id == store.state.user_id))
+              element.from_user_id == store.state.user.id))
         )
       })
     })
@@ -291,9 +273,9 @@ export default {
         return (
           moment(element.created_at).date() < moment().date() &&
           ((element.from_user_id == store.state.current_user_id &&
-            element.to_user_id == store.state.user_id) ||
+            element.to_user_id == store.state.user.id) ||
             (element.to_user_id == store.state.current_user_id &&
-              element.from_user_id == store.state.user_id))
+              element.from_user_id == store.state.user.id))
         )
       })
     })
