@@ -89,6 +89,7 @@ const state = reactive({
   current_zadaca_id: 0,
   successUpdateZadaca: false,
   deleteZadacaModal: false,
+  messages: [],
 })
 
 const methods = {
@@ -150,6 +151,7 @@ const methods = {
       methods.getOffers()
       methods.getZadaci()
       methods.getRabotni()
+      methods.getMessages()
     }
   },
   changeDeleteClientModal(deleteClientModal) {
@@ -2284,6 +2286,35 @@ const methods = {
         state.deleteZadacaModal = false
         state.current_zadaca_id = state.zadaci[0] ? state.zadaci[0].id : 0
         methods.toggleZadaciSidebar()
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getMessages() {
+    var data = new FormData()
+    data.append('token', '2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z')
+    data.append('user_id', state.user.id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/get_messages.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      console.log(this.response)
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.messages = JSON.parse(this.response).messages
       }
     }
     xmlhttpro.send(data)
