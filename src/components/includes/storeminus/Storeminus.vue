@@ -1,33 +1,27 @@
 <template>
   <div class="flex flex-col py-3 w-full">
     <div class="flex flex-row justify-between items-center mb-1">
-      <span class="p-1 text-sm w-3/12">Регистрация</span>
-      111
+      <select
+        class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
+        v-model="storeminus.contragent_id"
+      >
+        <option value="0" selected>Избери клиент</option>
+        <option
+          v-for="client in store.state.clienti"
+          :key="client.id"
+          :value="client.id"
+        >
+          {{ client.id }}&nbsp;-&nbsp;{{ client.name }}
+        </option>
+      </select>
     </div>
     <div class="flex flex-row justify-between items-center mb-1">
       <span class="p-1 text-sm w-3/12">Приключване</span>
-      222
+      <input type="date" v-model="storeminus.dateon" />
     </div>
     <div class="flex flex-row justify-between items-center mb-1">
       <span class="p-1 text-sm w-3/12">Напомняне</span>
-      333
-    </div>
-    <div class="flex flex-row justify-between items-center mb-1">
-      <span class="p-1 text-sm w-3/12">Статус</span>
-      444
-    </div>
-    <div class="flex flex-row justify-between items-center mb-1">
-      <span class="p-1 text-sm w-3/12">Потребители</span>
-      555
-    </div>
-    <div class="flex flex-row justify-between items-center mb-1">666</div>
-    <div class="flex flex-col mb-1">
-      <span class="p-1 text-sm">Тема</span>
-      777
-    </div>
-    <div class="flex flex-col mb-1">
-      <span class="p-1 text-sm">Описание</span>
-      888
+      <input type="text" v-model="storeminus.parvicen" />
     </div>
   </div>
 </template>

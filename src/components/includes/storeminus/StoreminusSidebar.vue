@@ -17,7 +17,7 @@
             <div class="w-full flex items-center justify-between">
               <button
                 class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-                @click.stop="store.methods.saveStoreminus(0)"
+                @click.stop="newStoreminus()"
               >
                 <svg
                   class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
@@ -59,7 +59,11 @@
                           >№&nbsp;{{ storeminus.id }}</span
                         >
                       </div>
-                      <div>{{ storeminus.client_name }}</div>
+                      <div>
+                        {{ storeminus.contragent_id }}&nbsp;-&nbsp;{{
+                          getClientName(storeminus.contragent_id)
+                        }}
+                      </div>
                       <div>{{ formatDateTime(storeminus.dateon) }}</div>
                     </div>
                     <div
@@ -117,10 +121,40 @@ export default {
       store.methods.closeStoreminusiSidebar()
     }
 
+    const getClientName = (contragent_id) => {
+      if (contragent_id != 0) {
+        return store.state.clienti.find(
+          (element) => element.id == contragent_id
+        ).name
+      } else {
+        return ''
+      }
+    }
+
+    const newStoreminus = () => {
+      const new_storeminus = {
+        id: -1,
+        contragent_id: 0,
+        dateon: moment().format('YYYY-MM-DD'),
+        parvicen: '',
+        price: '0.00',
+        stat_bg: '#dcdcdc',
+        stat_color: '#708090',
+        status: 0,
+        status_txt: 'Типова',
+      }
+      store.state.storeminusi.splice(0, 0, new_storeminus)
+      store.state.storeminusi_temp.splice(0, 0, new_storeminus)
+      store.state.current_storeminus_id = new_storeminus.id
+      store.methods.toggleStoreminusiSidebar()
+    }
+
     return {
       store,
       formatDateTime,
       changeStoreminusi,
+      getClientName,
+      newStoreminus,
     }
   },
 }

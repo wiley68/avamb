@@ -100,6 +100,7 @@ const state = reactive({
   current_storeminus_id: 0,
   successUpdateStoreminus: false,
   deleteStoreminusModal: false,
+  clienti: [],
 })
 
 const methods = {
@@ -2479,7 +2480,65 @@ const methods = {
       ) {
         state.storeminusi = JSON.parse(this.response).storeminusi
         state.storeminusi_temp = JSON.parse(this.response).storeminusi
+        state.clienti = JSON.parse(this.response).clienti
         console.log(state)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveStoreminus(storeminus_id) {
+    const storeminus = state.storeminusi_temp.find(
+      (element) => element.id == storeminus_id
+    )
+    if (storeminus.contragent_id == 0) {
+      alert('Моля изберете клиент!')
+      return
+    }
+    let sid = 0
+    if (storeminus_id > 0) {
+      sid = storeminus_id
+    }
+    var data = new FormData()
+    var info = []
+    info[0] = 'SAVE'
+    info[1] = sid
+    info[2] = storeminus.dateon
+    info[3] = ''
+    info[4] = ''
+    info[5] = storeminus.contragent_id
+    info[6] = state.user.firm_id
+    info[7] = state.user.id
+    info[8] = storeminus.parvicen
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/storeminus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        if (storeminus_id > 0) {
+          methods.changeSuccessUpdateStoreminus(true)
+        } else {
+          const storeminus_id = JSON.parse(this.response).newid
+          methods.getStoreminusi()
+          methods.changeStoreminusi(storeminus_id)
+          methods.toggleStoreminusiSidebar()
+        }
+      } else {
+        methods.changeSuccessUpdateStoreminus(false)
       }
     }
     xmlhttpro.send(data)
