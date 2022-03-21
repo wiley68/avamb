@@ -48,7 +48,7 @@
                       ? 'bg-indigo-100 border-indigo-200'
                       : 'bg-gray-100 border-gray-200'
                   "
-                  @click.stop="changeStoreminus(storeminus.id)"
+                  @click.stop="changeStoreminusi(storeminus.id)"
                 >
                   <div class="grow">
                     <div
@@ -112,15 +112,15 @@ export default {
       }
     }
 
-    const changeStoreminus = (storeminus_id) => {
-      store.methods.changeStoreminus(storeminus_id)
-      store.methods.closeStoreminusSidebar()
+    const changeStoreminusi = (storeminus_id) => {
+      store.methods.changeStoreminusi(storeminus_id)
+      store.methods.closeStoreminusiSidebar()
     }
 
     return {
       store,
       formatDateTime,
-      changeStoreminus,
+      changeStoreminusi,
     }
   },
 }

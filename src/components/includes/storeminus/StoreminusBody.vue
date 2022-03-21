@@ -1,8 +1,10 @@
 <template>
   <div
     class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
-    :class="store.state.zadaciSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'"
-    v-if="zadaca"
+    :class="
+      store.state.storeminusiSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
+    "
+    v-if="storeminus"
   >
     <div class="sticky top-16">
       <div
@@ -11,9 +13,9 @@
         <div class="flex">
           <button
             class="md:hidden text-gray-400 hover:text-gray-500 mr-4"
-            @click.stop="store.methods.toggleZadaciSidebar()"
+            @click.stop="store.methods.toggleStoreminusiSidebar()"
             aria-controls="inbox-sidebar"
-            :aria-expanded="store.state.zadaciSidebarOpen"
+            :aria-expanded="store.state.storeminusiSidebarOpen"
           >
             <span class="sr-only">Затвори</span>
             <svg
@@ -29,7 +31,7 @@
           <button
             class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="success-modal"
-            @click.stop="updateZadaca(zadaca.id)"
+            @click.stop="updateStoreminus(storeminus.id)"
           >
             <svg
               class="w-6 h-6 fill-current text-blue-600 shrink-0"
@@ -43,8 +45,8 @@
           </button>
           <ModalBlank
             id="success-modal"
-            :modalOpen="store.state.successUpdateZadaca"
-            @close-modal="store.methods.changeSuccessUpdateZadaca(false)"
+            :modalOpen="store.state.successUpdateStoreminus"
+            @close-modal="store.methods.changeSuccessUpdateStoreminus(false)"
           >
             <div class="p-5 flex space-x-4">
               <div
@@ -73,71 +75,11 @@
                 <div class="flex flex-wrap justify-end space-x-2">
                   <button
                     class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                    @click.stop="store.methods.changeSuccessUpdateZadaca(false)"
+                    @click.stop="
+                      store.methods.changeSuccessUpdateStoreminus(false)
+                    "
                   >
                     Затвори
-                  </button>
-                </div>
-              </div>
-            </div>
-          </ModalBlank>
-          <button
-            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-            aria-controls="danger-modal"
-            @click.stop="deleteZadacaCheck()"
-          >
-            <svg
-              class="w-6 h-6 fill-current text-blue-600 shrink-0"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M17 4V6H3V4H6.5L7.5 3H12.5L13.5 4H17M4 19V7H16V19C16 20.1 15.1 21 14 21H6C4.9 21 4 20.1 4 19M19 15H21V17H19V15M19 7H21V13H19V7Z"
-              />
-            </svg>
-          </button>
-          <ModalBlank
-            id="danger-modal"
-            :modalOpen="store.state.deleteZadacaModal"
-            @close-modal="store.methods.changeDeleteZadacaModal(false)"
-          >
-            <div class="p-5 flex space-x-4">
-              <div
-                class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-red-100"
-              >
-                <svg
-                  class="w-4 h-4 shrink-0 fill-current text-red-600"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"
-                  />
-                </svg>
-              </div>
-              <div>
-                <div class="mb-2">
-                  <div class="text-lg font-semibold text-gray-800">
-                    Внимание!
-                  </div>
-                </div>
-                <!-- Modal content -->
-                <div class="text-sm mb-10">
-                  <div class="space-y-2">
-                    <p>Желаете ли да изтриете задачата?</p>
-                  </div>
-                </div>
-                <div class="flex flex-wrap justify-end space-x-2">
-                  <button
-                    class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                    @click.stop="store.methods.changeDeleteZadacaModal(false)"
-                  >
-                    Откажи
-                  </button>
-                  <button
-                    class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                    @click.stop="deleteZadaca()"
-                  >
-                    Изтрий
                   </button>
                 </div>
               </div>
@@ -170,23 +112,14 @@ export default {
   setup() {
     const store = inject('store')
 
-    const zadaca = computed(() => {
-      return store.state.zadaci_temp.find(
-        (element) => element.id == store.state.current_zadaca_id
+    const storeminus = computed(() => {
+      return store.state.storeminusi_temp.find(
+        (element) => element.id == store.state.current_storeminus_id
       )
     })
 
-    const updateZadaca = (zadaca_id) => {
-      store.methods.saveZadaca(zadaca_id)
-    }
-
-    const deleteZadacaCheck = () => {
-      store.methods.changeDeleteZadacaModal(true)
-    }
-
-    const deleteZadaca = () => {
-      const deleted_id = zadaca.value.id
-      store.methods.deleteZadaca(deleted_id)
+    const updateStoreminus = (storeminus_id) => {
+      store.methods.saveStoreminus(storeminus_id)
     }
 
     const formatDateTime = (value) => {
@@ -197,10 +130,8 @@ export default {
 
     return {
       store,
-      zadaca,
-      updateZadaca,
-      deleteZadacaCheck,
-      deleteZadaca,
+      storeminus,
+      updateStoreminus,
       formatDateTime,
     }
   },

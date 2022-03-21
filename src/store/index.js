@@ -142,14 +142,26 @@ const methods = {
   toggleZadaciSidebar() {
     state.zadaciSidebarOpen = !state.zadaciSidebarOpen
   },
+  toggleStoreminusiSidebar() {
+    state.storeminusiSidebarOpen = !state.storeminusiSidebarOpen
+  },
   closeZadaciSidebar() {
     state.zadaciSidebarOpen = false
+  },
+  closeStoreminusiSidebar() {
+    state.storeminusiSidebarOpen = false
   },
   openZadaciSidebar() {
     state.zadaciSidebarOpen = true
   },
+  openStoreminusiSidebar() {
+    state.storeminusiSidebarOpen = true
+  },
   changeZadaci(zadaca_id) {
     state.current_zadaca_id = zadaca_id
+  },
+  changeStoreminusi(storeminus_id) {
+    state.current_storeminus_id = storeminus_id
   },
   changePoseshtenie(poseshtenie_id) {
     state.current_poseshtenie_id = poseshtenie_id
