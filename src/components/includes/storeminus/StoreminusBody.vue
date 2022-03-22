@@ -85,6 +85,21 @@
               </div>
             </div>
           </ModalBlank>
+          <button
+            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            aria-controls="success-modal"
+            @click.stop="add_sub_storeminus = !add_sub_storeminus"
+          >
+            <svg
+              class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M19,11H15V15H13V11H9V9H13V5H15V9H19M20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M4,6H2V20A2,2 0 0,0 4,22H18V20H4V6Z"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -93,6 +108,51 @@
         class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 divide-y divide-gray-200 mb-3"
       >
         <Storeminus />
+      </div>
+      <div
+        v-if="add_sub_storeminus"
+        class="flex flex-col items-start justify-between bg-red-50 shadow-lg rounded-t-sm border border-red-200 px-6 divide-y divide-gray-200 mb-3"
+      >
+        <div class="flex flex-col py-3 w-full">
+          <div class="flex flex-row justify-between items-center mb-1">
+            <select
+              class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
+              v-model="storeminus.contragent_id"
+            >
+              <option value="0" selected>Избери продукт</option>
+              <option
+                v-for="client in store.state.clienti"
+                :key="client.id"
+                :value="client.id"
+              >
+                {{ client.id }}&nbsp;-&nbsp;{{ client.name }}
+              </option>
+            </select>
+          </div>
+          <div class="flex flex-row justify-between items-center mb-3">
+            <span class="p-1 text-sm w-3/12">Бройка</span>
+            <input
+              type="number"
+              v-model="quantity"
+              class="w-7/12 text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
+            />
+          </div>
+          <button
+            class="w-24 flex flex-row justify-center self-end p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm"
+            aria-controls="success-modal"
+            @click.stop="add_sub_storeminus = !add_sub_storeminus"
+          >
+            <svg
+              class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M19,11H15V15H13V11H9V9H13V5H15V9H19M20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M4,6H2V20A2,2 0 0,0 4,22H18V20H4V6Z"
+              /></svg
+            ><span>Добави</span>
+          </button>
+        </div>
       </div>
       <div
         class="flex flex-col justify-center items-center bg-orange-50 shadow-lg rounded-sm border border-orange-200 px-2 py-2 mb-3"
@@ -207,6 +267,10 @@ export default {
 
     const deleted_id = ref(0)
 
+    const add_sub_storeminus = ref(false)
+
+    const quantity = ref(0)
+
     const storeminus = computed(() => {
       return store.state.storeminusi_temp.find(
         (element) => element.id == store.state.current_storeminus_id
@@ -250,6 +314,8 @@ export default {
       changeSubstoreminus,
       deleteSubstoreminusCheck,
       deleteSubstoreminus,
+      add_sub_storeminus,
+      quantity,
     }
   },
 }
