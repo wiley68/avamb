@@ -94,12 +94,105 @@
       >
         <Storeminus />
       </div>
+      <div
+        class="flex flex-col justify-center items-center bg-orange-50 shadow-lg rounded-sm border border-orange-200 px-2 py-2 mb-3"
+        v-for="sub_storeminus in sub_storeminusi"
+        :key="sub_storeminus.id"
+      >
+        <div class="flex flex-col w-full items-start justify-start text-sm">
+          <div class="flex flex-row justify-between w-full">
+            <button
+              class="flex-grow text-left"
+              @click.stop="changeSubstoreminus(sub_storeminus.id)"
+            >
+              <span class="font-medium">{{ sub_storeminus.product_name }}</span>
+            </button>
+            <button
+              class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+              aria-controls="danger-modal"
+              @click.stop="deleteSubstoreminusCheck(sub_storeminus.id)"
+            >
+              <svg
+                class="w-6 h-6 fill-current text-blue-600 shrink-0"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M17 4V6H3V4H6.5L7.5 3H12.5L13.5 4H17M4 19V7H16V19C16 20.1 15.1 21 14 21H6C4.9 21 4 20.1 4 19M19 15H21V17H19V15M19 7H21V13H19V7Z"
+                />
+              </svg>
+            </button>
+            <ModalBlank
+              id="danger-modal"
+              :modalOpen="store.state.deleteSubstoreminusModal"
+              @close-modal="store.methods.changeDeleteSubstoreminusModal(false)"
+            >
+              <div class="p-5 flex space-x-4">
+                <div
+                  class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-red-100"
+                >
+                  <svg
+                    class="w-4 h-4 shrink-0 fill-current text-red-600"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div class="mb-2">
+                    <div class="text-lg font-semibold text-gray-800">
+                      Внимание!
+                    </div>
+                  </div>
+                  <!-- Modal content -->
+                  <div class="text-sm mb-10">
+                    <div class="space-y-2">
+                      <p>Желаете ли да изтриете продукта?</p>
+                    </div>
+                  </div>
+                  <div class="flex flex-wrap justify-end space-x-2">
+                    <button
+                      class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+                      @click.stop="
+                        store.methods.changeDeleteSubstoreminusModal(false)
+                      "
+                    >
+                      Откажи
+                    </button>
+                    <button
+                      class="btn-sm bg-red-500 hover:bg-red-600 text-white"
+                      @click.stop="deleteSubstoreminus()"
+                    >
+                      Изтрий
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ModalBlank>
+          </div>
+          <div class="text-left">
+            {{ sub_storeminus.quantity }}&nbsp;x&nbsp;{{
+              sub_storeminus.price
+            }}&nbsp;-&nbsp;{{
+              (
+                parseFloat(sub_storeminus.quantity) *
+                parseFloat(sub_storeminus.price)
+              ).toFixed(2)
+            }}
+          </div>
+          <div class="text-left">
+            Наличност&nbsp;-&nbsp;{{ sub_storeminus.store_quantity }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { inject, computed } from 'vue'
+import { inject, computed, ref } from 'vue'
 import ModalBlank from '../components/ModalBlank.vue'
 import Storeminus from './Storeminus.vue'
 import moment from 'moment'
@@ -111,6 +204,8 @@ export default {
 
   setup() {
     const store = inject('store')
+
+    const deleted_id = ref(0)
 
     const storeminus = computed(() => {
       return store.state.storeminusi_temp.find(
@@ -128,11 +223,33 @@ export default {
       }
     }
 
+    const sub_storeminusi = computed(() => {
+      return store.state.sub_storeminusi
+    })
+
+    const changeSubstoreminus = (sub_storeminus_id) => {
+      store.methods.changeSubstoreminus(sub_storeminus_id)
+      store.methods.closeStoreminusiSidebar()
+    }
+
+    const deleteSubstoreminusCheck = (sub_storeminus_id) => {
+      deleted_id.value = sub_storeminus_id
+      store.methods.changeDeleteSubstoreminusModal(true)
+    }
+
+    const deleteSubstoreminus = () => {
+      store.methods.deleteSubstoreminus(deleted_id.value)
+    }
+
     return {
       store,
       storeminus,
       updateStoreminus,
       formatDateTime,
+      sub_storeminusi,
+      changeSubstoreminus,
+      deleteSubstoreminusCheck,
+      deleteSubstoreminus,
     }
   },
 }

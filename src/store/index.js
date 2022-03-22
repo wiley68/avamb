@@ -103,6 +103,7 @@ const state = reactive({
   clienti: [],
   sub_storeminusi: [],
   current_sub_storeminus_id: 0,
+  deleteSubstoreminusModal: false,
 })
 
 const methods = {
@@ -171,6 +172,9 @@ const methods = {
   },
   changePoseshtenie(poseshtenie_id) {
     state.current_poseshtenie_id = poseshtenie_id
+  },
+  changeSubstoreminus(sub_storeminus_id) {
+    state.current_sub_storeminus_id = sub_storeminus_id
   },
   changePage(page) {
     state.page = page
@@ -338,6 +342,9 @@ const methods = {
   changeDeleteRabotenModal(deleteRabotenModal) {
     state.deleteRabotenModal = deleteRabotenModal
   },
+  changeDeleteSubstoreminusModal(deleteSubstoreminusModal) {
+    state.deleteSubstoreminusModal = deleteSubstoreminusModal
+  },
   changeDeleteZadacaModal(deleteZadacaModal) {
     state.deleteZadacaModal = deleteZadacaModal
   },
@@ -372,6 +379,11 @@ const methods = {
   },
   deletePoseshtenieById(id) {
     state.poseshtenia = state.poseshtenia.filter((element) => {
+      return element.id != id
+    })
+  },
+  deleteSubstoreminusById(id) {
+    state.sub_storeminusi = state.sub_storeminusi.filter((element) => {
       return element.id != id
     })
   },
@@ -2570,6 +2582,40 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.sub_storeminusi = JSON.parse(this.response).sub_storeminusi
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteSubstoreminus(substoreminus_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'DELETE'
+    info[1] = substoreminus_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/storeminus_edit.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteSubstoreminusById(substoreminus_id)
+        state.deleteSubstoreminusModal = false
+        state.current_sub_storeminus_id = state.sub_storeminusi[0]
+          ? state.sub_storeminusi[0].id
+          : 0
       }
     }
     xmlhttpro.send(data)

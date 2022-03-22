@@ -176,7 +176,6 @@ export default {
     }
 
     const sub_storeminusi = computed(() => {
-      console.log(store.state.sub_storeminusi)
       return store.state.sub_storeminusi
     })
 
