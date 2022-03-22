@@ -117,15 +117,15 @@
           <div class="flex flex-row justify-between items-center mb-1">
             <select
               class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
-              v-model="storeminus.contragent_id"
+              v-model="code"
             >
-              <option value="0" selected>Избери продукт</option>
+              <option value="" selected>Избери продукт</option>
               <option
-                v-for="client in store.state.clienti"
-                :key="client.id"
-                :value="client.id"
+                v-for="produkt in store.state.produkti"
+                :key="produkt.id"
+                :value="produkt.code"
               >
-                {{ client.id }}&nbsp;-&nbsp;{{ client.name }}
+                {{ produkt.code }}&nbsp;-&nbsp;{{ produkt.name }}
               </option>
             </select>
           </div>
@@ -140,7 +140,7 @@
           <button
             class="w-24 flex flex-row justify-center self-end p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm"
             aria-controls="success-modal"
-            @click.stop="add_sub_storeminus = !add_sub_storeminus"
+            @click.stop="addProdukt()"
           >
             <svg
               class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
@@ -271,6 +271,8 @@ export default {
 
     const quantity = ref(0)
 
+    const code = ref('')
+
     const storeminus = computed(() => {
       return store.state.storeminusi_temp.find(
         (element) => element.id == store.state.current_storeminus_id
@@ -305,6 +307,23 @@ export default {
       store.methods.deleteSubstoreminus(deleted_id.value)
     }
 
+    const addProdukt = () => {
+      if (code.value == '' || quantity.value == 0) {
+        alert('Моля иаберете продукт и количество!')
+      } else {
+        add_sub_storeminus.value = !add_sub_storeminus.value
+        const price = store.state.produkti.find(
+          (element) => element.code == code.value
+        ).price
+        store.methods.createSubstoreminus(
+          storeminus.value.id,
+          code.value,
+          quantity.value,
+          price
+        )
+      }
+    }
+
     return {
       store,
       storeminus,
@@ -316,6 +335,8 @@ export default {
       deleteSubstoreminus,
       add_sub_storeminus,
       quantity,
+      code,
+      addProdukt,
     }
   },
 }

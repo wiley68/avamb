@@ -104,6 +104,7 @@ const state = reactive({
   sub_storeminusi: [],
   current_sub_storeminus_id: 0,
   deleteSubstoreminusModal: false,
+  produkti: [],
 })
 
 const methods = {
@@ -185,6 +186,7 @@ const methods = {
       methods.getRabotni()
       methods.getMessages()
       methods.getStoreminusi()
+      methods.getProdukti()
     }
     if (page == 'Rabotni') {
       methods.getRabotni()
@@ -2616,6 +2618,71 @@ const methods = {
         state.current_sub_storeminus_id = state.sub_storeminusi[0]
           ? state.sub_storeminusi[0].id
           : 0
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getProdukti() {
+    var data = new FormData()
+    var info = []
+    info[0] = 'GET'
+    info[1] = state.user.firm_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/getproductiaddstoreminus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      let result = []
+      try {
+        result = JSON.parse(this.response)
+      } catch (err) {}
+      if (this.readyState == 4 && result.success == 'success') {
+        state.produkti = result.data
+        console.log(state)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  createSubstoreminus(storeminus_id, code, quantity, price) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'CREATE'
+    info[1] = storeminus_id
+    info[2] = code
+    info[3] = quantity
+    info[4] = price
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/storeminus_edit.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.getSubStoreminusi(storeminus_id)
       }
     }
     xmlhttpro.send(data)
