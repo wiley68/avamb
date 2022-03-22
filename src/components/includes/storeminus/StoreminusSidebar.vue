@@ -91,6 +91,32 @@
                     </div>
                   </div>
                 </button>
+                <div
+                  v-if="
+                    storeminus.id == store.state.current_storeminus_id &&
+                    sub_storeminusi.length > 0
+                  "
+                  class="flex flex-col w-full rounded-b text-left bg-orange-50 border-l border-r border-b border-orange-200"
+                >
+                  <div
+                    class="flex flex-row justify-between border-b border-dotted border-gray-200 hover:bg-orange-100 px-1 py-0.5"
+                    v-for="sub_storeminus in sub_storeminusi"
+                    :key="sub_storeminus.id"
+                    :class="
+                      sub_storeminus.id == store.state.current_sub_storeminus_id
+                        ? 'bg-orange-100'
+                        : ''
+                    "
+                  >
+                    <button
+                      class="text-sm flex justify-between flex-grow whitespace-nowrap overflow-hidden overflow-ellipsis"
+                      @click.stop="changeSubstoreminus(sub_storeminus.id)"
+                    >
+                      <div>{{ sub_storeminus.product_name }}</div>
+                      <div>{{ sub_storeminus.quantity }}</div>
+                    </button>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
@@ -101,7 +127,7 @@
 </template>
 
 <script>
-import { inject } from 'vue'
+import { inject, computed } from 'vue'
 import moment from 'moment'
 
 export default {
@@ -149,12 +175,18 @@ export default {
       store.methods.toggleStoreminusiSidebar()
     }
 
+    const sub_storeminusi = computed(() => {
+      console.log(store.state.sub_storeminusi)
+      return store.state.sub_storeminusi
+    })
+
     return {
       store,
       formatDateTime,
       changeStoreminusi,
       getClientName,
       newStoreminus,
+      sub_storeminusi,
     }
   },
 }

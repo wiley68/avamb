@@ -101,6 +101,8 @@ const state = reactive({
   successUpdateStoreminus: false,
   deleteStoreminusModal: false,
   clienti: [],
+  sub_storeminusi: [],
+  current_sub_storeminus_id: 0,
 })
 
 const methods = {
@@ -162,7 +164,10 @@ const methods = {
     state.current_zadaca_id = zadaca_id
   },
   changeStoreminusi(storeminus_id) {
+    state.current_sub_storeminus_id = 0
+    state.sub_storeminusi = []
     state.current_storeminus_id = storeminus_id
+    methods.getSubStoreminusi(state.current_storeminus_id)
   },
   changePoseshtenie(poseshtenie_id) {
     state.current_poseshtenie_id = poseshtenie_id
@@ -2481,7 +2486,6 @@ const methods = {
         state.storeminusi = JSON.parse(this.response).storeminusi
         state.storeminusi_temp = JSON.parse(this.response).storeminusi
         state.clienti = JSON.parse(this.response).clienti
-        console.log(state)
       }
     }
     xmlhttpro.send(data)
@@ -2539,6 +2543,33 @@ const methods = {
         }
       } else {
         methods.changeSuccessUpdateStoreminus(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getSubStoreminusi(storeminus_id) {
+    var data = new FormData()
+    data.append('sid', storeminus_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_substoreminusi.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.sub_storeminusi = JSON.parse(this.response).sub_storeminusi
       }
     }
     xmlhttpro.send(data)
