@@ -105,6 +105,7 @@ const state = reactive({
   current_sub_storeminus_id: 0,
   deleteSubstoreminusModal: false,
   produkti: [],
+  produkti_temp: [],
 })
 
 const methods = {
@@ -2649,7 +2650,6 @@ const methods = {
       } catch (err) {}
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti = result.data
-        console.log(state)
       }
     }
     xmlhttpro.send(data)

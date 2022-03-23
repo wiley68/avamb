@@ -88,7 +88,7 @@
           <button
             class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="success-modal"
-            @click.stop="add_sub_storeminus = !add_sub_storeminus"
+            @click.stop="openNewProdukt()"
           >
             <svg
               class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
@@ -149,11 +149,27 @@
           <div class="flex flex-row justify-between items-center mb-1">
             <select
               class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
+              v-model="category"
+              v-on:change.stop="changeCategory()"
+            >
+              <option value="" selected>Избери категория</option>
+              <option
+                v-for="category in getProduktiCategories()"
+                :key="category"
+                :value="category"
+              >
+                {{ category }}
+              </option>
+            </select>
+          </div>
+          <div class="flex flex-row justify-between items-center mb-1">
+            <select
+              class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
               v-model="code"
             >
               <option value="" selected>Избери продукт</option>
               <option
-                v-for="produkt in store.state.produkti"
+                v-for="produkt in store.state.produkti_temp"
                 :key="produkt.id"
                 :value="produkt.code"
               >
@@ -305,6 +321,8 @@ export default {
 
     const code = ref('')
 
+    const category = ref('')
+
     const storeminus = computed(() => {
       return store.state.storeminusi_temp.find(
         (element) => element.id == store.state.current_storeminus_id
@@ -340,8 +358,8 @@ export default {
     }
 
     const addProdukt = () => {
-      if (code.value == '' || quantity.value == 0) {
-        alert('Моля иаберете продукт и количество!')
+      if (category.value == 0 || code.value == '' || quantity.value == 0) {
+        alert('Моля иаберете категория, продукт и количество!')
       } else {
         add_sub_storeminus.value = !add_sub_storeminus.value
         const price = store.state.produkti.find(
@@ -376,6 +394,36 @@ export default {
       store.methods.saveStoreminus(storeminus_id, status)
     }
 
+    const getUniqueValues = (array, key) => {
+      var result = new Set()
+      array.forEach(function (item) {
+        if (item.hasOwnProperty(key)) {
+          result.add(item[key])
+        }
+      })
+      return result
+    }
+
+    const getProduktiCategories = () => {
+      var categories = []
+      categories = getUniqueValues(store.state.produkti, 'category_name')
+      return categories
+    }
+
+    const changeCategory = () => {
+      code.value = ''
+      store.state.produkti_temp = store.state.produkti.filter(
+        (element) => element.category_name == category.value
+      )
+    }
+
+    const openNewProdukt = () => {
+      category.value = ''
+      code.value = ''
+      quantity.value = 0
+      add_sub_storeminus.value = !add_sub_storeminus.value
+    }
+
     return {
       store,
       storeminus,
@@ -390,6 +438,10 @@ export default {
       code,
       addProdukt,
       statusStoreminus,
+      getProduktiCategories,
+      category,
+      changeCategory,
+      openNewProdukt,
     }
   },
 }
