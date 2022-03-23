@@ -73,13 +73,14 @@
                         <span>Цена:&nbsp;{{ storeminus.price }}</span>
                       </div>
                       <div
-                        class="bg-green-600 w-32 flex flex-row justify-center items-center text-white"
-                        :style="{
-                          color: storeminus.stat_color,
-                          backgroundColor: storeminus.stat_bg,
-                        }"
+                        class="w-32 flex flex-row justify-center items-center"
+                        :class="
+                          storeminus.status == 0
+                            ? 'bg-gray-300 text-gray-600'
+                            : 'bg-green-600 text-white'
+                        "
                       >
-                        {{ storeminus.status_txt }}
+                        {{ getStatusText(storeminus.status) }}
                       </div>
                     </div>
                     <div
@@ -179,6 +180,14 @@ export default {
       return store.state.sub_storeminusi
     })
 
+    const getStatusText = (status) => {
+      if (status == 0) {
+        return 'Типова'
+      } else {
+        return 'Приключена'
+      }
+    }
+
     return {
       store,
       formatDateTime,
@@ -186,6 +195,7 @@ export default {
       getClientName,
       newStoreminus,
       sub_storeminusi,
+      getStatusText,
     }
   },
 }

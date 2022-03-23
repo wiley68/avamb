@@ -2504,7 +2504,7 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  saveStoreminus(storeminus_id) {
+  saveStoreminus(storeminus_id, type) {
     const storeminus = state.storeminusi_temp.find(
       (element) => element.id == storeminus_id
     )
@@ -2518,7 +2518,7 @@ const methods = {
     }
     var data = new FormData()
     var info = []
-    info[0] = 'SAVE'
+    info[0] = type
     info[1] = sid
     info[2] = storeminus.dateon
     info[3] = ''

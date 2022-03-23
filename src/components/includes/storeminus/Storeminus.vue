@@ -30,12 +30,24 @@
       />
     </div>
     <div class="flex flex-row justify-between items-center mb-1">
-      <span class="p-1 text-sm w-3/12">Напомняне</span>
+      <span class="p-1 text-sm w-3/12">Първ. док.</span>
       <input
         type="text"
         v-model="storeminus.parvicen"
         class="w-7/12 text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
       />
+    </div>
+    <div class="flex flex-row justify-end items-center mb-1">
+      <div
+        class="w-32 flex flex-row justify-center items-center"
+        :class="
+          storeminus.status == 0
+            ? 'bg-gray-300 text-gray-600'
+            : 'bg-green-600 text-white'
+        "
+      >
+        {{ getStatusText(storeminus.status) }}
+      </div>
     </div>
   </div>
 </template>
@@ -62,7 +74,15 @@ export default {
       }
     }
 
-    return { store, storeminus, formatDateTime }
+    const getStatusText = (status) => {
+      if (status == 0) {
+        return 'Типова'
+      } else {
+        return 'Приключена'
+      }
+    }
+
+    return { store, storeminus, formatDateTime, getStatusText }
   },
 }
 </script>

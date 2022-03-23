@@ -100,6 +100,38 @@
               />
             </svg>
           </button>
+          <button
+            v-if="storeminus.status == 0"
+            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            aria-controls="success-modal"
+            @click.stop="statusStoreminus(storeminus.id, 'STATUS')"
+          >
+            <svg
+              class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M20 17H23L19 21L15 17H18V3H20V17M8 5C4.14 5 1 8.13 1 12C1 15.87 4.13 19 8 19C11.86 19 15 15.87 15 12C15 8.13 11.87 5 8 5M8 7.15C10.67 7.15 12.85 9.32 12.85 12C12.85 14.68 10.68 16.85 8 16.85C5.32 16.85 3.15 14.68 3.15 12C3.15 9.32 5.32 7.15 8 7.15M7 9V12.69L10.19 14.53L10.94 13.23L8.5 11.82V9"
+              />
+            </svg>
+          </button>
+          <button
+            v-if="storeminus.status == 1"
+            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            aria-controls="success-modal"
+            @click.stop="statusStoreminus(storeminus.id, 'STATUSBACK')"
+          >
+            <svg
+              class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M18 7H15L19 3L23 7H20V21H18V7M8 5C4.14 5 1 8.13 1 12C1 15.87 4.13 19 8 19C11.86 19 15 15.87 15 12C15 8.13 11.87 5 8 5M8 7.15C10.67 7.15 12.85 9.32 12.85 12C12.85 14.68 10.68 16.85 8 16.85C5.32 16.85 3.15 14.68 3.15 12C3.15 9.32 5.32 7.15 8 7.15M7 9V12.69L10.19 14.53L10.94 13.23L8.5 11.82V9"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -280,7 +312,7 @@ export default {
     })
 
     const updateStoreminus = (storeminus_id) => {
-      store.methods.saveStoreminus(storeminus_id)
+      store.methods.saveStoreminus(storeminus_id, 'SAVE')
     }
 
     const formatDateTime = (value) => {
@@ -324,6 +356,26 @@ export default {
       }
     }
 
+    const statusStoreminus = (storeminus_id, status) => {
+      if (status == 'STATUSBACK') {
+        store.state.storeminusi_temp.find(
+          (element) => element.id == storeminus_id
+        ).status = 0
+        store.state.storeminusi.find(
+          (element) => element.id == storeminus_id
+        ).status = 0
+      }
+      if (status == 'STATUS') {
+        store.state.storeminusi_temp.find(
+          (element) => element.id == storeminus_id
+        ).status = 1
+        store.state.storeminusi.find(
+          (element) => element.id == storeminus_id
+        ).status = 1
+      }
+      store.methods.saveStoreminus(storeminus_id, status)
+    }
+
     return {
       store,
       storeminus,
@@ -337,6 +389,7 @@ export default {
       quantity,
       code,
       addProdukt,
+      statusStoreminus,
     }
   },
 }
