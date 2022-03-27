@@ -15,7 +15,10 @@
         </option>
       </select>
     </div>
-    <div class="flex flex-row justify-between items-center mb-1">
+    <div
+      v-if="raboten.isdriver == 1"
+      class="flex flex-row justify-between items-center mb-1"
+    >
       <span class="p-1 text-sm w-3/12">Час на тр.</span>
       <input
         type="time"
@@ -24,7 +27,10 @@
       />
       <div class="w-2/12"></div>
     </div>
-    <div class="flex flex-row justify-between items-center mb-1">
+    <div
+      v-if="raboten.isdriver == 1"
+      class="flex flex-row justify-between items-center mb-1"
+    >
       <span class="p-1 text-sm w-3/12">Км. на тр.</span>
       <input
         type="text"
@@ -40,7 +46,10 @@
         </svg>
       </button>
     </div>
-    <div class="flex flex-row justify-between items-center mb-1">
+    <div
+      v-if="raboten.isdriver == 1"
+      class="flex flex-row justify-between items-center mb-1"
+    >
       <span class="p-1 text-sm w-3/12">Адр. на тр.</span>
       <input
         type="text"
@@ -56,7 +65,10 @@
         </svg>
       </button>
     </div>
-    <div class="flex flex-row justify-between items-center mb-1">
+    <div
+      v-if="raboten.isdriver == 1"
+      class="flex flex-row justify-between items-center mb-1"
+    >
       <span class="p-1 text-sm w-3/12">Час на пр.</span>
       <input
         type="time"
@@ -65,7 +77,10 @@
       />
       <div class="w-2/12"></div>
     </div>
-    <div class="flex flex-row justify-between items-center mb-1">
+    <div
+      v-if="raboten.isdriver == 1"
+      class="flex flex-row justify-between items-center mb-1"
+    >
       <span class="p-1 text-sm w-3/12">Км. на пр.</span>
       <input
         type="text"
@@ -74,7 +89,10 @@
       />
       <div class="w-2/12"></div>
     </div>
-    <div class="flex flex-row justify-between items-center mb-1">
+    <div
+      v-if="raboten.isdriver == 1"
+      class="flex flex-row justify-between items-center mb-1"
+    >
       <span class="p-1 text-sm w-3/12">Адр. на пр.</span>
       <input
         type="text"
