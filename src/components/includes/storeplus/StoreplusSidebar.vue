@@ -3,7 +3,7 @@
     id="inbox-sidebar"
     class="absolute z-20 top-0 bottom-0 w-full md:w-auto md:static md:top-auto md:bottom-auto -mr-px md:translate-x-0 transform transition-transform duration-200 ease-in-out"
     :class="
-      store.state.storeminusiSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      store.state.storeplusiSidebarOpen ? 'translate-x-0' : '-translate-x-full'
     "
   >
     <div
@@ -17,7 +17,7 @@
             <div class="w-full flex items-center justify-between">
               <button
                 class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-                @click.stop="newStoreminus()"
+                @click.stop="newStoreplus()"
               >
                 <svg
                   class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
@@ -29,7 +29,7 @@
                   />
                 </svg>
               </button>
-              <div class="font-medium">Експедиционни бележки</div>
+              <div class="font-medium">Складова разписка</div>
             </div>
           </div>
         </div>
@@ -37,18 +37,18 @@
           <div class="mt-4">
             <ul class="mb-6">
               <li
-                v-for="storeminus in store.state.storeminusi_temp"
-                :key="storeminus.id"
+                v-for="storeplus in store.state.storeplusi_temp"
+                :key="storeplus.id"
                 class="-mx-2 mb-2"
               >
                 <button
                   class="flex w-full p-1 text-left hover:bg-indigo-100 border hover:border-indigo-200"
                   :class="
-                    storeminus.id == store.state.current_storeminus_id
+                    storeplus.id == store.state.current_storeplus_id
                       ? 'bg-indigo-100 border-indigo-200'
                       : 'bg-gray-100 border-gray-200'
                   "
-                  @click.stop="changeStoreminusi(storeminus.id)"
+                  @click.stop="changeStoreplusi(storeplus.id)"
                 >
                   <div class="grow">
                     <div
@@ -56,65 +56,65 @@
                     >
                       <div>
                         <span class="text-red-600"
-                          >№&nbsp;{{ storeminus.id }}</span
+                          >№&nbsp;{{ storeplus.id }}</span
                         >
                       </div>
                       <div>
-                        {{ storeminus.contragent_id }}&nbsp;-&nbsp;{{
-                          getClientName(storeminus.contragent_id)
+                        {{ storeplus.contragent_id }}&nbsp;-&nbsp;{{
+                          getDostavcikName(storeplus.contragent_id)
                         }}
                       </div>
-                      <div>{{ formatDateTime(storeminus.dateon) }}</div>
+                      <div>{{ formatDateTime(storeplus.dateon) }}</div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate mb-2"
                     >
                       <div>
-                        <span>Цена:&nbsp;{{ storeminus.price }}</span>
+                        <span>Цена:&nbsp;{{ storeplus.price }}</span>
                       </div>
                       <div
                         class="w-32 flex flex-row justify-center items-center"
                         :class="
-                          storeminus.status == 0
+                          storeplus.status == 0
                             ? 'bg-gray-300 text-gray-600'
                             : 'bg-green-600 text-white'
                         "
                       >
-                        {{ getStatusText(storeminus.status) }}
+                        {{ getStatusText(storeplus.status) }}
                       </div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate mb-2"
                     >
                       <div class="overflow-clip">
-                        <span>Първ. док.:&nbsp;{{ storeminus.parvicen }}</span>
+                        <span>Първ. док.:&nbsp;{{ storeplus.parvicen }}</span>
                       </div>
                     </div>
                   </div>
                 </button>
                 <div
                   v-if="
-                    storeminus.id == store.state.current_storeminus_id &&
-                    sub_storeminusi.length > 0
+                    storeplus.id == store.state.current_storeplus_id &&
+                    sub_storeplusi.length > 0
                   "
                   class="flex flex-col w-full rounded-b text-left bg-orange-50 border-l border-r border-b border-orange-200"
                 >
                   <div
                     class="flex flex-row justify-between border-b border-dotted border-gray-200 hover:bg-orange-100 px-1 py-0.5"
-                    v-for="sub_storeminus in sub_storeminusi"
-                    :key="sub_storeminus.id"
+                    v-for="sub_storeplus in sub_storeplusi"
+                    :key="sub_storeplus.id"
                     :class="
-                      sub_storeminus.id == store.state.current_sub_storeminus_id
+                      sub_storeplus.id == store.state.current_sub_storeplus_id
                         ? 'bg-orange-100'
                         : ''
                     "
                   >
                     <button
                       class="text-sm flex justify-between flex-grow whitespace-nowrap overflow-hidden overflow-ellipsis"
-                      @click.stop="changeSubstoreminus(sub_storeminus.id)"
+                      @click.stop="changeSubstoreplus(sub_storeplus.id)"
                     >
-                      <div>{{ sub_storeminus.product_name }}</div>
-                      <div>{{ sub_storeminus.quantity }}</div>
+                      <div>{{ sub_storeplus.product_name }}</div>
+                      <div>{{ sub_storeplus.quantity }}</div>
                     </button>
                   </div>
                 </div>
@@ -143,14 +143,15 @@ export default {
       }
     }
 
-    const changeStoreminusi = (storeminus_id) => {
-      store.methods.changeStoreminusi(storeminus_id)
-      store.methods.closeStoreminusiSidebar()
+    const changeStoreplusi = (storeplus_id) => {
+      store.methods.changeStoreplusi(storeplus_id)
+      store.methods.closeStoreplusiSidebar()
     }
 
-    const getClientName = (contragent_id) => {
+    const getDostavcikName = (contragent_id) => {
+      console.log(contragent_id)
       if (contragent_id != 0) {
-        return store.state.clienti.find(
+        return store.state.dostavcici.find(
           (element) => element.id == contragent_id
         ).name
       } else {
@@ -158,8 +159,8 @@ export default {
       }
     }
 
-    const newStoreminus = () => {
-      const new_storeminus = {
+    const newStoreplus = () => {
+      const new_storeplus = {
         id: -1,
         contragent_id: 0,
         dateon: moment().format('YYYY-MM-DD'),
@@ -170,14 +171,14 @@ export default {
         status: 0,
         status_txt: 'Типова',
       }
-      store.state.storeminusi.splice(0, 0, new_storeminus)
-      store.state.storeminusi_temp.splice(0, 0, new_storeminus)
-      store.state.current_storeminus_id = new_storeminus.id
-      store.methods.toggleStoreminusiSidebar()
+      store.state.storeplusi.splice(0, 0, new_storeplus)
+      store.state.storeplusi_temp.splice(0, 0, new_storeplus)
+      store.state.current_storeplus_id = new_storeplus.id
+      store.methods.toggleStoreplusiSidebar()
     }
 
-    const sub_storeminusi = computed(() => {
-      return store.state.sub_storeminusi
+    const sub_storeplusi = computed(() => {
+      return store.state.sub_storeplusi
     })
 
     const getStatusText = (status) => {
@@ -191,10 +192,10 @@ export default {
     return {
       store,
       formatDateTime,
-      changeStoreminusi,
-      getClientName,
-      newStoreminus,
-      sub_storeminusi,
+      changeStoreplusi,
+      getDostavcikName,
+      newStoreplus,
+      sub_storeplusi,
       getStatusText,
     }
   },

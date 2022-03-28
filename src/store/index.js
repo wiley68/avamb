@@ -115,6 +115,7 @@ const state = reactive({
   sub_storeplusi: [],
   current_sub_storeplus_id: 0,
   deleteSubstoreplusModal: false,
+  dostavcici: [],
 })
 
 const methods = {
@@ -2588,6 +2589,7 @@ const methods = {
       ) {
         state.storeplusi = JSON.parse(this.response).storeplusi
         state.storeplusi_temp = JSON.parse(this.response).storeplusi
+        state.dostavcici = JSON.parse(this.response).dostavcici
         console.log(state)
       }
     }
