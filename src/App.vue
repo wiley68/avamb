@@ -27,6 +27,7 @@
       <Zadaci v-if="store.state.page == 'Zadaci'"></Zadaci>
       <Messages v-if="store.state.page == 'Messages'"></Messages>
       <Storeminusi v-if="store.state.page == 'Storeminusi'"></Storeminusi>
+      <Storeplusi v-if="store.state.page == 'Storeplusi'"></Storeplusi>
     </div>
   </div>
 </template>
@@ -56,6 +57,7 @@ import Rabotni from './components/Rabotni.vue'
 import Zadaci from './components/Zadaci.vue'
 import Messages from './components/Messages.vue'
 import Storeminusi from './components/Storeminusi.vue'
+import Storeplusi from './components/Storeplusi.vue'
 
 export default {
   name: 'App',
@@ -83,6 +85,7 @@ export default {
     Zadaci,
     Messages,
     Storeminusi,
+    Storeplusi,
   },
 
   setup() {

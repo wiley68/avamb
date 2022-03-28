@@ -626,7 +626,7 @@
                 >
                   <div
                     class="block text-gray-200 truncate transition duration-150"
-                    @click="showMessage('Не е активно за мобилната версия.')"
+                    @click="store.methods.changePage('Storeplusi')"
                   >
                     <div class="flex items-center">
                       <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">

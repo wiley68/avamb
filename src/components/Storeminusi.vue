@@ -13,7 +13,7 @@ import StoreminusSidebar from './includes/storeminus/StoreminusSidebar.vue'
 import StoreminusBody from './includes/storeminus/StoreminusBody.vue'
 
 export default {
-  name: 'Storeminus',
+  name: 'Storeminusi',
 
   components: { StoreminusSidebar, StoreminusBody },
 

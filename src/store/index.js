@@ -106,6 +106,15 @@ const state = reactive({
   deleteSubstoreminusModal: false,
   produkti: [],
   produkti_temp: [],
+  storeplusi: [],
+  storeplusi_temp: [],
+  storeplusiSidebarOpen: true,
+  current_storeplus_id: 0,
+  successUpdateStoreplus: false,
+  deleteStoreplusModal: false,
+  sub_storeplusi: [],
+  current_sub_storeplus_id: 0,
+  deleteSubstoreplusModal: false,
 })
 
 const methods = {
@@ -151,17 +160,26 @@ const methods = {
   toggleStoreminusiSidebar() {
     state.storeminusiSidebarOpen = !state.storeminusiSidebarOpen
   },
+  toggleStoreplusiSidebar() {
+    state.storeplusiSidebarOpen = !state.storeplusiSidebarOpen
+  },
   closeZadaciSidebar() {
     state.zadaciSidebarOpen = false
   },
   closeStoreminusiSidebar() {
     state.storeminusiSidebarOpen = false
   },
+  closeStoreplusiSidebar() {
+    state.storeplusiSidebarOpen = false
+  },
   openZadaciSidebar() {
     state.zadaciSidebarOpen = true
   },
   openStoreminusiSidebar() {
     state.storeminusiSidebarOpen = true
+  },
+  openStoreplusiSidebar() {
+    state.storeplusiSidebarOpen = true
   },
   changeZadaci(zadaca_id) {
     state.current_zadaca_id = zadaca_id
@@ -172,11 +190,20 @@ const methods = {
     state.current_storeminus_id = storeminus_id
     methods.getSubStoreminusi(state.current_storeminus_id)
   },
+  changeStoreplusi(storeplus_id) {
+    state.current_sub_storeplus_id = 0
+    state.sub_storeplusi = []
+    state.current_storeplus_id = storeplus_id
+    methods.getSubStoreplusi(state.current_storeplus_id)
+  },
   changePoseshtenie(poseshtenie_id) {
     state.current_poseshtenie_id = poseshtenie_id
   },
   changeSubstoreminus(sub_storeminus_id) {
     state.current_sub_storeminus_id = sub_storeminus_id
+  },
+  changeSubstoreplus(sub_storeplus_id) {
+    state.current_sub_storeplus_id = sub_storeplus_id
   },
   changePage(page) {
     state.page = page
@@ -187,6 +214,7 @@ const methods = {
       methods.getRabotni()
       methods.getMessages()
       methods.getStoreminusi()
+      methods.getStoreplusi()
       methods.getProdukti()
     }
     if (page == 'Rabotni') {
@@ -200,6 +228,9 @@ const methods = {
     }
     if (page == 'Storeminusi') {
       methods.getStoreminusi()
+    }
+    if (page == 'Storeplusi') {
+      methods.getStoreplusi()
     }
   },
   changeDeleteClientModal(deleteClientModal) {
@@ -348,6 +379,9 @@ const methods = {
   changeDeleteSubstoreminusModal(deleteSubstoreminusModal) {
     state.deleteSubstoreminusModal = deleteSubstoreminusModal
   },
+  changeDeleteSubstoreplusModal(deleteSubstoreplusModal) {
+    state.deleteSubstoreplusModal = deleteSubstoreplusModal
+  },
   changeDeleteZadacaModal(deleteZadacaModal) {
     state.deleteZadacaModal = deleteZadacaModal
   },
@@ -390,6 +424,11 @@ const methods = {
       return element.id != id
     })
   },
+  deleteSubstoreplusById(id) {
+    state.sub_storeplusi = state.sub_storeplusi.filter((element) => {
+      return element.id != id
+    })
+  },
   getUserById(user_id) {
     return state.users.find((element) => {
       return element.id == user_id
@@ -406,14 +445,28 @@ const methods = {
   changeDeleteStoreminusModal(deleteStoreminusModal) {
     state.deleteStoreminusModal = deleteStoreminusModal
   },
+  changeDeleteStoreplusModal(deleteStoreplusModal) {
+    state.deleteStoreplusModal = deleteStoreplusModal
+  },
   changeSuccessUpdateStoreminus(successUpdateStoreminus) {
     state.successUpdateStoreminus = successUpdateStoreminus
+  },
+  changeSuccessUpdateStoreplus(successUpdateStoreplus) {
+    state.successUpdateStoreplus = successUpdateStoreplus
   },
   deleteStoreminusById(id) {
     state.storeminusi = state.storeminusi.filter((element) => {
       return element.id != id
     })
     state.storeminusi_temp = state.storeminusi_temp.filter((element) => {
+      return element.id != id
+    })
+  },
+  deleteStoreplusById(id) {
+    state.storeplusi = state.storeplusi.filter((element) => {
+      return element.id != id
+    })
+    state.storeplusi_temp = state.storeplusi_temp.filter((element) => {
       return element.id != id
     })
   },
@@ -2505,6 +2558,41 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  getStoreplusi() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    const tekushta_start = state.tekushta.substring(0, 10)
+    const tekushta_end = state.tekushta.substring(14)
+    data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_end', tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_storeplusi.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.storeplusi = JSON.parse(this.response).storeplusi
+        state.storeplusi_temp = JSON.parse(this.response).storeplusi
+        console.log(state)
+      }
+    }
+    xmlhttpro.send(data)
+  },
   saveStoreminus(storeminus_id, type) {
     const storeminus = state.storeminusi_temp.find(
       (element) => element.id == storeminus_id
@@ -2562,6 +2650,63 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  saveStoreplus(storeplus_id, type) {
+    const storeplus = state.storeplusi_temp.find(
+      (element) => element.id == storeplus_id
+    )
+    if (storeplus.contragent_id == 0) {
+      alert('Моля изберете клиент!')
+      return
+    }
+    let sid = 0
+    if (storeplus_id > 0) {
+      sid = storeplus_id
+    }
+    var data = new FormData()
+    var info = []
+    info[0] = type
+    info[1] = sid
+    info[2] = storeplus.dateon
+    info[3] = ''
+    info[4] = ''
+    info[5] = storeplus.contragent_id
+    info[6] = state.user.firm_id
+    info[7] = state.user.id
+    info[8] = storeplus.parvicen
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/storeplus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        if (storeplus_id > 0) {
+          methods.changeSuccessUpdateStoreplus(true)
+        } else {
+          const storeplus_id = JSON.parse(this.response).newid
+          methods.getStoreplusi()
+          methods.changeStoreplusi(storeplus_id)
+          methods.toggleStoreplusiSidebar()
+        }
+      } else {
+        methods.changeSuccessUpdateStoreplusi(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
   getSubStoreminusi(storeminus_id) {
     var data = new FormData()
     data.append('sid', storeminus_id)
@@ -2585,6 +2730,33 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.sub_storeminusi = JSON.parse(this.response).sub_storeminusi
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getSubStoreplusi(storeplus_id) {
+    var data = new FormData()
+    data.append('sid', storeplus_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_substoreplusi.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.sub_storeplusi = JSON.parse(this.response).sub_storeplusi
       }
     }
     xmlhttpro.send(data)
@@ -2618,6 +2790,40 @@ const methods = {
         state.deleteSubstoreminusModal = false
         state.current_sub_storeminus_id = state.sub_storeminusi[0]
           ? state.sub_storeminusi[0].id
+          : 0
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteSubstoreplus(substoreplus_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'DELETE'
+    info[1] = substoreplus_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/storeplus_edit.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteSubstoreplusById(substoreplus_id)
+        state.deleteSubstoreplusModal = false
+        state.current_sub_storeplus_id = state.sub_storeplusi[0]
+          ? state.sub_storeplusi[0].id
           : 0
       }
     }
@@ -2683,6 +2889,39 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         methods.getSubStoreminusi(storeminus_id)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  createSubstoreplus(storeplus_id, code, quantity, price) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'CREATE'
+    info[1] = storeplus_id
+    info[2] = code
+    info[3] = quantity
+    info[4] = price
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/storeplus_edit.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.getSubStoreplusi(storeplus_id)
       }
     }
     xmlhttpro.send(data)
