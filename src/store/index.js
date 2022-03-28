@@ -2703,7 +2703,7 @@ const methods = {
           methods.toggleStoreplusiSidebar()
         }
       } else {
-        methods.changeSuccessUpdateStoreplusi(false)
+        methods.changeSuccessUpdateStoreplus(false)
       }
     }
     xmlhttpro.send(data)
