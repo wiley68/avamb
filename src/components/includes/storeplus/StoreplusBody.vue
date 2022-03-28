@@ -2,9 +2,9 @@
   <div
     class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
     :class="
-      store.state.storeminusiSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
+      store.state.storeplusiSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
     "
-    v-if="storeminus"
+    v-if="storeplus"
   >
     <div class="sticky top-16">
       <div
@@ -13,9 +13,9 @@
         <div class="flex">
           <button
             class="md:hidden text-gray-400 hover:text-gray-500 mr-4"
-            @click.stop="store.methods.toggleStoreminusiSidebar()"
+            @click.stop="store.methods.toggleStoreplusiSidebar()"
             aria-controls="inbox-sidebar"
-            :aria-expanded="store.state.storeminusiSidebarOpen"
+            :aria-expanded="store.state.storeplusiSidebarOpen"
           >
             <span class="sr-only">Затвори</span>
             <svg
@@ -31,7 +31,7 @@
           <button
             class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="success-modal"
-            @click.stop="updateStoreminus(storeminus.id)"
+            @click.stop="updateStoreplus(storeplus.id)"
           >
             <svg
               class="w-6 h-6 fill-current text-blue-600 shrink-0"
@@ -45,8 +45,8 @@
           </button>
           <ModalBlank
             id="success-modal"
-            :modalOpen="store.state.successUpdateStoreminus"
-            @close-modal="store.methods.changeSuccessUpdateStoreminus(false)"
+            :modalOpen="store.state.successUpdateStoreplus"
+            @close-modal="store.methods.changeSuccessUpdateStoreplus(false)"
           >
             <div class="p-5 flex space-x-4">
               <div
@@ -76,7 +76,7 @@
                   <button
                     class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
                     @click.stop="
-                      store.methods.changeSuccessUpdateStoreminus(false)
+                      store.methods.changeSuccessUpdateStoreplus(false)
                     "
                   >
                     Затвори
@@ -101,10 +101,10 @@
             </svg>
           </button>
           <button
-            v-if="storeminus.status == 0"
+            v-if="storeplus.status == 0"
             class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="success-modal"
-            @click.stop="statusStoreminus(storeminus.id, 'STATUS')"
+            @click.stop="statusStoreplus(storeplus.id, 'STATUS')"
           >
             <svg
               class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
@@ -117,10 +117,10 @@
             </svg>
           </button>
           <button
-            v-if="storeminus.status == 1"
+            v-if="storeplus.status == 1"
             class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="success-modal"
-            @click.stop="statusStoreminus(storeminus.id, 'STATUSBACK')"
+            @click.stop="statusStoreplus(storeplus.id, 'STATUSBACK')"
           >
             <svg
               class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
@@ -142,7 +142,7 @@
         <Storeplus />
       </div>
       <div
-        v-if="add_sub_storeminus"
+        v-if="add_sub_storeplus"
         class="flex flex-col items-start justify-between bg-red-50 shadow-lg rounded-t-sm border border-red-200 px-6 divide-y divide-gray-200 mb-3"
       >
         <div class="flex flex-col py-3 w-full">
@@ -204,21 +204,21 @@
       </div>
       <div
         class="flex flex-col justify-center items-center bg-orange-50 shadow-lg rounded-sm border border-orange-200 px-2 py-2 mb-3"
-        v-for="sub_storeminus in sub_storeminusi"
-        :key="sub_storeminus.id"
+        v-for="sub_storeplus in sub_storeplusi"
+        :key="sub_storeplus.id"
       >
         <div class="flex flex-col w-full items-start justify-start text-sm">
           <div class="flex flex-row justify-between w-full">
             <button
               class="flex-grow text-left"
-              @click.stop="changeSubstoreminus(sub_storeminus.id)"
+              @click.stop="changeSubstoreplus(sub_storeplus.id)"
             >
-              <span class="font-medium">{{ sub_storeminus.product_name }}</span>
+              <span class="font-medium">{{ sub_storeplus.product_name }}</span>
             </button>
             <button
               class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
               aria-controls="danger-modal"
-              @click.stop="deleteSubstoreminusCheck(sub_storeminus.id)"
+              @click.stop="deleteSubstoreplusCheck(sub_storeplus.id)"
             >
               <svg
                 class="w-6 h-6 fill-current text-blue-600 shrink-0"
@@ -232,8 +232,8 @@
             </button>
             <ModalBlank
               id="danger-modal"
-              :modalOpen="store.state.deleteSubstoreminusModal"
-              @close-modal="store.methods.changeDeleteSubstoreminusModal(false)"
+              :modalOpen="store.state.deleteSubstoreplusModal"
+              @close-modal="store.methods.changeDeleteSubstoreplusModal(false)"
             >
               <div class="p-5 flex space-x-4">
                 <div
@@ -264,14 +264,14 @@
                     <button
                       class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
                       @click.stop="
-                        store.methods.changeDeleteSubstoreminusModal(false)
+                        store.methods.changeDeleteSubstoreplusModal(false)
                       "
                     >
                       Откажи
                     </button>
                     <button
                       class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                      @click.stop="deleteSubstoreminus()"
+                      @click.stop="deleteSubstoreplus()"
                     >
                       Изтрий
                     </button>
@@ -281,17 +281,17 @@
             </ModalBlank>
           </div>
           <div class="text-left">
-            {{ sub_storeminus.quantity }}&nbsp;x&nbsp;{{
-              sub_storeminus.price
+            {{ sub_storeplus.quantity }}&nbsp;x&nbsp;{{
+              sub_storeplus.price
             }}&nbsp;-&nbsp;{{
               (
-                parseFloat(sub_storeminus.quantity) *
-                parseFloat(sub_storeminus.price)
+                parseFloat(sub_storeplus.quantity) *
+                parseFloat(sub_storeplus.price)
               ).toFixed(2)
             }}
           </div>
           <div class="text-left">
-            Наличност&nbsp;-&nbsp;{{ sub_storeminus.store_quantity }}
+            Наличност&nbsp;-&nbsp;{{ sub_storeplus.store_quantity }}
           </div>
         </div>
       </div>
@@ -315,7 +315,7 @@ export default {
 
     const deleted_id = ref(0)
 
-    const add_sub_storeminus = ref(false)
+    const add_sub_storeplus = ref(false)
 
     const quantity = ref(0)
 
@@ -323,14 +323,14 @@ export default {
 
     const category = ref('')
 
-    const storeminus = computed(() => {
-      return store.state.storeminusi_temp.find(
-        (element) => element.id == store.state.current_storeminus_id
+    const storeplus = computed(() => {
+      return store.state.storeplusi_temp.find(
+        (element) => element.id == store.state.current_storeplus_id
       )
     })
 
-    const updateStoreminus = (storeminus_id) => {
-      store.methods.saveStoreminus(storeminus_id, 'SAVE')
+    const updateStoreplus = (storeplus_id) => {
+      store.methods.saveStoreplus(storeplus_id, 'SAVE')
     }
 
     const formatDateTime = (value) => {
@@ -339,34 +339,34 @@ export default {
       }
     }
 
-    const sub_storeminusi = computed(() => {
-      return store.state.sub_storeminusi
+    const sub_storeplusi = computed(() => {
+      return store.state.sub_storeplusi
     })
 
-    const changeSubstoreminus = (sub_storeminus_id) => {
-      store.methods.changeSubstoreminus(sub_storeminus_id)
-      store.methods.closeStoreminusiSidebar()
+    const changeSubstoreplus = (sub_storeplus_id) => {
+      store.methods.changeSubstoreplus(sub_storeplus_id)
+      store.methods.closeStoreplusiSidebar()
     }
 
-    const deleteSubstoreminusCheck = (sub_storeminus_id) => {
-      deleted_id.value = sub_storeminus_id
-      store.methods.changeDeleteSubstoreminusModal(true)
+    const deleteSubstoreplusCheck = (sub_storeplus_id) => {
+      deleted_id.value = sub_storeplus_id
+      store.methods.changeDeleteSubstoreplusModal(true)
     }
 
-    const deleteSubstoreminus = () => {
-      store.methods.deleteSubstoreminus(deleted_id.value)
+    const deleteSubstoreplus = () => {
+      store.methods.deleteSubstoreplus(deleted_id.value)
     }
 
     const addProdukt = () => {
       if (category.value == 0 || code.value == '' || quantity.value == 0) {
         alert('Моля иаберете категория, продукт и количество!')
       } else {
-        add_sub_storeminus.value = !add_sub_storeminus.value
+        add_sub_storeplus.value = !add_sub_storeplus.value
         const price = store.state.produkti.find(
           (element) => element.code == code.value
         ).price
-        store.methods.createSubstoreminus(
-          storeminus.value.id,
+        store.methods.createSubstoreplus(
+          storeplus.value.id,
           code.value,
           quantity.value,
           price
@@ -374,24 +374,24 @@ export default {
       }
     }
 
-    const statusStoreminus = (storeminus_id, status) => {
+    const statusStoreplus = (storeplus_id, status) => {
       if (status == 'STATUSBACK') {
-        store.state.storeminusi_temp.find(
-          (element) => element.id == storeminus_id
+        store.state.storeplusi_temp.find(
+          (element) => element.id == storeplus_id
         ).status = 0
-        store.state.storeminusi.find(
-          (element) => element.id == storeminus_id
+        store.state.storeplusi.find(
+          (element) => element.id == storeplus_id
         ).status = 0
       }
       if (status == 'STATUS') {
-        store.state.storeminusi_temp.find(
-          (element) => element.id == storeminus_id
+        store.state.storeplusi_temp.find(
+          (element) => element.id == storeplus_id
         ).status = 1
-        store.state.storeminusi.find(
-          (element) => element.id == storeminus_id
+        store.state.storeplusi.find(
+          (element) => element.id == storeplus_id
         ).status = 1
       }
-      store.methods.saveStoreminus(storeminus_id, status)
+      store.methods.saveStoreplus(storeplus_id, status)
     }
 
     const getUniqueValues = (array, key) => {
@@ -421,23 +421,23 @@ export default {
       category.value = ''
       code.value = ''
       quantity.value = 0
-      add_sub_storeminus.value = !add_sub_storeminus.value
+      add_sub_storeplus.value = !add_sub_storeplus.value
     }
 
     return {
       store,
-      storeminus,
-      updateStoreminus,
+      storeplus,
+      updateStoreplus,
       formatDateTime,
-      sub_storeminusi,
-      changeSubstoreminus,
-      deleteSubstoreminusCheck,
-      deleteSubstoreminus,
-      add_sub_storeminus,
+      sub_storeplusi,
+      changeSubstoreplus,
+      deleteSubstoreplusCheck,
+      deleteSubstoreplus,
+      add_sub_storeplus,
       quantity,
       code,
       addProdukt,
-      statusStoreminus,
+      statusStoreplus,
       getProduktiCategories,
       category,
       changeCategory,

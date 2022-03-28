@@ -149,7 +149,6 @@ export default {
     }
 
     const getDostavcikName = (contragent_id) => {
-      console.log(contragent_id)
       if (contragent_id != 0) {
         return store.state.dostavcici.find(
           (element) => element.id == contragent_id

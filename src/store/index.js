@@ -2590,7 +2590,6 @@ const methods = {
         state.storeplusi = JSON.parse(this.response).storeplusi
         state.storeplusi_temp = JSON.parse(this.response).storeplusi
         state.dostavcici = JSON.parse(this.response).dostavcici
-        console.log(state)
       }
     }
     xmlhttpro.send(data)
