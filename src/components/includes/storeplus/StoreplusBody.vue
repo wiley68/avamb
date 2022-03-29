@@ -169,7 +169,7 @@
             >
               <option value="" selected>Избери продукт</option>
               <option
-                v-for="produkt in store.state.produkti_temp"
+                v-for="produkt in store.state.produkti_plus_temp"
                 :key="produkt.id"
                 :value="produkt.code"
               >
@@ -362,7 +362,7 @@ export default {
         alert('Моля иаберете категория, продукт и количество!')
       } else {
         add_sub_storeplus.value = !add_sub_storeplus.value
-        const price = store.state.produkti.find(
+        const price = store.state.produkti_plus.find(
           (element) => element.code == code.value
         ).price
         store.methods.createSubstoreplus(
@@ -406,13 +406,13 @@ export default {
 
     const getProduktiCategories = () => {
       var categories = []
-      categories = getUniqueValues(store.state.produkti, 'category_name')
+      categories = getUniqueValues(store.state.produkti_plus, 'category_name')
       return categories
     }
 
     const changeCategory = () => {
       code.value = ''
-      store.state.produkti_temp = store.state.produkti.filter(
+      store.state.produkti_plus_temp = store.state.produkti_plus.filter(
         (element) => element.category_name == category.value
       )
     }

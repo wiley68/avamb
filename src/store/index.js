@@ -106,6 +106,8 @@ const state = reactive({
   deleteSubstoreminusModal: false,
   produkti: [],
   produkti_temp: [],
+  produkti_plus: [],
+  produkti_plus_temp: [],
   storeplusi: [],
   storeplusi_temp: [],
   storeplusiSidebarOpen: true,
@@ -2857,6 +2859,38 @@ const methods = {
       } catch (err) {}
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti = result.data
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getProduktiPlus(dostavcik_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'GET'
+    info[1] = dostavcik_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/getproductiaddstore.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      let result = []
+      try {
+        result = JSON.parse(this.response)
+      } catch (err) {}
+      if (this.readyState == 4 && result.success == 'success') {
+        state.produkti_plus = result.data
+        console.log(state)
       }
     }
     xmlhttpro.send(data)
