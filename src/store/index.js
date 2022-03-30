@@ -223,9 +223,6 @@ const methods = {
     if (page == 'Rabotni') {
       methods.getRabotni()
     }
-    if (page == 'Zadaci') {
-      methods.getZadaci()
-    }
     if (page == 'Messages') {
       methods.getMessages()
     }

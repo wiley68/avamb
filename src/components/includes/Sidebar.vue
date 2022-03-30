@@ -147,7 +147,7 @@
                   <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24">
                     <path
                       :class="
-                        store.state.page == 'FirmZadaci'
+                        store.state.page == 'Zadaci'
                           ? '!text-lime-500'
                           : 'text-gray-400'
                       "
@@ -260,22 +260,22 @@
                 </li>
                 <li
                   class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
-                  :class="store.state.page == 'FirmZadaci' ? 'bg-gray-900' : ''"
+                  :class="store.state.page == 'Zadaci' ? 'bg-gray-900' : ''"
                 >
                   <div
                     class="block text-gray-200 truncate transition duration-150"
                     :class="
-                      store.state.page == 'FirmZadaci'
+                      store.state.page == 'Zadaci'
                         ? 'hover:text-gray-200'
                         : 'hover:text-white'
                     "
-                    @click="store.methods.changePage('FirmZadaci')"
+                    @click="changePageZadaci()"
                   >
                     <div class="flex items-center">
                       <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
                         <path
                           :class="
-                            store.state.page == 'FirmZadaci'
+                            store.state.page == 'Zadaci'
                               ? '!text-lime-500'
                               : 'text-gray-400'
                           "
@@ -591,16 +591,16 @@
                 </li>
                 <li
                   class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
-                  :class="store.state.page == 'FirmZadaci' ? 'bg-gray-900' : ''"
+                  :class="store.state.page == 'Zadaci' ? 'bg-gray-900' : ''"
                 >
                   <div
                     class="block text-gray-200 truncate transition duration-150"
                     :class="
-                      store.state.page == 'FirmZadaci'
+                      store.state.page == 'Zadaci'
                         ? 'hover:text-gray-200'
                         : 'hover:text-white'
                     "
-                    @click="store.methods.changePage('FirmZadaci')"
+                    @click="store.methods.changePage('Zadaci')"
                   >
                     <div class="flex items-center">
                       <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
@@ -852,7 +852,12 @@ export default {
       alert(message)
     }
 
-    return { store, trigger, sidebar, showMessage }
+    const changePageZadaci = () => {
+      store.state.zadaci_temp = store.state.zadaci
+      store.methods.changePage('Zadaci')
+    }
+
+    return { store, trigger, sidebar, showMessage, changePageZadaci }
   },
 }
 </script>

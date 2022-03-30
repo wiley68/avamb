@@ -22,7 +22,6 @@
       <Pprs v-if="store.state.page == 'Pprs'"></Pprs>
       <Snimki v-if="store.state.page == 'Snimki'"></Snimki>
       <Fakturip v-if="store.state.page == 'Fakturip'"></Fakturip>
-      <FirmZadaci v-if="store.state.page == 'FirmZadaci'"></FirmZadaci>
       <Rabotni v-if="store.state.page == 'Rabotni'"></Rabotni>
       <Zadaci v-if="store.state.page == 'Zadaci'"></Zadaci>
       <Messages v-if="store.state.page == 'Messages'"></Messages>
@@ -52,7 +51,6 @@ import Pps from './components/includes/etapna/Pps.vue'
 import Pprs from './components/includes/etapna/Pprs.vue'
 import Snimki from './components/includes/etapna/Snimki.vue'
 import Fakturip from './components/includes/etapna/Fakturip.vue'
-import FirmZadaci from './components/FirmZadaci.vue'
 import Rabotni from './components/Rabotni.vue'
 import Zadaci from './components/Zadaci.vue'
 import Messages from './components/Messages.vue'
@@ -80,7 +78,6 @@ export default {
     Pprs,
     Snimki,
     Fakturip,
-    FirmZadaci,
     Rabotni,
     Zadaci,
     Messages,
