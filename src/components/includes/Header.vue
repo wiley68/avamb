@@ -81,7 +81,7 @@
           </button>
           <button
             class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full"
-            @click.stop="store.methods.changePage('Rabotni')"
+            @click.stop="changePageRabotni()"
           >
             <svg class="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -125,7 +125,18 @@ export default {
       store.methods.changePage('Zadaci')
     }
 
-    return { store, searchModalOpen, showLog, changePageZadaci }
+    const changePageRabotni = () => {
+      store.state.rabotni_temp = store.state.rabotni
+      store.methods.changePage('Rabotni')
+    }
+
+    return {
+      store,
+      searchModalOpen,
+      showLog,
+      changePageZadaci,
+      changePageRabotni,
+    }
   },
 }
 </script>

@@ -220,9 +220,6 @@ const methods = {
       methods.getStoreplusi()
       methods.getProdukti()
     }
-    if (page == 'Rabotni') {
-      methods.getRabotni()
-    }
     if (page == 'Messages') {
       methods.getMessages()
     }
@@ -529,6 +526,7 @@ const methods = {
         state.offers_temp = state.offers.filter(
           (element) => element.status == 'No'
         )
+        console.log(state)
       }
     }
     xmlhttpro.send(data)

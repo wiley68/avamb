@@ -48,12 +48,15 @@
             >
               {{ offer().poseshtenie_broi }}
             </div>
-            <div
+            <button
               class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
-              :class="offer().poseshtenie_broi > 0 ? 'bg-blue-600' : 'bg-white'"
+              :class="
+                offer().sub_poseshtenie_broi > 0 ? 'bg-blue-600' : 'bg-white'
+              "
+              @click.stop="goToRabotni()"
             >
-              {{ offer().poseshtenie_broi }}
-            </div>
+              {{ offer().sub_poseshtenie_broi }}
+            </button>
           </div>
         </div>
         <div class="text-sm mr-1">
@@ -593,6 +596,13 @@ export default {
       }
     }
 
+    const goToRabotni = () => {
+      store.state.rabotni_temp = store.state.rabotni.filter((element) =>
+        element.idnomber.includes(offer().idnomber)
+      )
+      store.methods.changePage('Rabotni')
+    }
+
     const goToRazmeri = () => {
       store.methods.getRazmeri(store.state.current_dashboard_offer)
       store.methods.changePage('Razmeri')
@@ -689,6 +699,7 @@ export default {
       goToSnimki,
       goToFakturip,
       goToZadaci,
+      goToRabotni,
     }
   },
 }

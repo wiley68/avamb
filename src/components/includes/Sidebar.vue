@@ -676,9 +676,9 @@
                 <li
                   class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 cursor-pointer hover:bg-gray-900"
                 >
-                  <div
+                  <button
                     class="block text-gray-200 truncate transition duration-150"
-                    @click="showMessage('Не е активно за мобилната версия.')"
+                    @click="changePageRabotni()"
                   >
                     <div class="flex items-center">
                       <svg class="shrink-0 w-6 h-6" viewBox="0 0 24 24">
@@ -697,7 +697,7 @@
                         >Работни листи</span
                       >
                     </div>
-                  </div>
+                  </button>
                 </li>
               </ul>
             </div></SidebarLinkGroup
@@ -857,7 +857,19 @@ export default {
       store.methods.changePage('Zadaci')
     }
 
-    return { store, trigger, sidebar, showMessage, changePageZadaci }
+    const changePageRabotni = () => {
+      store.state.rabotni_temp = store.state.rabotni
+      store.methods.changePage('Rabotni')
+    }
+
+    return {
+      store,
+      trigger,
+      sidebar,
+      showMessage,
+      changePageZadaci,
+      changePageRabotni,
+    }
   },
 }
 </script>
