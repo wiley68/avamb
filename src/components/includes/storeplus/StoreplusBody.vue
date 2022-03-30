@@ -209,12 +209,9 @@
       >
         <div class="flex flex-col w-full items-start justify-start text-sm">
           <div class="flex flex-row justify-between w-full">
-            <button
-              class="flex-grow text-left"
-              @click.stop="changeSubstoreplus(sub_storeplus.id)"
-            >
+            <div class="flex-grow text-left">
               <span class="font-medium">{{ sub_storeplus.product_name }}</span>
-            </button>
+            </div>
             <button
               class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
               aria-controls="danger-modal"
@@ -343,11 +340,6 @@ export default {
       return store.state.sub_storeplusi
     })
 
-    const changeSubstoreplus = (sub_storeplus_id) => {
-      store.methods.changeSubstoreplus(sub_storeplus_id)
-      store.methods.closeStoreplusiSidebar()
-    }
-
     const deleteSubstoreplusCheck = (sub_storeplus_id) => {
       deleted_id.value = sub_storeplus_id
       store.methods.changeDeleteSubstoreplusModal(true)
@@ -430,7 +422,6 @@ export default {
       updateStoreplus,
       formatDateTime,
       sub_storeplusi,
-      changeSubstoreplus,
       deleteSubstoreplusCheck,
       deleteSubstoreplus,
       add_sub_storeplus,
