@@ -163,12 +163,9 @@ export default {
         id: -1,
         contragent_id: 0,
         dateon: moment().format('YYYY-MM-DD'),
-        parvicen: '',
         price: '0.00',
-        stat_bg: '#dcdcdc',
-        stat_color: '#708090',
         status: 0,
-        status_txt: 'Типова',
+        parvicen: '',
       }
       store.state.storeplusi.splice(0, 0, new_storeplus)
       store.state.storeplusi_temp.splice(0, 0, new_storeplus)
