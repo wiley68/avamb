@@ -89,7 +89,7 @@
         class="flex flex-col items-center p-2 rounded font-medium bg-stone-400 border border-orange-200 shadow mb-2"
       >
         <div class="w-full flex flex-row justify-between items-center pb-2">
-          <div class="text-sm text-gray-800 mr-1">№-4-И</div>
+          <div class="text-sm text-gray-800 mr-1">№-4-И-З</div>
           <div
             class="flex flex-row justify-center items-center text-sm text-gray-800"
           >
@@ -110,9 +110,7 @@
             </button>
           </div>
         </div>
-        <div class="text-sm text-gray-800 mr-1">
-          Информация получена от клиент
-        </div>
+        <div class="text-sm text-gray-800 mr-1">Обща информация и задачи</div>
       </div>
       <div
         v-if="store.state.user.etapna5 == '1'"
