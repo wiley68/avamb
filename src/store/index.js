@@ -526,7 +526,6 @@ const methods = {
         state.offers_temp = state.offers.filter(
           (element) => element.status == 'No'
         )
-        console.log(state)
       }
     }
     xmlhttpro.send(data)
@@ -2885,7 +2884,6 @@ const methods = {
       } catch (err) {}
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti_plus = result.data
-        console.log(state)
       }
     }
     xmlhttpro.send(data)

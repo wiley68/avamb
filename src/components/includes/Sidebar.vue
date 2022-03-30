@@ -806,7 +806,6 @@
 
 <script>
 import { ref, inject, onMounted, onUnmounted } from 'vue'
-import moment from 'moment'
 import SidebarLinkGroup from './SidebarLinkGroup.vue'
 
 export default {
