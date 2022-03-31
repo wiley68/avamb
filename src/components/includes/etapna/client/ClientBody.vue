@@ -4,7 +4,7 @@
       class="md:hidden absolute top-4 left-4 sm:left-6 text-white opacity-80 hover:opacity-100"
       @click.stop="store.methods.changePage('Dashboard')"
     >
-      <span class="sr-only">Информация получена от клиент</span>
+      <span class="sr-only">Обща информация и задачи</span>
       <svg
         class="w-6 h-6 fill-current"
         viewBox="0 0 24 24"
@@ -32,7 +32,7 @@
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
     >
       <div class="w-full flex flex-row justify-between items-center pb-2">
-        <div class="text-sm text-gray-800 mr-1">№-4-И</div>
+        <div class="text-sm text-gray-800 mr-1">№-4-И-З</div>
         <div
           class="flex flex-row justify-center items-center text-sm text-gray-800"
         >
@@ -50,9 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="text-sm text-gray-800 mr-1">
-        Информация получена от клиент
-      </div>
+      <div class="text-sm text-gray-800 mr-1">Обща информация и задачи</div>
     </div>
     <div
       v-for="otclient in store.state.otclienti"
@@ -203,6 +201,7 @@
           ref="file"
           v-on:change="handleFileUpload(offer().id)"
           type="file"
+          accept="text/html,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,text/plain,application/pdf,image/*,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         />
       </div>
     </div>
