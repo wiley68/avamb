@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col justify-center">
     <div
-      v-for="otclient in store.state.otclienti"
-      :key="otclient.id"
+      v-for="doc_poseshtenie in store.state.doc_poseshtenia"
+      :key="doc_poseshtenie.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
@@ -10,7 +10,10 @@
           <a
             target="_blank"
             :href="
-              '/dist/img/files/otklient/' + offer().id + '/' + otclient.file
+              '/dist/img/files/visits/' +
+              store.state.current_poseshtenie_id +
+              '/' +
+              doc_poseshtenie.file
             "
             ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
               <path
@@ -21,61 +24,7 @@
         </div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="
-            updateClient(otclient.id, otclient.file, otclient.offer_id)
-          "
-        >
-          <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"
-            />
-          </svg>
-          <span class="text-xs">Запиши</span>
-        </button>
-        <ModalBlank
-          id="success-modal"
-          :modalOpen="store.state.successUpdateClient"
-          @close-modal="store.methods.changeSuccessUpdateClient(false)"
-        >
-          <div class="p-5 flex space-x-4">
-            <div
-              class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-green-100"
-            >
-              <svg
-                class="w-4 h-4 shrink-0 fill-current text-green-500"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zM7 11.4L3.6 8 5 6.6l2 2 4-4L12.4 6 7 11.4z"
-                />
-              </svg>
-            </div>
-            <div>
-              <div class="mb-2">
-                <div class="text-lg font-semibold text-gray-800">
-                  Уведомление
-                </div>
-              </div>
-              <div class="text-sm mb-10">
-                <div class="space-y-2">
-                  <p>Успешно записахте промяната.</p>
-                </div>
-              </div>
-              <div class="flex flex-wrap justify-end space-x-2">
-                <button
-                  class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeSuccessUpdateClient(false)"
-                >
-                  Затвори
-                </button>
-              </div>
-            </div>
-          </div>
-        </ModalBlank>
-        <button
-          class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-          @click.stop="deleteClientCheck(otclient)"
+          @click.stop="deleteDocPoseshtenieCheck(doc_poseshtenie)"
         >
           <svg class="w-4 h-4 text-blue-600 mr-1" viewBox="0 0 24 24">
             <path
@@ -87,8 +36,8 @@
         </button>
         <ModalBlank
           id="danger-modal"
-          :modalOpen="store.state.deleteClientModal"
-          @close-modal="store.methods.changeDeleteClientModal(false)"
+          :modalOpen="store.state.deleteDocPoseshtenieModal"
+          @close-modal="store.methods.changeDeleteDocPoseshtenieModal(false)"
         >
           <div class="p-5 flex space-x-4">
             <div
@@ -118,13 +67,15 @@
               <div class="flex flex-wrap justify-end space-x-2">
                 <button
                   class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
-                  @click.stop="store.methods.changeDeleteClientModal(false)"
+                  @click.stop="
+                    store.methods.changeDeleteDocPoseshtenieModal(false)
+                  "
                 >
                   Откажи
                 </button>
                 <button
                   class="btn-sm bg-red-500 hover:bg-red-600 text-white"
-                  @click.stop="deleteClient()"
+                  @click.stop="deleteDocPoseshtenie()"
                 >
                   Изтрий
                 </button>
@@ -164,9 +115,25 @@ export default {
 
   setup() {
     const store = inject('store')
+    const doc_poseshtenie_current = ref(null)
+
+    const deleteDocPoseshtenieCheck = (_doc_poseshtenie) => {
+      doc_poseshtenie_current.value = _doc_poseshtenie
+      store.methods.changeDeleteDocPoseshtenieModal(true)
+    }
+
+    const deleteDocPoseshtenie = () => {
+      store.methods.deleteClient(
+        otclient_current.value.id,
+        otclient_current.value.file,
+        otclient_current.value.offer_id
+      )
+    }
 
     return {
       store,
+      deleteDocPoseshtenieCheck,
+      deleteDocPoseshtenie,
     }
   },
 }

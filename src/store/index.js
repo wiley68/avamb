@@ -36,6 +36,7 @@ const state = reactive({
   otclienti: [],
   doc_poseshtenia: [],
   deleteClientModal: false,
+  deleteDocPoseshtenieModal: false,
   successUpdateClient: false,
   zapitvania: [],
   deleteZapitvaneModal: false,
@@ -237,6 +238,9 @@ const methods = {
   },
   changeDeleteClientModal(deleteClientModal) {
     state.deleteClientModal = deleteClientModal
+  },
+  changeDeleteDocPoseshtenieModal(deleteDocPoseshtenieModal) {
+    state.deleteDocPoseshtenieModal = deleteDocPoseshtenieModal
   },
   deleteClientById(id) {
     state.otclienti = state.otclienti.filter((element) => {
