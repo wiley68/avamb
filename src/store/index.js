@@ -595,15 +595,16 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.otclienti = JSON.parse(this.response).result
+        console.log(state.otclienti)
       } else {
         state.otclienti = []
       }
     }
     xmlhttpro.send(data)
   },
-  getDocPoseshtenie() {
+  getDocPoseshtenie(poseshtenie_id) {
     var data = new FormData()
-    data.append('poseshtenie_id', state.user.firm_id)
+    data.append('poseshtenie_id', poseshtenie_id)
     var xmlhttpro = createCORSRequest(
       'POST',
       'https://dograma.avalonbg.com/function/mobile/get_doc_poseshtenia.php'
@@ -623,9 +624,10 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        state.otclienti = JSON.parse(this.response).result
+        state.doc_poseshtenia = JSON.parse(this.response).result
+        console.log(state.doc_poseshtenia)
       } else {
-        state.otclienti = []
+        state.doc_poseshtenia = []
       }
     }
     xmlhttpro.send(data)
