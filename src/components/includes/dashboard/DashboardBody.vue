@@ -45,6 +45,7 @@
               :class="
                 offer().poseshtenie_broi > 0 ? 'bg-green-600' : 'bg-white'
               "
+              @click.stop="goToDocPoseshtenia()"
             >
               {{ offer().poseshtenie_broi }}
             </div>
@@ -613,6 +614,10 @@ export default {
       store.methods.changePage('Client')
     }
 
+    const goToDocPoseshtenia = () => {
+      store.methods.changePage('Docposeshtenia')
+    }
+
     const goToZadaci = () => {
       store.state.zadaci_temp = store.state.zadaci.filter(
         (element) => element.offer_id == store.state.current_dashboard_offer
@@ -700,6 +705,7 @@ export default {
       goToFakturip,
       goToZadaci,
       goToRabotni,
+      goToDocPoseshtenia,
     }
   },
 }
