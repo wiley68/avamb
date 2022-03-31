@@ -35,6 +35,7 @@ const state = reactive({
   razmeri: [],
   otclienti: [],
   doc_poseshtenia: [],
+  doc_poseshtenia_view: [],
   deleteClientModal: false,
   deleteDocPoseshtenieModal: false,
   successUpdateClient: false,
@@ -234,6 +235,9 @@ const methods = {
     if (page == 'Storeplusi') {
       methods.getStoreplusi()
       methods.getProduktiPlus()
+    }
+    if (page == 'Docposeshtenia') {
+      methods.getDocPoseshtenieView()
     }
   },
   changeDeleteClientModal(deleteClientModal) {
@@ -630,6 +634,36 @@ const methods = {
         state.doc_poseshtenia = JSON.parse(this.response).result
       } else {
         state.doc_poseshtenia = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getDocPoseshtenieView() {
+    var data = new FormData()
+    data.append('offer_id', state.current_dashboard_offer)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc_poseshtenia_all.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      console.log(this.response)
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.doc_poseshtenia_view = JSON.parse(this.response).result
+      } else {
+        state.doc_poseshtenia_view = []
       }
     }
     xmlhttpro.send(data)
