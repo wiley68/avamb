@@ -700,7 +700,6 @@ export default {
       goToFakturip,
       goToZadaci,
       goToRabotni,
-      goToDocPoseshtenie,
     }
   },
 }
