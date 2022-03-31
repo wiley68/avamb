@@ -628,7 +628,6 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.doc_poseshtenia = JSON.parse(this.response).result
-        console.log(state.doc_poseshtenia)
       } else {
         state.doc_poseshtenia = []
       }
@@ -662,6 +661,35 @@ const methods = {
       ) {
         methods.deleteClientById(client_id)
         state.deleteClientModal = false
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteDocPoseshtenie(poseshtenie_id, file) {
+    var data = new FormData()
+    data.append('id', poseshtenie_id)
+    data.append('file', file)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/delete_doc_poseshtenie.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteDocPoseshtenieById(poseshtenie_id)
+        state.deleteDocPoseshtenieModal = false
       }
     }
     xmlhttpro.send(data)
@@ -732,7 +760,6 @@ const methods = {
           '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
       )
     }
-
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -787,6 +814,39 @@ const methods = {
         if (type == 'fakturip') {
           methods.getFakturip(state.current_dashboard_offer)
         }
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  uploadFileDocPoseshtenie(files, poseshtenie_id) {
+    var data = new FormData()
+    Object.entries(files).forEach((element) => {
+      const [key, value] = element
+      data.append(key, value)
+    })
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/submit_visit.php?vid=' +
+        poseshtenie_id +
+        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      console.log(this.response)
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.getDocPoseshtenie(poseshtenie_id)
       }
     }
     xmlhttpro.send(data)

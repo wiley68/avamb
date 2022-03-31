@@ -6,7 +6,7 @@
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
       <div class="flex flex-row justify-between items-center">
-        <div class="flex-grow">
+        <div>
           <a
             target="_blank"
             :href="
@@ -22,6 +22,7 @@
               /></svg
           ></a>
         </div>
+        <div class="flex-grow">{{ doc_poseshtenie.file }}</div>
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           @click.stop="deleteDocPoseshtenieCheck(doc_poseshtenie)"
@@ -84,13 +85,6 @@
           </div>
         </ModalBlank>
       </div>
-      <div class="mt-2">
-        <textarea
-          class="w-full border border-gray-200 p-1"
-          rows="5"
-          v-model="otclient.description"
-        ></textarea>
-      </div>
     </div>
     <div
       class="flex flex-col items-center p-2 rounded bg-orange-50 border border-orange-200 shadow mb-2"
@@ -98,9 +92,9 @@
       <div class="w-full flex flex-row justify-between items-center pb-2">
         <input
           ref="file"
-          v-on:change="handleFileUpload(offer().id)"
+          v-on:change="handleFileUpload()"
           type="file"
-          accept="text/html,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,text/plain,application/pdf,image/*,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          accept="image/jpg,image/jpeg"
         />
       </div>
     </div>
@@ -108,14 +102,20 @@
 </template>
 
 <script>
-import { inject, computed, ref } from 'vue'
+import { inject, ref } from 'vue'
+import ModalBlank from '../components/ModalBlank.vue'
 
 export default {
   name: 'PoseshtenieSnimki',
 
+  components: {
+    ModalBlank,
+  },
+
   setup() {
     const store = inject('store')
     const doc_poseshtenie_current = ref(null)
+    const file = ref(null)
 
     const deleteDocPoseshtenieCheck = (_doc_poseshtenie) => {
       doc_poseshtenie_current.value = _doc_poseshtenie
@@ -123,17 +123,26 @@ export default {
     }
 
     const deleteDocPoseshtenie = () => {
-      store.methods.deleteClient(
-        otclient_current.value.id,
-        otclient_current.value.file,
-        otclient_current.value.offer_id
+      store.methods.deleteDocPoseshtenie(
+        doc_poseshtenie_current.value.id,
+        doc_poseshtenie_current.value.file
       )
+    }
+
+    const handleFileUpload = async () => {
+      store.methods.uploadFileDocPoseshtenie(
+        file.value.files,
+        store.state.current_poseshtenie_id
+      )
+      file.value = null
     }
 
     return {
       store,
       deleteDocPoseshtenieCheck,
       deleteDocPoseshtenie,
+      handleFileUpload,
+      file,
     }
   },
 }
