@@ -118,6 +118,8 @@ const state = reactive({
   current_sub_storeplus_id: 0,
   deleteSubstoreplusModal: false,
   dostavcici: [],
+  code: '',
+  category: '',
 })
 
 const methods = {
@@ -198,6 +200,7 @@ const methods = {
     state.sub_storeplusi = []
     state.current_storeplus_id = storeplus_id
     methods.getSubStoreplusi(state.current_storeplus_id)
+    methods.getProduktiPlus()
   },
   changePoseshtenie(poseshtenie_id) {
     state.current_poseshtenie_id = poseshtenie_id
@@ -228,6 +231,7 @@ const methods = {
     }
     if (page == 'Storeplusi') {
       methods.getStoreplusi()
+      methods.getProduktiPlus()
     }
   },
   changeDeleteClientModal(deleteClientModal) {
@@ -2857,11 +2861,18 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  getProduktiPlus(dostavcik_id) {
+  getProduktiPlus() {
     var data = new FormData()
     var info = []
     info[0] = 'GET'
-    info[1] = dostavcik_id
+    if (state.current_storeplus_id != 0) {
+      const storeplus_current = state.storeplusi_temp.find(
+        (element) => element.id == state.current_storeplus_id
+      )
+      info[1] = storeplus_current.contragent_id
+    } else {
+      info[1] = 0
+    }
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
@@ -2921,7 +2932,7 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  createSubstoreplus(storeplus_id, code, quantity, price) {
+  createSubstoreplus(storeplus_id, code, quantity, price, dds) {
     var data = new FormData()
     var info = []
     info[0] = 'CREATE'
@@ -2929,6 +2940,7 @@ const methods = {
     info[2] = code
     info[3] = quantity
     info[4] = price
+    info[5] = dds
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',

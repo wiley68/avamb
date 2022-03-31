@@ -149,7 +149,7 @@
           <div class="flex flex-row justify-between items-center mb-1">
             <select
               class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
-              v-model="category"
+              v-model="store.state.category"
               v-on:change.stop="changeCategory()"
             >
               <option value="" selected>Избери категория</option>
@@ -165,7 +165,7 @@
           <div class="flex flex-row justify-between items-center mb-1">
             <select
               class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
-              v-model="code"
+              v-model="store.state.code"
             >
               <option value="" selected>Избери продукт</option>
               <option
@@ -173,15 +173,31 @@
                 :key="produkt.id"
                 :value="produkt.code"
               >
-                {{ produkt.name }}&nbsp;-&nbsp;{{ parseInt(produkt.quantity) }}
+                {{ produkt.name }}
               </option>
             </select>
           </div>
-          <div class="flex flex-row justify-between items-center mb-3">
+          <div class="flex flex-row justify-between items-center mb-1">
             <span class="p-1 text-sm w-3/12">Бройка</span>
             <input
               type="number"
               v-model="quantity"
+              class="w-7/12 text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
+            />
+          </div>
+          <div class="flex flex-row justify-between items-center mb-1">
+            <span class="p-1 text-sm w-3/12">Ед. цена</span>
+            <input
+              type="number"
+              v-model="price"
+              class="w-7/12 text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
+            />
+          </div>
+          <div class="flex flex-row justify-between items-center mb-3">
+            <span class="p-1 text-sm w-3/12">ДДС</span>
+            <input
+              type="number"
+              v-model="dds"
               class="w-7/12 text-sm border rounded-sm border-gray-100 p-1 bg-red-300"
             />
           </div>
@@ -198,7 +214,7 @@
                 fill="currentColor"
                 d="M20 13.09V7C20 4.79 16.42 3 12 3S4 4.79 4 7V17C4 19.21 7.59 21 12 21C12.46 21 12.9 21 13.33 20.94C13.12 20.33 13 19.68 13 19L13 18.95C12.68 19 12.35 19 12 19C8.13 19 6 17.5 6 17V14.77C7.61 15.55 9.72 16 12 16C12.65 16 13.27 15.96 13.88 15.89C14.93 14.16 16.83 13 19 13C19.34 13 19.67 13.04 20 13.09M18 12.45C16.7 13.4 14.42 14 12 14S7.3 13.4 6 12.45V9.64C7.47 10.47 9.61 11 12 11S16.53 10.47 18 9.64V12.45M12 9C8.13 9 6 7.5 6 7S8.13 5 12 5 18 6.5 18 7 15.87 9 12 9M20 22V20H16V18H20V16L23 19L20 22Z"
               /></svg
-            ><span>Изпиши</span>
+            ><span>Добави</span>
           </button>
         </div>
       </div>
@@ -356,16 +372,17 @@ export default {
 
     const quantity = ref(0)
 
-    const code = ref('')
+    const price = ref(0)
 
-    const category = ref('')
+    const dds = ref(0)
 
     const errorProductModal = ref(false)
 
     const storeplus = computed(() => {
-      return store.state.storeplusi_temp.find(
+      const storeplus_current = store.state.storeplusi_temp.find(
         (element) => element.id == store.state.current_storeplus_id
       )
+      return storeplus_current
     })
 
     const updateStoreplus = (storeplus_id) => {
@@ -392,18 +409,22 @@ export default {
     }
 
     const addProdukt = () => {
-      if (category.value == 0 || code.value == '' || quantity.value == 0) {
+      if (
+        store.state.category == 0 ||
+        store.state.code == '' ||
+        quantity.value == 0 ||
+        price.value == 0 ||
+        dds.value == 0
+      ) {
         errorProductModal.value = true
       } else {
         add_sub_storeplus.value = !add_sub_storeplus.value
-        const price = store.state.produkti_plus.find(
-          (element) => element.code == code.value
-        ).price
         store.methods.createSubstoreplus(
           storeplus.value.id,
-          code.value,
+          store.state.code,
           quantity.value,
-          price
+          price.value,
+          dds.value
         )
       }
     }
@@ -445,16 +466,18 @@ export default {
     }
 
     const changeCategory = () => {
-      code.value = ''
+      store.state.code = ''
       store.state.produkti_plus_temp = store.state.produkti_plus.filter(
-        (element) => element.category_name == category.value
+        (element) => element.category_name == store.state.category
       )
     }
 
     const openNewProdukt = () => {
-      category.value = ''
-      code.value = ''
+      store.state.category = ''
+      store.state.code = ''
       quantity.value = 0
+      price.value = 0
+      dds.value = 0
       add_sub_storeplus.value = !add_sub_storeplus.value
     }
 
@@ -468,11 +491,11 @@ export default {
       deleteSubstoreplus,
       add_sub_storeplus,
       quantity,
-      code,
+      price,
+      dds,
       addProdukt,
       statusStoreplus,
       getProduktiCategories,
-      category,
       changeCategory,
       openNewProdukt,
       errorProductModal,

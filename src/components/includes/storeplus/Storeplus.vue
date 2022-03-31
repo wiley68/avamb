@@ -10,6 +10,7 @@
       <select
         class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
         v-model="storeplus.contragent_id"
+        @change.stop="changeDostavcik()"
       >
         <option value="0" selected>Избери клиент</option>
         <option
@@ -63,9 +64,10 @@ export default {
     const store = inject('store')
 
     const storeplus = computed(() => {
-      return store.state.storeplusi_temp.find(
+      const storeplus_current = store.state.storeplusi_temp.find(
         (element) => element.id == store.state.current_storeplus_id
       )
+      return storeplus_current
     })
 
     const formatDateTime = (value) => {
@@ -82,7 +84,16 @@ export default {
       }
     }
 
-    return { store, storeplus, formatDateTime, getStatusText }
+    const changeDostavcik = () => {
+      store.methods.getProduktiPlus()
+      store.state.category = ''
+      store.state.code = ''
+      store.state.produkti_plus_temp = store.state.produkti_plus.filter(
+        (element) => element.category_name == store.state.category
+      )
+    }
+
+    return { store, storeplus, formatDateTime, getStatusText, changeDostavcik }
   },
 }
 </script>
