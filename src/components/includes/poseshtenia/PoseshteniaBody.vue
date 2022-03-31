@@ -73,9 +73,14 @@
     </div>
     <div class="grow p-4">
       <div
-        class="bg-orange-50 shadow-lg rounded-t-sm border border-orange-200 p-2 divide-y divide-gray-200"
+        class="bg-orange-50 shadow-lg rounded-t-sm border border-orange-200 p-2 divide-y divide-gray-200 mb-2"
       >
         <Poseshtenie />
+      </div>
+      <div
+        class="bg-gray-50 shadow-lg rounded-t-sm border border-gray-200 p-2 divide-y divide-gray-200"
+      >
+        <PoseshtenieSnimki />
       </div>
     </div>
   </div>
@@ -205,6 +210,7 @@
 import { inject, ref, computed } from 'vue'
 import moment from 'moment'
 import Poseshtenie from './Poseshtenie.vue'
+import PoseshtenieSnimki from './PoseshtenieSnimki.vue'
 import ModalBlank from './../components/ModalBlank.vue'
 
 export default {
@@ -212,6 +218,7 @@ export default {
 
   components: {
     Poseshtenie,
+    PoseshtenieSnimki,
     ModalBlank,
   },
 

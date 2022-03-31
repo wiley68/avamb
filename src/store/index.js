@@ -34,6 +34,7 @@ const state = reactive({
   current_dashboard_offer: 0,
   razmeri: [],
   otclienti: [],
+  doc_poseshtenia: [],
   deleteClientModal: false,
   successUpdateClient: false,
   zapitvania: [],
@@ -239,6 +240,11 @@ const methods = {
   },
   deleteClientById(id) {
     state.otclienti = state.otclienti.filter((element) => {
+      return element.id != id
+    })
+  },
+  deleteDocPoseshtenieById(id) {
+    state.doc_poseshtenia = state.doc_poseshtenia.filter((element) => {
       return element.id != id
     })
   },
@@ -572,6 +578,35 @@ const methods = {
     var xmlhttpro = createCORSRequest(
       'POST',
       'https://dograma.avalonbg.com/function/mobile/get_doc.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.otclienti = JSON.parse(this.response).result
+      } else {
+        state.otclienti = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getDocPoseshtenie() {
+    var data = new FormData()
+    data.append('poseshtenie_id', state.user.firm_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_doc_poseshtenia.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
