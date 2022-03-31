@@ -595,7 +595,6 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.otclienti = JSON.parse(this.response).result
-        console.log(state.otclienti)
       } else {
         state.otclienti = []
       }

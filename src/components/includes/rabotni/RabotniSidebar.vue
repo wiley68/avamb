@@ -140,6 +140,7 @@ export default {
     }
 
     const changePoseshtenie = (poseshtenie_id) => {
+      store.methods.getDocPoseshtenie(poseshtenie_id)
       store.methods.changePoseshtenie(poseshtenie_id)
       store.methods.closeRabotniSidebar()
     }
