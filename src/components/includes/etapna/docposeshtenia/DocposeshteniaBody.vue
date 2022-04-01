@@ -42,12 +42,12 @@
             <div
               class="flex flex-row justify-center items-center w-20 h-7 border border-green-800 text-white mr-2"
               :class="
-                store.state.doc_poseshtenia.length > 0
+                store.state.doc_poseshtenia_view.length > 0
                   ? 'bg-green-600'
                   : 'bg-white'
               "
             >
-              {{ store.state.doc_poseshtenia.length }}
+              {{ store.state.doc_poseshtenia_view.length }}
             </div>
           </div>
         </div>
