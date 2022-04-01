@@ -656,7 +656,6 @@ const methods = {
       loader.hide()
     })
     xmlhttpro.onreadystatechange = function () {
-      console.log(this.response)
       if (
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
@@ -702,6 +701,7 @@ const methods = {
   deleteDocPoseshtenie(poseshtenie_id, file) {
     var data = new FormData()
     data.append('id', poseshtenie_id)
+    data.append('sub_poseshtenie_id', state.current_poseshtenie_id)
     data.append('file', file)
     var xmlhttpro = createCORSRequest(
       'POST',

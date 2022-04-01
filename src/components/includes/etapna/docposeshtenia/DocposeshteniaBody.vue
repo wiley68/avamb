@@ -57,27 +57,28 @@
       </div>
     </div>
     <div
-      v-for="doc_poseshtenie in store.state.doc_poseshtenia"
+      v-for="doc_poseshtenie in store.state.doc_poseshtenia_view"
       :key="doc_poseshtenie.id"
       class="flex flex-col p-2 rounded bg-gray-50 border border-gray-200 shadow mb-2"
     >
-      <div class="flex flex-row justify-between items-center">
-        <div class="flex-grow">
-          <a
-            target="_blank"
-            :href="
+      <div class="flex flex-row justify-center items-center">
+        <a
+          target="_blank"
+          :href="
+            '/dist/img/files/visits/' +
+            doc_poseshtenie.poseshtenie_id +
+            '/' +
+            doc_poseshtenie.file
+          "
+          ><img
+            :src="
               '/dist/img/files/visits/' +
-              store.state.current_poseshtenie_id +
+              doc_poseshtenie.poseshtenie_id +
               '/' +
               doc_poseshtenie.file
             "
-            ><svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M5,3C3.89,3 3,3.89 3,5V19C3,20.11 3.89,21 5,21H19C20.11,21 21,20.11 21,19V5C21,3.89 20.11,3 19,3H5M5,5H19V19H5V5M7,7V9H17V7H7M7,11V13H17V11H7M7,15V17H14V15H7Z"
-              /></svg
-          ></a>
-        </div>
+          />
+        </a>
       </div>
     </div>
   </div>
