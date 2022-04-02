@@ -24,7 +24,7 @@
                         />
                       </svg>
                       <div class="ml-3">
-                        <span class="text-lg font-medium text-grya-900"
+                        <span class="text-lg font-medium text-gray-900"
                           >Етапна визуализация</span
                         >
                       </div>
@@ -44,7 +44,7 @@
                         />
                       </svg>
                       <div class="ml-3">
-                        <span class="text-lg font-medium text-grya-900"
+                        <span class="text-lg font-medium text-gray-900"
                           >Работни листи</span
                         >
                       </div>
@@ -56,17 +56,25 @@
                     class="w-full p-2 rounded-lg border-2 border-blue-600"
                     @click.stop="changePageZadaci()"
                   >
-                    <div class="flex items-center">
+                    <div class="flex flex-row justify-between items-center">
                       <svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
                         <path
                           fill="currentColor"
                           d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"
                         />
                       </svg>
-                      <div class="ml-3">
-                        <span class="text-lg font-medium text-grya-900"
+                      <div class="ml-3 flex-grow text-left">
+                        <span class="text-lg font-medium text-gray-900"
                           >Фирмени задачи</span
                         >
+                      </div>
+                      <div
+                        v-if="getZadaciIzticashti() > 0"
+                        class="flex justify-center items-center h-6 px-2 bg-red-600 rounded-full"
+                      >
+                        <span class="text-lg font-medium text-gray-100">{{
+                          getZadaciIzticashti()
+                        }}</span>
                       </div>
                     </div>
                   </button>
@@ -76,7 +84,7 @@
                     class="w-full p-2 rounded-lg border-2 border-blue-600"
                     @click.stop="store.methods.changePage('Messages')"
                   >
-                    <div class="flex items-center">
+                    <div class="flex flex-row justify-between items-center">
                       <svg
                         class="w-8 h-8"
                         viewBox="0 0 16 16"
@@ -91,10 +99,18 @@
                           d="M16 9.5c0-.987-.429-1.897-1.147-2.639C14.124 10.348 10.66 13 6.5 13c-.103 0-.202-.018-.305-.021C7.231 13.617 8.556 14 10 14c.449 0 .886-.04 1.307-.11L15 16v-4h-.012C15.627 11.285 16 10.425 16 9.5z"
                         />
                       </svg>
-                      <div class="ml-3">
-                        <span class="text-lg font-medium text-grya-900"
+                      <div class="ml-3 flex-grow text-left">
+                        <span class="text-lg font-medium text-gray-900"
                           >Съобщения</span
                         >
+                      </div>
+                      <div
+                        v-if="getMessagesLength() > 0"
+                        class="flex justify-center items-center h-6 px-2 bg-red-600 rounded-full"
+                      >
+                        <span class="text-lg font-medium text-gray-100">{{
+                          getMessagesLength()
+                        }}</span>
                       </div>
                     </div>
                   </button>
@@ -110,6 +126,7 @@
 
 <script>
 import { inject } from 'vue'
+import moment from 'moment'
 
 export default {
   name: 'Landing',
@@ -127,7 +144,29 @@ export default {
       store.methods.changePage('Zadaci')
     }
 
-    return { store, changePageRabotni, changePageZadaci }
+    const getZadaciIzticashti = () => {
+      return store.state.zadaci.filter(
+        (element) => element.status == 0 || element.status == 2
+      ).length
+    }
+
+    const getMessagesLength = () => {
+      return store.state.messages.filter((element) => {
+        return (
+          moment(element.created_at).date() == moment().date() &&
+          (element.to_user_id == store.state.user.id ||
+            element.from_user_id == store.state.user.id)
+        )
+      }).length
+    }
+
+    return {
+      store,
+      changePageRabotni,
+      changePageZadaci,
+      getZadaciIzticashti,
+      getMessagesLength,
+    }
   },
 }
 </script>
