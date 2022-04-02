@@ -177,6 +177,22 @@ export default {
           store.state.rabotni_temp = store.state.rabotni
         }
       }
+      if (store.state.page == 'Zadaci' && store.state.zadaciSidebarOpen) {
+        if (searchInput.value.value != '') {
+          store.state.zadaci_temp = store.state.zadaci.filter((element) => {
+            return (
+              element.subject
+                .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase()) ||
+              element.idnomber
+                .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase())
+            )
+          })
+        } else {
+          store.state.zadaci_temp = store.state.zadaci
+        }
+      }
     }
 
     return {

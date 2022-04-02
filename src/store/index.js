@@ -877,7 +877,6 @@ const methods = {
       loader.hide()
     })
     xmlhttpro.onreadystatechange = function () {
-      console.log(this.response)
       if (
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
