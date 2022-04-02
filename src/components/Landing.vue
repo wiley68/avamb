@@ -3,86 +3,38 @@
     <div class="relative flex">
       <div
         id="dashboard-sidebar"
-        class="absolute z-20 top-0 bottom-0 w-full md:w-auto md:static md:top-auto md:bottom-auto -mr-px md:translate-x-0 transform transition-transform duration-200 ease-in-out"
-        :class="
-          store.state.dashboardSidebarOpen
-            ? 'translate-x-0'
-            : '-translate-x-full'
-        "
+        class="absolute z-20 top-0 bottom-0 w-full md:w-auto md:static md:top-auto md:bottom-auto -mr-px"
       >
         <div
           class="sticky top-16 bg-white overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 border-r border-gray-200 md:w-72 xl:w-80 h-[calc(100vh-64px)]"
         >
           <div>
             <div class="px-5 py-4">
-              <div class="relative bg-sky-700 p-2 rounded overflow-hidden mb-2">
-                <div class="relative">
-                  <h1 class="text-xl text-white font-medium">
-                    AVAMB-LOGICIEL - {{ typeUser() }}
-                  </h1>
-                  <p class="text-xl text-white">
-                    {{ store.state.user.username }}
-                  </p>
-                </div>
-              </div>
               <div
                 class="flex flex-wrap justify-center items-center space-y-2 p-4 sm:p-6 mb-2"
               >
                 <Datepicker class="mt-2" />
-                <div>
-                  <button
-                    class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-                    title="Покажи всички"
-                    @click.stop="showAll()"
-                  >
-                    <svg
-                      class="w-6 h-6 fill-current text-blue-600"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M3 4H21V8H19V20H17V8H7V20H5V8H3V4M8 9H16V11H8V9M8 12H16V14H8V12M8 15H16V17H8V15M8 18H16V20H8V18Z"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-                    title="Покажи активните"
-                    @click.stop="showActive()"
-                  >
-                    <svg
-                      class="w-6 h-6 fill-current text-blue-600"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M3 4H21V8H19V20H17V8H7V20H5V8H3V4M8 9H16V11H8V9Z"
-                      />
-                    </svg>
-                  </button>
-                </div>
               </div>
               <ul class="mb-6">
-                <li
-                  v-for="offer in getOffers()"
-                  :key="offer.id"
-                  class="-mx-2 mb-1"
-                >
+                <li class="-mx-2 mb-1">
                   <button
-                    class="w-full p-2 rounded bg-sky-200 border border-sky-300"
-                    @click.stop="openOffer(offer.id)"
+                    class="w-full p-2 rounded-lg border-2 border-blue-600"
                   >
-                    <div class="flex items-center justify-between">
-                      <div class="truncate">
-                        <span class="text-sm font-medium text-gray-800 mr-1">{{
-                          offer.client_name
-                        }}</span>
-                      </div>
-                      <div>
-                        <span class="text-sm font-medium text-orange-700">{{
-                          offer.idnomber
-                        }}</span>
-                      </div>
+                    <div class="flex items-center">
+                      <svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M4,1H20A1,1 0 0,1 21,2V6A1,1 0 0,1 20,7H4A1,1 0 0,1 3,6V2A1,1 0 0,1 4,1M4,9H20A1,1 0 0,1 21,10V14A1,1 0 0,1 20,15H4A1,1 0 0,1 3,14V10A1,1 0 0,1 4,9M4,17H20A1,1 0 0,1 21,18V22A1,1 0 0,1 20,23H4A1,1 0 0,1 3,22V18A1,1 0 0,1 4,17M9,5H10V3H9V5M9,13H10V11H9V13M9,21H10V19H9V21M5,3V5H7V3H5M5,11V13H7V11H5M5,19V21H7V19H5Z"
+                        />
+                      </svg>
+                      <button
+                        class="ml-3"
+                        @click="store.methods.changePage('Dashboard')"
+                      >
+                        <span class="text-lg font-medium text-grya-900"
+                          >Етапна визуализация</span
+                        >
+                      </button>
                     </div>
                   </button>
                 </li>
@@ -109,36 +61,7 @@ export default {
   setup() {
     const store = inject('store')
 
-    const typeUser = () => {
-      if (store.state.user.admin == 'Yes') {
-        return 'Суперадминистратор'
-      } else {
-        if (store.state.user.firmadmin == 'Yes') {
-          return 'Администратор'
-        } else {
-          switch (store.state.user.role) {
-            case 'scet':
-              return 'АС-2'
-              break
-            case 'sluz':
-              return 'АС-3'
-              break
-            case 'targ':
-              return 'АС-1'
-              break
-            default:
-              return ''
-              break
-          }
-        }
-      }
-    }
-
-    const getOffers = () => {
-      return store.state.offers_temp
-    }
-
-    return { store, typeUser, getOffers }
+    return { store }
   },
 }
 </script>
