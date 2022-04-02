@@ -110,7 +110,6 @@ export default {
     const showAll = () => {
       store.state.offers_filter_status = 'Yes'
       store.state.offers_temp = store.state.offers
-      console.log(store.state)
     }
 
     const showActive = () => {

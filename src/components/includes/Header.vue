@@ -51,42 +51,23 @@
           />
           <button
             class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full"
-            @click.stop="store.methods.changePage('Messages')"
+            @click.stop="loadData()"
           >
-            <svg
-              class="w-5 h-5"
-              viewBox="0 0 16 16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg class="w-5 h-5" viewBox="0 0 24 24">
               <path
                 class="fill-current text-blue-600"
-                d="M6.5 0C2.91 0 0 2.462 0 5.5c0 1.075.37 2.074 1 2.922V12l2.699-1.542A7.454 7.454 0 006.5 11c3.59 0 6.5-2.462 6.5-5.5S10.09 0 6.5 0z"
-              />
-              <path
-                class="fill-current text-blue-600"
-                d="M16 9.5c0-.987-.429-1.897-1.147-2.639C14.124 10.348 10.66 13 6.5 13c-.103 0-.202-.018-.305-.021C7.231 13.617 8.556 14 10 14c.449 0 .886-.04 1.307-.11L15 16v-4h-.012C15.627 11.285 16 10.425 16 9.5z"
+                d="M12,6V9L16,5L12,1V4A8,8 0 0,0 4,12C4,13.57 4.46,15.03 5.24,16.26L6.7,14.8C6.25,13.97 6,13 6,12A6,6 0 0,1 12,6M18.76,7.74L17.3,9.2C17.74,10.04 18,11 18,12A6,6 0 0,1 12,18V15L8,19L12,23V20A8,8 0 0,0 20,12C20,10.43 19.54,8.97 18.76,7.74Z"
               />
             </svg>
           </button>
           <button
             class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full"
-            @click.stop="changePageZadaci()"
+            @click.stop="store.methods.changePage('Landing')"
           >
             <svg class="w-5 h-5" viewBox="0 0 24 24">
               <path
                 class="fill-current text-blue-600"
-                d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"
-              />
-            </svg>
-          </button>
-          <button
-            class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full"
-            @click.stop="changePageRabotni()"
-          >
-            <svg class="w-5 h-5" viewBox="0 0 24 24">
-              <path
-                class="fill-current text-blue-600"
-                d="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z"
+                d="M12 16C13.1 16 14 16.9 14 18S13.1 20 12 20 10 19.1 10 18 10.9 16 12 16M12 10C13.1 10 14 10.9 14 12S13.1 14 12 14 10 13.1 10 12 10.9 10 12 10M12 4C13.1 4 14 4.9 14 6S13.1 8 12 8 10 7.1 10 6 10.9 4 12 4M6 16C7.1 16 8 16.9 8 18S7.1 20 6 20 4 19.1 4 18 4.9 16 6 16M6 10C7.1 10 8 10.9 8 12S7.1 14 6 14 4 13.1 4 12 4.9 10 6 10M6 4C7.1 4 8 4.9 8 6S7.1 8 6 8 4 7.1 4 6 4.9 4 6 4M18 16C19.1 16 20 16.9 20 18S19.1 20 18 20 16 19.1 16 18 16.9 16 18 16M18 10C19.1 10 20 10.9 20 12S19.1 14 18 14 16 13.1 16 12 16.9 10 18 10M18 4C19.1 4 20 4.9 20 6S19.1 8 18 8 16 7.1 16 6 16.9 4 18 4Z"
               />
             </svg>
           </button>
@@ -114,28 +95,24 @@ export default {
   setup() {
     const store = inject('store')
 
-    const showLog = () => {
-      console.log(store.state)
-    }
-
     const searchModalOpen = ref(false)
 
-    const changePageZadaci = () => {
-      store.state.zadaci_temp = store.state.zadaci
-      store.methods.changePage('Zadaci')
-    }
-
-    const changePageRabotni = () => {
-      store.state.rabotni_temp = store.state.rabotni
-      store.methods.changePage('Rabotni')
+    const loadData = () => {
+      store.methods.getOffers()
+      store.methods.getZadaci()
+      store.methods.getRabotni()
+      store.methods.getMessages()
+      store.methods.getStoreminusi()
+      store.methods.getStoreplusi()
+      store.methods.getProduktiPlus()
+      store.methods.getDocPoseshtenieView()
+      store.methods.getProdukti()
     }
 
     return {
       store,
       searchModalOpen,
-      showLog,
-      changePageZadaci,
-      changePageRabotni,
+      loadData,
     }
   },
 }

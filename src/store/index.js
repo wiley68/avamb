@@ -224,6 +224,8 @@ const methods = {
       methods.getMessages()
       methods.getStoreminusi()
       methods.getStoreplusi()
+      methods.getProduktiPlus()
+      methods.getDocPoseshtenieView()
       methods.getProdukti()
     }
     if (page == 'Messages') {
