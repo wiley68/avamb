@@ -7,6 +7,7 @@
     >
       <!-- Site header -->
       <Header />
+      <Landing v-if="store.state.page == 'Landing'"></Landing>
       <Dashboard v-if="store.state.page == 'Dashboard'"></Dashboard>
       <Razmeri v-if="store.state.page == 'Razmeri'"></Razmeri>
       <Client v-if="store.state.page == 'Client'"></Client>
@@ -39,6 +40,7 @@ import { onMounted, provide } from 'vue'
 import store from './store'
 import Sidebar from './components/includes/Sidebar.vue'
 import Header from './components/includes/Header.vue'
+import Landing from './components/Landing.vue'
 import Dashboard from './components/Dashboard.vue'
 import Razmeri from './components/includes/etapna/Razmeri.vue'
 import Client from './components/includes/etapna/Client.vue'
@@ -67,6 +69,7 @@ export default {
   components: {
     Sidebar,
     Header,
+    Landing,
     Dashboard,
     Razmeri,
     Client,

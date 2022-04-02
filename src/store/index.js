@@ -19,7 +19,7 @@ function createCORSRequest(method, url) {
 }
 
 const state = reactive({
-  page: 'Dashboard',
+  page: 'Landing',
   sidebarOpen: false,
   name: '',
   user: {},
@@ -217,7 +217,7 @@ const methods = {
   changePage(page) {
     state.page = page
     methods.closeSidebar()
-    if (page == 'Dashboard') {
+    if (page == 'Landing') {
       methods.getOffers()
       methods.getZadaci()
       methods.getRabotni()
@@ -507,7 +507,7 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.user = JSON.parse(this.response).user
-        methods.changePage('Dashboard')
+        methods.changePage('Landing')
       }
     }
     xmlhttpro.send(data)
