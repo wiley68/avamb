@@ -167,6 +167,9 @@ export default {
                 .includes(searchInput.value.value.toLowerCase()) ||
               element.id
                 .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase()) ||
+              element.idnomber
+                .toLowerCase()
                 .includes(searchInput.value.value.toLowerCase())
             )
           })
