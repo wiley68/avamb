@@ -157,6 +157,13 @@
         </svg>
       </button>
     </div>
+    <div class="flex flex-row mb-1">
+      <textarea
+        rows="5"
+        class="w-full text-sm border rounded-sm border-gray-100 bg-green-300 p-1"
+        v-model="poseshtenie.rabota"
+      ></textarea>
+    </div>
     <div class="flex flex-row justify-center items-center mb-1">
       <span class="p-1 text-sm w-32">Почивка 1, 2, 3</span>
     </div>
