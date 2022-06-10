@@ -489,10 +489,7 @@ const methods = {
   },
   loadData() {
     var data = new FormData()
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/getparams.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/getparams.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -523,10 +520,7 @@ const methods = {
     const tekushta_end = state.tekushta.substring(14)
     data.append('tekushta_start', tekushta_start)
     data.append('tekushta_end', tekushta_end)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_offers.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_offers.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -585,10 +579,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'otklient')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -675,10 +666,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'otklient')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -747,10 +735,7 @@ const methods = {
     data.append('offer_id', offer_id)
     data.append('filename', otclient.file)
     data.append('description', otclient.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -891,10 +876,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'zapitvane')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -923,10 +905,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'zapitvane')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -965,10 +944,7 @@ const methods = {
     data.append('offer_id', offer_id)
     data.append('filename', zapitvane.file)
     data.append('description', zapitvane.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -996,10 +972,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'odostavcik')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1028,10 +1001,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'odostavcik')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1070,10 +1040,7 @@ const methods = {
     data.append('offer_id', offer_id)
     data.append('filename', otgovor.file)
     data.append('description', otgovor.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1101,10 +1068,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'oferti')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1133,10 +1097,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'oferti')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1175,10 +1136,7 @@ const methods = {
     data.append('offer_id', eoffer_id)
     data.append('filename', eoffer.file)
     data.append('description', eoffer.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1206,10 +1164,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'pdogovor')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1238,10 +1193,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'pdogovor')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1280,10 +1232,7 @@ const methods = {
     data.append('offer_id', pdogovor_id)
     data.append('filename', pdogovor.file)
     data.append('description', pdogovor.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1311,10 +1260,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'dds')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1343,10 +1289,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'dds')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1385,10 +1328,7 @@ const methods = {
     data.append('offer_id', dds_id)
     data.append('filename', dds.file)
     data.append('description', dds.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1416,10 +1356,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'poffer')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1448,10 +1385,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'poffer')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1490,10 +1424,7 @@ const methods = {
     data.append('offer_id', poffer_id)
     data.append('filename', poffer.file)
     data.append('description', poffer.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1521,10 +1452,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'casti')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1553,10 +1481,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'casti')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1595,10 +1520,7 @@ const methods = {
     data.append('offer_id', cast_id)
     data.append('filename', cast.file)
     data.append('description', cast.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1626,10 +1548,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'poracki')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1658,10 +1577,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'poracki')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1700,10 +1616,7 @@ const methods = {
     data.append('offer_id', poracka_id)
     data.append('filename', poracka.file)
     data.append('description', poracka.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1731,10 +1644,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'pp')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1763,10 +1673,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'pp')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1805,10 +1712,7 @@ const methods = {
     data.append('offer_id', pp_id)
     data.append('filename', pp.file)
     data.append('description', pp.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1836,10 +1740,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'ppr')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1868,10 +1769,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'ppr')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1910,10 +1808,7 @@ const methods = {
     data.append('offer_id', ppr_id)
     data.append('filename', ppr.file)
     data.append('description', ppr.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1941,10 +1836,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'snimki')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1973,10 +1865,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'snimki')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -2003,10 +1892,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
     data.append('type', 'fakturip')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -2035,10 +1921,7 @@ const methods = {
     data.append('file', file)
     data.append('offer_id', offer_id)
     data.append('type', 'fakturip')
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/delete_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/delete_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -2077,10 +1960,7 @@ const methods = {
     data.append('offer_id', fakturap_id)
     data.append('filename', fakturap.file)
     data.append('description', fakturap.description)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/save_doc.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/save_doc.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -2146,10 +2026,7 @@ const methods = {
     const tekushta_end = state.tekushta.substring(14)
     data.append('tekushta_start', tekushta_start)
     data.append('tekushta_end', tekushta_end)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_zadaci.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_zadaci.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()

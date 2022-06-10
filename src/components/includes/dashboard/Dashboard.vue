@@ -46,15 +46,23 @@
         class="w-full p-2 rounded bg-sky-200 border border-sky-300"
         @click.stop="openOffer(offer.id)"
       >
-        <div class="flex items-center justify-between">
-          <div class="truncate">
+        <div class="flex items-start justify-between">
+          <div class="flex-grow text-left">
             <span class="text-sm font-medium text-gray-800 mr-1">{{
               offer.client_name
             }}</span>
           </div>
-          <div>
+          <div class="ml-1">
             <span class="text-sm font-medium text-orange-700">{{
               offer.idnomber
+            }}</span>
+          </div>
+        </div>
+        <div class="flex items-start justify-between">
+          <div class="flex-grow text-left"></div>
+          <div class="ml-1">
+            <span class="text-sm font-medium text-red-700">{{
+              offer.allprice_after_to
             }}</span>
           </div>
         </div>
