@@ -28,6 +28,7 @@
       <Messages v-if="store.state.page == 'Messages'"></Messages>
       <Storeminusi v-if="store.state.page == 'Storeminusi'"></Storeminusi>
       <Storeplusi v-if="store.state.page == 'Storeplusi'"></Storeplusi>
+      <Offer v-if="store.state.page == 'Offer'"></Offer>
       <Docposeshtenia
         v-if="store.state.page == 'Docposeshtenia'"
       ></Docposeshtenia>
@@ -62,6 +63,7 @@ import Messages from './components/Messages.vue'
 import Storeminusi from './components/Storeminusi.vue'
 import Storeplusi from './components/Storeplusi.vue'
 import Docposeshtenia from './components/includes/etapna/Docposeshtenia.vue'
+import Offer from './components/Offer.vue'
 
 export default {
   name: 'App',
@@ -91,6 +93,7 @@ export default {
     Storeminusi,
     Storeplusi,
     Docposeshtenia,
+    Offer,
   },
 
   setup() {

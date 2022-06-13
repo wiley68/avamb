@@ -41,7 +41,7 @@
       <button
         class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
         title="Създай оферта"
-        @click.stop="createOffer()"
+        @click.stop="store.methods.changePage('Offer')"
       >
         <svg
           class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
@@ -151,8 +151,6 @@ export default {
       store.methods.closeDashboardSidebar()
     }
 
-    const createOffer = () => {}
-
     return {
       store,
       changeDashboardOffer,
@@ -161,7 +159,6 @@ export default {
       showActive,
       getOffers,
       openOffer,
-      createOffer,
     }
   },
 }
