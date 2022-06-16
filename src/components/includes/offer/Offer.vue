@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { inject } from 'vue'
+import { inject, onMounted } from 'vue'
 
 export default {
   name: 'Offer',
@@ -96,6 +96,11 @@ export default {
       store.state.offerEtap = 4
       store.methods.closeOfferSidebar()
     }
+
+    onMounted(() => {
+      store.methods.getDds()
+      store.methods.getStatusi()
+    })
 
     return { store, goToEtap1, goToEtap2, goToEtap4 }
   },

@@ -34,6 +34,8 @@ const state = reactive({
   offerSidebarOpen: true,
   offerEtap: 1,
   obekti: [],
+  ddsfirm: [],
+  statusi: [],
   current_dashboard_offer: 0,
   current_offer: 0,
   razmeri: [],
@@ -95,6 +97,7 @@ const state = reactive({
   zadaciSidebarOpen: true,
   current_zadaca_id: 0,
   successUpdateZadaca: false,
+  successUpdateOffer: false,
   deleteZadacaModal: false,
   messages: [],
   users: [],
@@ -425,6 +428,9 @@ const methods = {
   changeSuccessUpdateZadaca(successUpdateZadaca) {
     state.successUpdateZadaca = successUpdateZadaca
   },
+  changeSuccessUpdateOffer(successUpdateOffer) {
+    state.successUpdateOffer = successUpdateOffer
+  },
   deleteRabotenById(id) {
     state.rabotni = state.rabotni.filter((element) => {
       return element.id != id
@@ -603,7 +609,7 @@ const methods = {
     data.append('contragent_id', contragent_id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/mobile/get_razmeri.php'
+      'https://dograma.avalonbg.com/function/mobile/get_obekti.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -623,6 +629,64 @@ const methods = {
         state.obekti = JSON.parse(this.response).obekti
       } else {
         state.obekti = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getDds() {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_dds.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.ddsfirm = JSON.parse(this.response).ddsfirm
+      } else {
+        state.razmeri = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getStatusi() {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_statusi.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.statusi = JSON.parse(this.response).statusi
+      } else {
+        state.razmeri = []
       }
     }
     xmlhttpro.send(data)
@@ -3030,6 +3094,111 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         methods.getSubStoreplusi(storeplus_id)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveOffer(offer) {
+    var data = new FormData()
+    var info = []
+    if (offer.id > 0) {
+      info[0] = 'SAVE'
+      info[1] = offer.id
+      info[2] = offer.client_id
+      info[3] = offer.dateon
+      info[4] = offer.dateto
+      info[5] = state.user.id
+      info[6] = offer.obekt_id
+      info[7] = ''
+      info[8] = ''
+      info[9] = ''
+      info[10] = ''
+      info[11] = ''
+      info[12] = ''
+      info[13] = '/dist/img/products/product_.jpg'
+      info[14] = '/dist/img/products/product_.jpg'
+      info[15] = '/dist/img/products/product_.jpg'
+      info[16] = '/dist/img/products/product_.jpg'
+      info[17] = 0
+      info[18] = '0.00'
+      info[19] = offer.idnomber
+      info[20] = state.user.firm_id
+      info[21] = state.user.id
+      info[22] = ''
+      info[23] = offer.dds
+      info[24] = offer.status_offer
+      info[25] = ''
+      info[26] = '0.00'
+      info[27] = ''
+      info[28] = 0
+      info[29] = offer.text1
+      info[30] = offer.text2
+      info[31] = 1
+      info[32] = 1
+    } else {
+      info[0] = 'SAVE'
+      info[1] = offer.id
+      info[2] = offer.client_id
+      info[3] = moment().format('YYYY-MM-DD HH:mm:ss')
+      info[4] = moment().format('YYYY-MM-DD HH:mm:ss')
+      info[5] = state.user.id
+      info[6] = offer.obekt_id
+      info[7] = ''
+      info[8] = ''
+      info[9] = ''
+      info[10] = ''
+      info[11] = ''
+      info[12] = ''
+      info[13] = '/dist/img/products/product_.jpg'
+      info[14] = '/dist/img/products/product_.jpg'
+      info[15] = '/dist/img/products/product_.jpg'
+      info[16] = '/dist/img/products/product_.jpg'
+      info[17] = 0
+      info[18] = '0.00'
+      info[19] = offer.idnomber
+      info[20] = state.user.firm_id
+      info[21] = state.user.id
+      info[22] = ''
+      info[23] = offer.dds
+      info[24] = offer.status_offer
+      info[25] = ''
+      info[26] = '0.00'
+      info[27] = ''
+      info[28] = 0
+      info[29] = offer.text1
+      info[30] = offer.text2
+      info[31] = 1
+      info[32] = 1
+    }
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/offer.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        if (offer.id > 0) {
+          methods.changeSuccessUpdateOffer(true)
+        } else {
+          methods.getOffers()
+          state.current_offer = JSON.parse(this.response).newid
+          methods.changeSuccessUpdateOffer(true)
+        }
+      } else {
+        methods.changeSuccessUpdateOffer(false)
       }
     }
     xmlhttpro.send(data)
