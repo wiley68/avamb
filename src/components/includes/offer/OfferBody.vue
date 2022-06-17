@@ -215,7 +215,7 @@
 </template>
 
 <script>
-import { inject, computed, ref } from 'vue'
+import { inject, computed, ref, onMounted } from 'vue'
 import ModalBlank from '../components/ModalBlank.vue'
 
 export default {
@@ -250,6 +250,10 @@ export default {
       }
     })
 
+    onMounted(() => {
+      store.methods.getObekti(offer.value.client_id)
+    })
+
     const clentName = (first_name, last_name, name) => {
       let client_name = first_name
       if (first_name != '') {
@@ -270,10 +274,6 @@ export default {
     const updateOffer = () => {
       if (offer.value.client_id == 0) {
         alert('Моля изберете клиент!')
-        return
-      }
-      if (offer.value.obekt_id == 0) {
-        alert('Моля изберете обект!')
         return
       }
       if (offer.value.dds == '-1') {
