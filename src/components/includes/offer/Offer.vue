@@ -32,7 +32,7 @@
             </div>
           </button>
         </li>
-        <li class="-mx-2 mb-1">
+        <li v-if="store.state.current_offer != 0" class="-mx-2 mb-1">
           <button
             class="w-full p-2 rounded-lg border-2 border-blue-600"
             @click.stop="goToEtap2()"
@@ -50,7 +50,7 @@
             </div>
           </button>
         </li>
-        <li class="-mx-2 mb-1">
+        <li v-if="store.state.current_offer != 0" class="-mx-2 mb-1">
           <button
             class="w-full p-2 rounded-lg border-2 border-blue-600"
             @click.stop="goToEtap4()"
@@ -100,6 +100,7 @@ export default {
     onMounted(() => {
       store.methods.getDds()
       store.methods.getStatusi()
+      store.methods.getShabloni()
     })
 
     return { store, goToEtap1, goToEtap2, goToEtap4 }

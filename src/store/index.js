@@ -36,6 +36,7 @@ const state = reactive({
   obekti: [],
   ddsfirm: [],
   statusi: [],
+  shabloni: [],
   current_dashboard_offer: 0,
   current_offer: 0,
   razmeri: [],
@@ -674,7 +675,36 @@ const methods = {
       ) {
         state.statusi = JSON.parse(this.response).statusi
       } else {
-        state.razmeri = []
+        state.statusi = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getShabloni() {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      '/function/mobile/get_shabloni.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.shabloni = JSON.parse(this.response).shabloni
+      } else {
+        state.shabloni = []
       }
     }
     xmlhttpro.send(data)
@@ -3094,8 +3124,8 @@ const methods = {
       info[4] = offer.dateto
       info[5] = state.user.id
       info[6] = offer.obekt_id
-      info[7] = ''
-      info[8] = ''
+      info[7] = offer.info1
+      info[8] = offer.info2
       info[9] = ''
       info[10] = ''
       info[11] = ''
