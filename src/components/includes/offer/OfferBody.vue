@@ -22,21 +22,38 @@
       <div class="flex items-center ml-16">
         Етап {{ store.state.offerEtap }}
       </div>
-      <button
-        class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-        aria-controls="success-modal"
-        @click.stop="updateOffer()"
-      >
-        <svg
-          class="w-6 h-6 fill-current text-blue-600 shrink-0"
-          viewBox="0 0 24 24"
+      <div class="flex items-center">
+        <button
+          class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+          aria-controls="success-modal"
+          @click.stop="addProduct()"
         >
-          <path
-            fill="currentColor"
-            d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"
-          />
-        </svg>
-      </button>
+          <svg
+            class="w-6 h-6 fill-current text-blue-600 shrink-0"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M3 16H10V14H3M18 14V10H16V14H12V16H16V20H18V16H22V14M14 6H3V8H14M14 10H3V12H14V10Z"
+            />
+          </svg>
+        </button>
+        <button
+          class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+          aria-controls="success-modal"
+          @click.stop="updateOffer()"
+        >
+          <svg
+            class="w-6 h-6 fill-current text-blue-600 shrink-0"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
   <div v-if="store.state.offerEtap == 1" class="grow p-4">
@@ -269,6 +286,9 @@ export default {
 
     onMounted(() => {
       store.methods.getObekti(offer.value.client_id)
+      if (offer.value.id != 0) {
+        store.methods.getSuboffers(offer.value.id)
+      }
     })
 
     const clentName = (first_name, last_name, name) => {
@@ -312,6 +332,10 @@ export default {
       offer.value.info2 = shablon2.value
     }
 
+    const addProduct = () => {
+      store.methods.closeOfferSidebarProduct()
+    }
+
     return {
       store,
       offer,
@@ -322,6 +346,7 @@ export default {
       shablon1,
       shablon2,
       changeInfo2,
+      addProduct,
     }
   },
 }
