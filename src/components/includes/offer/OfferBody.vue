@@ -174,6 +174,21 @@
       </div>
     </div>
   </div>
+  <div v-if="store.state.offerEtap == 4" class="grow">
+    <div class="relative flex bg-blue-300">
+      <OfferSidebarProduct />
+      <div
+        class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
+        :class="
+          store.state.offerSidebarProductOpen
+            ? 'translate-x-1/3'
+            : 'translate-x-0'
+        "
+      >
+        <OfferBodyProduct />
+      </div>
+    </div>
+  </div>
   <ModalBlank
     id="success-modal"
     :modalOpen="store.state.successUpdateOffer"
@@ -217,11 +232,13 @@
 <script>
 import { inject, computed, ref, onMounted } from 'vue'
 import ModalBlank from '../components/ModalBlank.vue'
+import OfferSidebarProduct from './OfferSidebarProduct.vue'
+import OfferBodyProduct from './OfferBodyProduct.vue'
 
 export default {
   name: 'OfferBody',
 
-  components: { ModalBlank },
+  components: { ModalBlank, OfferSidebarProduct, OfferBodyProduct },
 
   setup() {
     const store = inject('store')
