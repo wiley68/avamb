@@ -24,6 +24,9 @@
       </div>
       <div class="flex items-center">
         <button
+          v-if="
+            store.state.offerEtap == 4 && store.state.offerSidebarProductOpen
+          "
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           aria-controls="success-modal"
           @click.stop="addProduct()"
@@ -39,6 +42,7 @@
           </svg>
         </button>
         <button
+          v-if="store.state.offerEtap != 4"
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           aria-controls="success-modal"
           @click.stop="updateOffer()"

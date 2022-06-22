@@ -7,7 +7,7 @@
         aria-controls="about-sidebar"
         :aria-expanded="store.state.offerSidebarProductOpen"
       >
-        <span class="sr-only">Оферта</span>
+        <span class="sr-only">Етап 4</span>
         <svg
           class="w-6 h-6 fill-current"
           viewBox="0 0 24 24"
@@ -19,13 +19,22 @@
           />
         </svg>
       </button>
-      <div class="flex items-center ml-16">Продукт</div>
+      <div class="flex items-center ml-16">
+        Продукт{{
+          store.state.current_suboffer == 0
+            ? ' - нов'
+            : ' - ' + store.state.current_suboffer
+        }}
+      </div>
       <button
         class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
         aria-controls="success-modal"
         @click.stop="updateProduct()"
       >
-        <svg class="w-6 h-6 fill-current shrink-0" viewBox="0 0 24 24">
+        <svg
+          class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
+          viewBox="0 0 24 24"
+        >
           <path
             fill="currentColor"
             d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z"
