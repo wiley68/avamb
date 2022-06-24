@@ -292,6 +292,7 @@ export default {
       store.methods.getObekti(offer.value.client_id)
       if (offer.value.id != 0) {
         store.methods.getSuboffers(offer.value.id)
+        store.methods.getProduktiMain()
       }
     })
 

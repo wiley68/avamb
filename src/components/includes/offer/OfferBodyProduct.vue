@@ -32,7 +32,7 @@
         @click.stop="updateProduct()"
       >
         <svg
-          class="w-6 h-6 fill-current text-blue-600 mr-1 shrink-0"
+          class="w-6 h-6 fill-current text-blue-600 shrink-0"
           viewBox="0 0 24 24"
         >
           <path
@@ -48,12 +48,67 @@
   >
     <div class="flex flex-col mt-2 w-full">
       <div class="text-sm text-slate-600">Продукт:</div>
+      <div class="flex">
+        <input
+          readonly
+          type="text"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          placeholder="Продукт"
+          v-model="suboffer.products_code"
+        /><button
+          @click.stop="product_search_div = !product_search_div"
+          class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+          aria-controls="success-modal"
+        >
+          <svg
+            class="w-6 h-6 fill-current text-blue-600 shrink-0"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L6.04,7.5L12,10.85L17.96,7.5L12,4.15Z"
+            />
+          </svg>
+        </button>
+        <button
+          class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+          aria-controls="success-modal"
+        >
+          <svg
+            class="w-6 h-6 fill-current text-blue-600 shrink-0"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      v-show="product_search_div"
+      class="bg-red-50 w-full mt-2 rounded p-2 border border-red-300 flex flex-col items-center justify-center"
+    >
       <input
         type="text"
         class="w-full text-sm border rounded-sm border-gray-100 p-1"
-        placeholder="Продукт"
-        v-model="suboffer.products_code"
+        placeholder="Търси продукт ..."
+        v-model="product_code_search"
       />
+      <select
+        size="8"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        v-model="product"
+      >
+        <option
+          v-for="product in products"
+          :key="product.code"
+          :value="product"
+        >
+          {{ product.code }} - {{ product.name }}
+        </option>
+      </select>
     </div>
     <div class="flex flex-col mt-2 w-full">
       <div class="text-sm text-slate-600">Местонахождение 3:</div>
@@ -152,13 +207,18 @@
 </template>
 
 <script>
-import { inject, computed } from 'vue'
+import { inject, computed, ref, watch } from 'vue'
 
 export default {
   name: 'OfferBodyProduct',
 
   setup() {
     const store = inject('store')
+
+    const product_code_search = ref('')
+    const product_search_div = ref(false)
+    const products = ref(store.state.produkti_main)
+    const product = ref({})
 
     const suboffer = computed(() => {
       if (store.state.current_suboffer == 0) {
@@ -181,9 +241,27 @@ export default {
       }
     })
 
+    watch(product_code_search, async (newSearch, oldSearch) => {
+      if (newSearch.length > 0) {
+        products.value = store.state.produkti_main.filter((element) => {
+          return element.code.toLowerCase().includes(newSearch.toLowerCase())
+        })
+      } else {
+        products.value = store.state.produkti_main
+      }
+    })
+
+    watch(product, async (newProduct, oldProduct) => {
+      console.log(newProduct)
+    })
+
     return {
       store,
       suboffer,
+      product_code_search,
+      product_search_div,
+      products,
+      product,
     }
   },
 }

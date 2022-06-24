@@ -123,6 +123,7 @@ const state = reactive({
   produkti_temp: [],
   produkti_plus: [],
   produkti_plus_temp: [],
+  produkti_main: [],
   storeplusi: [],
   storeplusi_temp: [],
   storeplusiSidebarOpen: true,
@@ -668,6 +669,39 @@ const methods = {
         state.suboffers = JSON.parse(this.response).suboffers
       } else {
         state.suboffers = []
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getProduktiMain() {
+    var data = new FormData()
+    var info = []
+    info[0] = 'producti'
+    info[1] = 0
+    info[2] = state.user.firm_id
+    info[3] = state.user.id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/getproductiadd.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      let result = []
+      try {
+        result = JSON.parse(this.response)
+      } catch (err) {}
+      if (this.readyState == 4 && result.success == 'success') {
+        state.produkti_main = result.data
       }
     }
     xmlhttpro.send(data)
