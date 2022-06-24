@@ -20,10 +20,10 @@
         </svg>
       </button>
       <div class="flex items-center ml-16">
-        Продукт{{
+        {{
           store.state.current_suboffer == 0
-            ? ' - нов'
-            : ' - ' + store.state.current_suboffer
+            ? 'Нов продукт'
+            : suboffer.product_name
         }}
       </div>
       <button
@@ -43,10 +43,116 @@
       </button>
     </div>
   </div>
+  <div
+    class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 m-3"
+  >
+    <div class="flex flex-col mt-2 w-full">
+      <div class="text-sm text-slate-600">Продукт:</div>
+      <input
+        type="text"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        placeholder="Продукт"
+        v-model="suboffer.products_code"
+      />
+    </div>
+    <div class="flex flex-col mt-2 w-full">
+      <div class="text-sm text-slate-600">Местонахождение 3:</div>
+      <input
+        type="text"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        placeholder="Местонахождение 3"
+        v-model="suboffer.grupa3"
+      />
+    </div>
+    <div class="flex flex-col mt-2 w-full">
+      <div class="text-sm text-slate-600">Количество:</div>
+      <input
+        type="number"
+        step="0.01"
+        min="0"
+        max="9999.99"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        placeholder="Количество"
+        v-model="suboffer.quantity"
+      />
+    </div>
+    <div class="flex flex-col mt-2 w-full">
+      <div class="text-sm text-slate-600">ДДС:</div>
+      <select
+        class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
+        v-model="suboffer.dds"
+      >
+        <option value="-1">Избери ДДС</option>
+        <option
+          v-for="dds in store.state.ddsfirm"
+          :key="dds.value"
+          :value="dds.value"
+        >
+          {{ dds.name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex flex-col mt-2 w-full">
+      <div class="text-sm text-slate-600">Височина H:</div>
+      <input
+        type="number"
+        step="1"
+        min="0"
+        max="999999"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        placeholder="Височина H"
+        v-model="suboffer.h"
+      />
+    </div>
+    <div class="flex flex-col mt-2 w-full">
+      <div class="text-sm text-slate-600">Ширина L:</div>
+      <input
+        type="number"
+        step="1"
+        min="0"
+        max="999999"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        placeholder="Ширина L"
+        v-model="suboffer.l"
+      />
+    </div>
+    <div class="flex flex-col mt-2 w-full">
+      <div class="text-sm text-slate-600">Дълбочина P:</div>
+      <input
+        type="number"
+        step="1"
+        min="0"
+        max="999999"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        placeholder="Дълбочина P"
+        v-model="suboffer.p"
+      />
+    </div>
+    <div class="flex flex-col mt-1 w-full">
+      <div class="text-sm text-slate-600">Описание:</div>
+      <textarea
+        rows="5"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        v-model="suboffer.description"
+      />
+    </div>
+    <div class="flex flex-col mt-2 mb-4 w-full">
+      <div class="text-sm text-slate-600">Ед. цена:</div>
+      <input
+        type="number"
+        step="0.01"
+        min="0"
+        max="99999999.99"
+        class="w-full text-sm border rounded-sm border-gray-100 p-1"
+        placeholder="Ед. цена"
+        v-model="suboffer.price"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-import { inject } from 'vue'
+import { inject, computed } from 'vue'
 
 export default {
   name: 'OfferBodyProduct',
@@ -54,8 +160,30 @@ export default {
   setup() {
     const store = inject('store')
 
+    const suboffer = computed(() => {
+      if (store.state.current_suboffer == 0) {
+        return {
+          id: 0,
+          products_code: '',
+          grupa3: '',
+          quantity: '0.00',
+          dds: '-1',
+          h: '1',
+          l: '1',
+          p: '1',
+          description: '',
+          price: '0.00',
+        }
+      } else {
+        return store.state.suboffers.find(
+          (element) => element.id == store.state.current_suboffer
+        )
+      }
+    })
+
     return {
       store,
+      suboffer,
     }
   },
 }

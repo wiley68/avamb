@@ -27,7 +27,7 @@
           </div>
           <div class="flex items-center justify-between mt-2">
             <button
-              @click.stop="store.methods.closeOfferSidebarProduct()"
+              @click.stop="editSuboffer(suboffer.id)"
               type="button"
               class="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
@@ -93,7 +93,12 @@ export default {
   setup() {
     const store = inject('store')
 
-    return { store }
+    const editSuboffer = (suboffer_id) => {
+      store.state.current_suboffer = suboffer_id
+      store.methods.closeOfferSidebarProduct()
+    }
+
+    return { store, editSuboffer }
   },
 }
 </script>

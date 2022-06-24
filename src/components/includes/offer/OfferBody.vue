@@ -196,7 +196,7 @@
     </div>
   </div>
   <div v-if="store.state.offerEtap == 4" class="grow">
-    <div class="relative flex bg-blue-300">
+    <div class="relative flex">
       <OfferSidebarProduct />
       <div
         class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
