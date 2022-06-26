@@ -252,8 +252,24 @@ export default {
     })
 
     watch(product, async (newProduct, oldProduct) => {
-      console.log(newProduct)
+      let current_product = store.state.suboffers.find(
+        (element) => element.id == store.state.current_suboffer
+      )
+      current_product.products_code = newProduct.code
+      current_product.product_name = newProduct.name
+      current_product.price = newProduct.price
     })
+
+    const updateProduct = () => {
+      let current_product = store.state.suboffers.find(
+        (element) => element.id == store.state.current_suboffer
+      )
+      store.methods.checkL2(
+        current_product.products_code,
+        current_product.l,
+        current_product.h
+      )
+    }
 
     return {
       store,
@@ -262,6 +278,7 @@ export default {
       product_search_div,
       products,
       product,
+      updateProduct,
     }
   },
 }

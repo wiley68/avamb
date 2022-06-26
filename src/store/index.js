@@ -706,6 +706,36 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  checkL2(products_code, l, h) {
+    var data = new FormData()
+    data.append('products_code', products_code)
+    data.append('l', l)
+    data.append('h', h)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/check_l2.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (this.readyState == 4) {
+        if (JSON.parse(this.response).success == 'success') {
+          console.log('OK')
+        } else {
+          alert('Надвишавате стойностите за L/H')
+        }
+      }
+    }
+    xmlhttpro.send(data)
+  },
   getDds() {
     var data = new FormData()
     data.append('firm_id', state.user.firm_id)
