@@ -204,13 +204,54 @@
       />
     </div>
   </div>
+  <ModalBlank
+    id="success-modal"
+    :modalOpen="store.state.successUpdateSuboffer"
+    @close-modal="store.methods.changeSuccessUpdateSuboffer(false)"
+  >
+    <div class="p-5 flex space-x-4">
+      <div
+        class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-green-100"
+      >
+        <svg
+          class="w-4 h-4 shrink-0 fill-current text-green-500"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zM7 11.4L3.6 8 5 6.6l2 2 4-4L12.4 6 7 11.4z"
+          />
+        </svg>
+      </div>
+      <div>
+        <div class="mb-2">
+          <div class="text-lg font-semibold text-gray-800">Съобщение</div>
+        </div>
+        <div class="text-sm mb-10">
+          <div class="space-y-2">
+            <p>Промените са записани успешно</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap justify-end space-x-2">
+          <button
+            class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+            @click.stop="store.methods.changeSuccessUpdateSuboffer(false)"
+          >
+            Затвори
+          </button>
+        </div>
+      </div>
+    </div>
+  </ModalBlank>
 </template>
 
 <script>
 import { inject, computed, ref, watch } from 'vue'
+import ModalBlank from '../components/ModalBlank.vue'
 
 export default {
   name: 'OfferBodyProduct',
+
+  components: { ModalBlank },
 
   setup() {
     const store = inject('store')
@@ -225,6 +266,8 @@ export default {
         return {
           id: 0,
           products_code: '',
+          grupa1: null,
+          grupa2: null,
           grupa3: '',
           quantity: '0.00',
           dds: '-1',
@@ -233,6 +276,39 @@ export default {
           p: '1',
           description: '',
           price: '0.00',
+          picture_url: null,
+          picture_is: 1,
+          description_is: 1,
+          order_id: 0,
+          isstat: 'Yes',
+          isbroi: 'No',
+          subproducts_code_1: null,
+          subproducts_code_1_q: null,
+          subproducts_code_1_price: null,
+          subproducts_code_2: null,
+          subproducts_code_2_q: null,
+          subproducts_code_2_price: null,
+          subproducts_code_3: null,
+          subproducts_code_3_q: null,
+          subproducts_code_3_price: null,
+          subproducts_code_4: null,
+          subproducts_code_4_q: null,
+          subproducts_code_4_price: null,
+          subproducts_code_5: null,
+          subproducts_code_5_q: null,
+          subproducts_code_5_price: null,
+          subproducts_code_1_description: null,
+          subproducts_code_2_description: null,
+          subproducts_code_3_description: null,
+          subproducts_code_4_description: null,
+          subproducts_code_5_description: null,
+          zakupnaprice: '0.00',
+          subproducts_code_1_zakupnaprice: '0.00',
+          subproducts_code_2_zakupnaprice: '0.00',
+          subproducts_code_3_zakupnaprice: '0.00',
+          subproducts_code_4_zakupnaprice: '0.00',
+          subproducts_code_5_zakupnaprice: '0.00',
+          otstapka: '0.00',
         }
       } else {
         return store.state.suboffers.find(

@@ -102,6 +102,7 @@ const state = reactive({
   current_zadaca_id: 0,
   successUpdateZadaca: false,
   successUpdateOffer: false,
+  successUpdateSuboffer: false,
   deleteZadacaModal: false,
   messages: [],
   users: [],
@@ -442,6 +443,9 @@ const methods = {
   changeSuccessUpdateOffer(successUpdateOffer) {
     state.successUpdateOffer = successUpdateOffer
   },
+  changeSuccessUpdateSuboffer(successUpdateSuboffer) {
+    state.successUpdateSuboffer = successUpdateSuboffer
+  },
   deleteRabotenById(id) {
     state.rabotni = state.rabotni.filter((element) => {
       return element.id != id
@@ -728,7 +732,7 @@ const methods = {
     xmlhttpro.onreadystatechange = function () {
       if (this.readyState == 4) {
         if (JSON.parse(this.response).success == 'success') {
-          console.log('OK')
+          methods.saveSubOffer()
         } else {
           alert('Надвишавате стойностите за L/H')
         }
@@ -3331,6 +3335,87 @@ const methods = {
         }
       } else {
         methods.changeSuccessUpdateOffer(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveSubOffer() {
+    const current_suboffer = state.suboffers.find(
+      (element) => element.id == state.current_suboffer
+    )
+    var data = new FormData()
+    var info = []
+    info[0] = 'SAVE'
+    info[1] = state.current_offer
+    info[2] = current_suboffer.grupa1
+    info[3] = current_suboffer.grupa2
+    info[4] = current_suboffer.grupa3
+    info[5] = current_suboffer.products_code
+    info[6] = current_suboffer.quantity
+    info[7] = current_suboffer.dds
+    info[8] = current_suboffer.h
+    info[9] = current_suboffer.l
+    info[10] = current_suboffer.p
+    info[11] = current_suboffer.description
+    info[12] = current_suboffer.picture_url
+    info[13] = current_suboffer.id
+    info[14] = current_suboffer.price
+    info[15] = current_suboffer.picture_is
+    info[16] = current_suboffer.description_is
+    info[17] = current_suboffer.order_id
+    info[18] = current_suboffer.isstat
+    info[19] = current_suboffer.isbroi
+    info[20] = current_suboffer.subproducts_code_1
+    info[21] = current_suboffer.subproducts_code_1_q
+    info[22] = current_suboffer.subproducts_code_1_price
+    info[23] = current_suboffer.subproducts_code_2
+    info[24] = current_suboffer.subproducts_code_2_q
+    info[25] = current_suboffer.subproducts_code_2_price
+    info[26] = current_suboffer.subproducts_code_3
+    info[27] = current_suboffer.subproducts_code_3_q
+    info[28] = current_suboffer.subproducts_code_3_price
+    info[29] = current_suboffer.subproducts_code_4
+    info[30] = current_suboffer.subproducts_code_4_q
+    info[31] = current_suboffer.subproducts_code_4_price
+    info[32] = current_suboffer.subproducts_code_5
+    info[33] = current_suboffer.subproducts_code_5_q
+    info[34] = current_suboffer.subproducts_code_5_price
+    info[35] = current_suboffer.subproducts_code_1_description
+    info[36] = current_suboffer.subproducts_code_2_description
+    info[37] = current_suboffer.subproducts_code_3_description
+    info[38] = current_suboffer.subproducts_code_4_description
+    info[39] = current_suboffer.subproducts_code_5_description
+    info[40] = current_suboffer.zakupnaprice
+    info[41] = current_suboffer.subproducts_code_1_zakupnaprice
+    info[42] = current_suboffer.subproducts_code_2_zakupnaprice
+    info[43] = current_suboffer.subproducts_code_3_zakupnaprice
+    info[44] = current_suboffer.subproducts_code_4_zakupnaprice
+    info[45] = current_suboffer.subproducts_code_5_zakupnaprice
+    info[46] = current_suboffer.otstapka
+    info[47] = state.user.id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/suboffer.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateSuboffer(true)
+      } else {
+        methods.changeSuccessUpdateSuboffer(false)
       }
     }
     xmlhttpro.send(data)
