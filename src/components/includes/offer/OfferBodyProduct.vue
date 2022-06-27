@@ -129,6 +129,7 @@
         class="w-full text-sm border rounded-sm border-gray-100 p-1"
         placeholder="Количество"
         v-model="suboffer.quantity"
+        @input.stop="changeQuantity()"
       />
     </div>
     <div class="flex flex-col mt-2 w-full">
@@ -136,6 +137,7 @@
       <select
         class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
         v-model="suboffer.dds"
+        @change.stop="changeDds()"
       >
         <option value="-1">Избери ДДС</option>
         <option
@@ -311,9 +313,10 @@ export default {
           otstapka: '0.00',
         }
       } else {
-        return store.state.suboffers.find(
+        const suboffer_current = store.state.suboffers.find(
           (element) => element.id == store.state.current_suboffer
         )
+        return suboffer_current
       }
     })
 
@@ -333,11 +336,35 @@ export default {
       )
       current_product.products_code = newProduct.code
       current_product.product_name = newProduct.name
-      current_product.price = newProduct.price
+      current_product.price = (
+        parseFloat(newProduct.price) *
+        ((100 - parseFloat(current_product.otstapka)) / 100)
+      ).toFixed(2)
+      calculatePrice()
     })
 
+    const changeQuantity = () => {
+      calculatePrice()
+    }
+
+    const changeDds = () => {
+      calculatePrice()
+    }
+
+    const calculatePrice = () => {
+      let current_suboffer = store.state.suboffers.find(
+        (element) => element.id == store.state.current_suboffer
+      )
+      current_suboffer.allprice = (
+        (parseFloat(current_suboffer.price) +
+          parseFloat(current_suboffer.price) *
+            (parseFloat(current_suboffer.dds) / 100)) *
+        parseFloat(current_suboffer.quantity)
+      ).toFixed(2)
+    }
+
     const updateProduct = () => {
-      let current_product = store.state.suboffers.find(
+      const current_product = store.state.suboffers.find(
         (element) => element.id == store.state.current_suboffer
       )
       store.methods.checkL2(
@@ -355,6 +382,9 @@ export default {
       products,
       product,
       updateProduct,
+      calculatePrice,
+      changeQuantity,
+      changeDds,
     }
   },
 }
