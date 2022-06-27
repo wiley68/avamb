@@ -710,11 +710,11 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  checkL2(products_code, l, h) {
+  checkL2(suboffer) {
     var data = new FormData()
-    data.append('products_code', products_code)
-    data.append('l', l)
-    data.append('h', h)
+    data.append('products_code', suboffer.products_code)
+    data.append('l', suboffer.l)
+    data.append('h', suboffer.h)
     var xmlhttpro = createCORSRequest(
       'POST',
       'https://dograma.avalonbg.com/function/mobile/check_l2.php'
@@ -732,7 +732,7 @@ const methods = {
     xmlhttpro.onreadystatechange = function () {
       if (this.readyState == 4) {
         if (JSON.parse(this.response).success == 'success') {
-          methods.saveSubOffer()
+          methods.saveSubOffer(suboffer)
         } else {
           alert('Надвишавате стойностите за L/H')
         }
@@ -3339,59 +3339,56 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  saveSubOffer() {
-    const current_suboffer = state.suboffers.find(
-      (element) => element.id == state.current_suboffer
-    )
+  saveSubOffer(suboffer) {
     var data = new FormData()
     var info = []
     info[0] = 'SAVE'
     info[1] = state.current_offer
-    info[2] = current_suboffer.grupa1
-    info[3] = current_suboffer.grupa2
-    info[4] = current_suboffer.grupa3
-    info[5] = current_suboffer.products_code
-    info[6] = current_suboffer.quantity
-    info[7] = current_suboffer.dds
-    info[8] = current_suboffer.h
-    info[9] = current_suboffer.l
-    info[10] = current_suboffer.p
-    info[11] = current_suboffer.description
-    info[12] = current_suboffer.picture_url
-    info[13] = current_suboffer.id
-    info[14] = current_suboffer.price
-    info[15] = current_suboffer.picture_is
-    info[16] = current_suboffer.description_is
-    info[17] = current_suboffer.order_id
-    info[18] = current_suboffer.isstat
-    info[19] = current_suboffer.isbroi
-    info[20] = current_suboffer.subproducts_code_1
-    info[21] = current_suboffer.subproducts_code_1_q
-    info[22] = current_suboffer.subproducts_code_1_price
-    info[23] = current_suboffer.subproducts_code_2
-    info[24] = current_suboffer.subproducts_code_2_q
-    info[25] = current_suboffer.subproducts_code_2_price
-    info[26] = current_suboffer.subproducts_code_3
-    info[27] = current_suboffer.subproducts_code_3_q
-    info[28] = current_suboffer.subproducts_code_3_price
-    info[29] = current_suboffer.subproducts_code_4
-    info[30] = current_suboffer.subproducts_code_4_q
-    info[31] = current_suboffer.subproducts_code_4_price
-    info[32] = current_suboffer.subproducts_code_5
-    info[33] = current_suboffer.subproducts_code_5_q
-    info[34] = current_suboffer.subproducts_code_5_price
-    info[35] = current_suboffer.subproducts_code_1_description
-    info[36] = current_suboffer.subproducts_code_2_description
-    info[37] = current_suboffer.subproducts_code_3_description
-    info[38] = current_suboffer.subproducts_code_4_description
-    info[39] = current_suboffer.subproducts_code_5_description
-    info[40] = current_suboffer.zakupnaprice
-    info[41] = current_suboffer.subproducts_code_1_zakupnaprice
-    info[42] = current_suboffer.subproducts_code_2_zakupnaprice
-    info[43] = current_suboffer.subproducts_code_3_zakupnaprice
-    info[44] = current_suboffer.subproducts_code_4_zakupnaprice
-    info[45] = current_suboffer.subproducts_code_5_zakupnaprice
-    info[46] = current_suboffer.otstapka
+    info[2] = suboffer.grupa1
+    info[3] = suboffer.grupa2
+    info[4] = suboffer.grupa3
+    info[5] = suboffer.products_code
+    info[6] = suboffer.quantity
+    info[7] = suboffer.dds
+    info[8] = suboffer.h
+    info[9] = suboffer.l
+    info[10] = suboffer.p
+    info[11] = suboffer.description
+    info[12] = suboffer.picture_url
+    info[13] = suboffer.id
+    info[14] = suboffer.price
+    info[15] = suboffer.picture_is
+    info[16] = suboffer.description_is
+    info[17] = suboffer.order_id
+    info[18] = suboffer.isstat
+    info[19] = suboffer.isbroi
+    info[20] = suboffer.subproducts_code_1
+    info[21] = suboffer.subproducts_code_1_q
+    info[22] = suboffer.subproducts_code_1_price
+    info[23] = suboffer.subproducts_code_2
+    info[24] = suboffer.subproducts_code_2_q
+    info[25] = suboffer.subproducts_code_2_price
+    info[26] = suboffer.subproducts_code_3
+    info[27] = suboffer.subproducts_code_3_q
+    info[28] = suboffer.subproducts_code_3_price
+    info[29] = suboffer.subproducts_code_4
+    info[30] = suboffer.subproducts_code_4_q
+    info[31] = suboffer.subproducts_code_4_price
+    info[32] = suboffer.subproducts_code_5
+    info[33] = suboffer.subproducts_code_5_q
+    info[34] = suboffer.subproducts_code_5_price
+    info[35] = suboffer.subproducts_code_1_description
+    info[36] = suboffer.subproducts_code_2_description
+    info[37] = suboffer.subproducts_code_3_description
+    info[38] = suboffer.subproducts_code_4_description
+    info[39] = suboffer.subproducts_code_5_description
+    info[40] = suboffer.zakupnaprice
+    info[41] = suboffer.subproducts_code_1_zakupnaprice
+    info[42] = suboffer.subproducts_code_2_zakupnaprice
+    info[43] = suboffer.subproducts_code_3_zakupnaprice
+    info[44] = suboffer.subproducts_code_4_zakupnaprice
+    info[45] = suboffer.subproducts_code_5_zakupnaprice
+    info[46] = suboffer.otstapka
     info[47] = state.user.id
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
@@ -3413,7 +3410,13 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        methods.changeSuccessUpdateSuboffer(true)
+        if (suboffer.id == 0) {
+          methods.getSuboffers()
+          state.current_suboffer = 0
+          methods.toggleOfferSidebarProduct()
+        } else {
+          methods.changeSuccessUpdateSuboffer(true)
+        }
       } else {
         methods.changeSuccessUpdateSuboffer(false)
       }

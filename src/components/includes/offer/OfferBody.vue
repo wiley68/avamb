@@ -338,6 +338,7 @@ export default {
     }
 
     const addProduct = () => {
+      store.state.current_suboffer = 0
       store.methods.closeOfferSidebarProduct()
     }
 

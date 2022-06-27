@@ -364,14 +364,8 @@ export default {
     }
 
     const updateProduct = () => {
-      const current_product = store.state.suboffers.find(
-        (element) => element.id == store.state.current_suboffer
-      )
-      store.methods.checkL2(
-        current_product.products_code,
-        current_product.l,
-        current_product.h
-      )
+      //check suboffer
+      store.methods.checkL2(suboffer.value)
     }
 
     return {
