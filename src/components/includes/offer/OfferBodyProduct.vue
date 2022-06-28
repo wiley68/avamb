@@ -332,9 +332,6 @@ export default {
     })
 
     watch(product, async (newProduct, oldProduct) => {
-      // let current_product = store.state.suboffers.find(
-      //   (element) => element.id == store.state.current_suboffer
-      // )
       suboffer.value.products_code = newProduct.code
       suboffer.value.product_name = newProduct.name
       suboffer.value.price = (
@@ -353,9 +350,6 @@ export default {
     }
 
     const calculatePrice = () => {
-      // let current_suboffer = store.state.suboffers.find(
-      //   (element) => element.id == store.state.current_suboffer
-      // )
       suboffer.value.allprice = (
         (parseFloat(suboffer.value.price) +
           parseFloat(suboffer.value.price) *

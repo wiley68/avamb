@@ -3468,6 +3468,87 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  cloneSubOffer(suboffer_id) {
+    var suboffer = state.suboffers.find((element) => (element.id = suboffer_id))
+    var offer_id = state.offers.find(
+      (element) => (element.idnomber = state.current_offer)
+    ).id
+    var data = new FormData()
+    var info = []
+    info[0] = 'CLONE'
+    info[1] = offer_id
+    info[2] = suboffer.grupa1
+    info[3] = suboffer.grupa2
+    info[4] = suboffer.grupa3
+    info[5] = suboffer.products_code
+    info[6] = suboffer.quantity
+    info[7] = suboffer.dds
+    info[8] = suboffer.h
+    info[9] = suboffer.l
+    info[10] = suboffer.p
+    info[11] = suboffer.description
+    info[12] = suboffer.picture_url
+    info[13] = suboffer.id
+    info[14] = suboffer.price
+    info[15] = suboffer.picture_is
+    info[16] = suboffer.description_is
+    info[17] = suboffer.order_id
+    info[18] = suboffer.isstat
+    info[19] = suboffer.isbroi
+    info[20] = suboffer.subproducts_code_1
+    info[21] = suboffer.subproducts_code_1_q
+    info[22] = suboffer.subproducts_code_1_price
+    info[23] = suboffer.subproducts_code_2
+    info[24] = suboffer.subproducts_code_2_q
+    info[25] = suboffer.subproducts_code_2_price
+    info[26] = suboffer.subproducts_code_3
+    info[27] = suboffer.subproducts_code_3_q
+    info[28] = suboffer.subproducts_code_3_price
+    info[29] = suboffer.subproducts_code_4
+    info[30] = suboffer.subproducts_code_4_q
+    info[31] = suboffer.subproducts_code_4_price
+    info[32] = suboffer.subproducts_code_5
+    info[33] = suboffer.subproducts_code_5_q
+    info[34] = suboffer.subproducts_code_5_price
+    info[35] = suboffer.subproducts_code_1_description
+    info[36] = suboffer.subproducts_code_2_description
+    info[37] = suboffer.subproducts_code_3_description
+    info[38] = suboffer.subproducts_code_4_description
+    info[39] = suboffer.subproducts_code_5_description
+    info[40] = suboffer.zakupnaprice
+    info[41] = suboffer.subproducts_code_1_zakupnaprice
+    info[42] = suboffer.subproducts_code_2_zakupnaprice
+    info[43] = suboffer.subproducts_code_3_zakupnaprice
+    info[44] = suboffer.subproducts_code_4_zakupnaprice
+    info[45] = suboffer.subproducts_code_5_zakupnaprice
+    info[46] = suboffer.otstapka
+    info[47] = state.user.id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/suboffer.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.getSuboffers(offer_id)
+        state.current_suboffer = 0
+      }
+    }
+    xmlhttpro.send(data)
+  },
 }
 
 export default { state, methods }

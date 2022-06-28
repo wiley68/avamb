@@ -44,7 +44,7 @@
               </div>
             </button>
             <button
-              @click.stop="store.methods.closeOfferSidebarProduct()"
+              @click.stop="cloneProduct(suboffer.id)"
               type="button"
               class="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
@@ -160,7 +160,17 @@ export default {
       store.methods.deleteProduct(suboffer_id.value)
     }
 
-    return { store, editSuboffer, deleteProductCheck, deleteProduct }
+    const cloneProduct = (suboffer_id) => {
+      store.methods.cloneSubOffer(suboffer_id)
+    }
+
+    return {
+      store,
+      editSuboffer,
+      deleteProductCheck,
+      deleteProduct,
+      cloneProduct,
+    }
   },
 }
 </script>
