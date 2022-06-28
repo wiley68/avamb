@@ -61,7 +61,7 @@
               </div>
             </button>
             <button
-              @click.stop="store.methods.closeOfferSidebarProduct()"
+              @click.stop="deleteProductCheck(suboffer.id)"
               type="button"
               class="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             >
@@ -77,6 +77,55 @@
                 ><span class="text-sm">Изтрий</span>
               </div>
             </button>
+            <ModalBlank
+              id="danger-modal"
+              :modalOpen="store.state.deleteProductModal"
+              @close-modal="store.methods.changeDeleteProductModal(false)"
+            >
+              <div class="p-5 flex space-x-4">
+                <div
+                  class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-red-100"
+                >
+                  <svg
+                    class="w-4 h-4 shrink-0 fill-current text-red-600"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div class="mb-2">
+                    <div class="text-lg font-semibold text-gray-800">
+                      Внимание!
+                    </div>
+                  </div>
+                  <!-- Modal content -->
+                  <div class="text-sm mb-10">
+                    <div class="space-y-2">
+                      <p>Желаете ли да изтриете продукта?</p>
+                    </div>
+                  </div>
+                  <div class="flex flex-wrap justify-end space-x-2">
+                    <button
+                      class="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+                      @click.stop="
+                        store.methods.changeDeleteProductModal(false)
+                      "
+                    >
+                      Откажи
+                    </button>
+                    <button
+                      class="btn-sm bg-red-500 hover:bg-red-600 text-white"
+                      @click.stop="deleteProduct()"
+                    >
+                      Изтрий
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ModalBlank>
           </div>
         </li>
       </ul>
@@ -85,20 +134,33 @@
 </template>
 
 <script>
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
+import ModalBlank from '../components/ModalBlank.vue'
 
 export default {
   name: 'OfferSidebarProduct',
 
+  components: { ModalBlank },
+
   setup() {
     const store = inject('store')
+    const suboffer_id = ref(0)
 
     const editSuboffer = (suboffer_id) => {
       store.state.current_suboffer = suboffer_id
       store.methods.closeOfferSidebarProduct()
     }
 
-    return { store, editSuboffer }
+    const deleteProductCheck = (suboff_id) => {
+      suboffer_id.value = suboff_id
+      store.methods.changeDeleteProductModal(true)
+    }
+
+    const deleteProduct = () => {
+      store.methods.deleteProduct(suboffer_id.value)
+    }
+
+    return { store, editSuboffer, deleteProductCheck, deleteProduct }
   },
 }
 </script>

@@ -137,6 +137,7 @@ const state = reactive({
   dostavcici: [],
   code: '',
   category: '',
+  deleteProductModal: false,
 })
 
 const methods = {
@@ -434,6 +435,9 @@ const methods = {
   changeDeleteZadacaModal(deleteZadacaModal) {
     state.deleteZadacaModal = deleteZadacaModal
   },
+  changeDeleteProductModal(deleteProductModal) {
+    state.deleteProductModal = deleteProductModal
+  },
   changeSuccessUpdateRaboten(successUpdateRaboten) {
     state.successUpdateRaboten = successUpdateRaboten
   },
@@ -460,6 +464,11 @@ const methods = {
       return element.id != id
     })
     state.zadaci_temp = state.zadaci_temp.filter((element) => {
+      return element.id != id
+    })
+  },
+  deleteProductById(id) {
+    state.suboffers = state.suboffers.filter((element) => {
       return element.id != id
     })
   },
@@ -2691,6 +2700,39 @@ const methods = {
         state.deleteZadacaModal = false
         state.current_zadaca_id = state.zadaci[0] ? state.zadaci[0].id : 0
         methods.toggleZadaciSidebar()
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  deleteProduct(suboffer_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'DELETE'
+    info[13] = suboffer_id
+    info[47] = state.user.id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/suboffer.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteProductById(suboffer_id)
+        state.deleteProductModal = false
+        state.current_suboffer = 0
       }
     }
     xmlhttpro.send(data)
