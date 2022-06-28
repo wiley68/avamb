@@ -311,6 +311,7 @@ export default {
           subproducts_code_4_zakupnaprice: '0.00',
           subproducts_code_5_zakupnaprice: '0.00',
           otstapka: '0.00',
+          allprice: '0.00',
         }
       } else {
         const suboffer_current = store.state.suboffers.find(
@@ -331,14 +332,14 @@ export default {
     })
 
     watch(product, async (newProduct, oldProduct) => {
-      let current_product = store.state.suboffers.find(
-        (element) => element.id == store.state.current_suboffer
-      )
-      current_product.products_code = newProduct.code
-      current_product.product_name = newProduct.name
-      current_product.price = (
+      // let current_product = store.state.suboffers.find(
+      //   (element) => element.id == store.state.current_suboffer
+      // )
+      suboffer.value.products_code = newProduct.code
+      suboffer.value.product_name = newProduct.name
+      suboffer.value.price = (
         parseFloat(newProduct.price) *
-        ((100 - parseFloat(current_product.otstapka)) / 100)
+        ((100 - parseFloat(suboffer.value.otstapka)) / 100)
       ).toFixed(2)
       calculatePrice()
     })
@@ -352,20 +353,52 @@ export default {
     }
 
     const calculatePrice = () => {
-      let current_suboffer = store.state.suboffers.find(
-        (element) => element.id == store.state.current_suboffer
-      )
-      current_suboffer.allprice = (
-        (parseFloat(current_suboffer.price) +
-          parseFloat(current_suboffer.price) *
-            (parseFloat(current_suboffer.dds) / 100)) *
-        parseFloat(current_suboffer.quantity)
+      // let current_suboffer = store.state.suboffers.find(
+      //   (element) => element.id == store.state.current_suboffer
+      // )
+      suboffer.value.allprice = (
+        (parseFloat(suboffer.value.price) +
+          parseFloat(suboffer.value.price) *
+            (parseFloat(suboffer.value.dds) / 100)) *
+        parseFloat(suboffer.value.quantity)
       ).toFixed(2)
     }
 
     const updateProduct = () => {
-      //check suboffer
-      store.methods.checkL2(suboffer.value)
+      if (suboffer.value.products_code.length == 0) {
+        alert('Трябва да изберете Продукт!')
+      } else {
+        if (parseFloat(suboffer.value.quantity) == 0) {
+          alert('Трябва да въведете Количество!')
+        } else {
+          if (parseFloat(suboffer.value.dds) == -1) {
+            alert('Трябва да изберете ДДС!')
+          } else {
+            if (
+              suboffer.value.h.length == 0 ||
+              parseInt(suboffer.value.h) <= 0
+            ) {
+              alert('Трябва да изберете Височина!')
+            } else {
+              if (
+                suboffer.value.l.length == 0 ||
+                parseInt(suboffer.value.l) <= 0
+              ) {
+                alert('Трябва да изберете Ширина!')
+              } else {
+                if (
+                  suboffer.value.p.length == 0 ||
+                  parseInt(suboffer.value.p) <= 0
+                ) {
+                  alert('Трябва да изберете Дълбочина!')
+                } else {
+                  store.methods.checkL2(suboffer.value)
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     return {

@@ -3340,10 +3340,13 @@ const methods = {
     xmlhttpro.send(data)
   },
   saveSubOffer(suboffer) {
+    var offer_id = state.offers.find(
+      (element) => (element.idnomber = state.current_offer)
+    ).id
     var data = new FormData()
     var info = []
     info[0] = 'SAVE'
-    info[1] = state.current_offer
+    info[1] = offer_id
     info[2] = suboffer.grupa1
     info[3] = suboffer.grupa2
     info[4] = suboffer.grupa3
@@ -3411,7 +3414,7 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         if (suboffer.id == 0) {
-          methods.getSuboffers()
+          methods.getSuboffers(offer_id)
           state.current_suboffer = 0
           methods.toggleOfferSidebarProduct()
         } else {
