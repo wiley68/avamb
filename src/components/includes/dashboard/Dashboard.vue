@@ -116,19 +116,17 @@ export default {
     }
 
     const showAll = () => {
-      store.state.offers_filter_status = 'Yes'
-      store.state.offers_temp = store.state.offers
+      store.state.finished_offers = 0
+      store.methods.getOffers()
     }
 
     const showActive = () => {
-      store.state.offers_filter_status = 'No'
-      store.state.offers_temp = store.state.offers.filter(
-        (element) => element.status == 'No'
-      )
+      store.state.finished_offers = 1
+      store.methods.getOffers()
     }
 
     const getOffers = () => {
-      return store.state.offers_temp
+      return store.state.offers
     }
 
     const openOffer = (offer_id) => {

@@ -26,12 +26,11 @@ const state = reactive({
   offers: [],
   oferti: [],
   suboffers: [],
-  offers_temp: [],
+  finished_offers: 1,
   tekushta:
     moment().startOf('year').format('DD.MM.YYYY') +
     ' to ' +
     moment().format('DD.MM.YYYY'),
-  offers_filter_status: 'No',
   dashboardSidebarOpen: true,
   offerSidebarOpen: true,
   offerSidebarProductOpen: true,
@@ -572,6 +571,7 @@ const methods = {
     const tekushta_end = state.tekushta.substring(14)
     data.append('tekushta_start', tekushta_start)
     data.append('tekushta_end', tekushta_end)
+    data.append('finished_offers', state.finished_offers)
     var xmlhttpro = createCORSRequest(
       'POST',
       'https://dograma.avalonbg.com/function/mobile/get_offers.php'
@@ -592,9 +592,6 @@ const methods = {
         JSON.parse(this.response).success == 'success'
       ) {
         state.offers = JSON.parse(this.response).offers
-        state.offers_temp = state.offers.filter(
-          (element) => element.status == 'No'
-        )
         state.offer_clienti = JSON.parse(this.response).offer_clienti
       }
     }
@@ -611,7 +608,7 @@ const methods = {
     data.append('tekushta_end', tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      'https://dograma.avalonbg.com/function/mobile/get_offers.php'
+      'https://dograma.avalonbg.com/function/mobile/get_oferti.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
