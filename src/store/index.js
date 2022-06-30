@@ -3407,9 +3407,7 @@ const methods = {
         if (offer.id > 0) {
           methods.changeSuccessUpdateOffer(true)
         } else {
-          methods.getOffers()
           methods.getOferti()
-          state.current_offer = JSON.parse(this.response).newid
           state.current_oferti = JSON.parse(this.response).newid
           methods.changeSuccessUpdateOffer(true)
         }
@@ -3420,8 +3418,8 @@ const methods = {
     xmlhttpro.send(data)
   },
   saveSubOffer(suboffer) {
-    var offer_id = state.offers.find(
-      (element) => (element.idnomber = state.current_offer)
+    var offer_id = state.oferti.find(
+      (element) => (element.idnomber = state.current_oferti)
     ).id
     var data = new FormData()
     var info = []
