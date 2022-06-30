@@ -32,6 +32,7 @@ const state = reactive({
     moment().format('DD.MM.YYYY'),
   offers_filter_status: 'No',
   dashboardSidebarOpen: true,
+  ofertiSidebarOpen: true,
   offerSidebarOpen: true,
   offerSidebarProductOpen: true,
   offerEtap: 1,
@@ -153,11 +154,20 @@ const methods = {
   toggleDashboardSidebar() {
     state.dashboardSidebarOpen = !state.dashboardSidebarOpen
   },
+  toggleOfertiSidebar() {
+    state.ofertiSidebarOpen = !state.ofertiSidebarOpen
+  },
   closeDashboardSidebar() {
     state.dashboardSidebarOpen = false
   },
+  closeOfertiSidebar() {
+    state.ofertiSidebarOpen = false
+  },
   openDashboardSidebar() {
     state.dashboardSidebarOpen = true
+  },
+  openOfertiSidebar() {
+    state.ofertiSidebarOpen = true
   },
   toggleOfferSidebar() {
     state.offerSidebarOpen = !state.offerSidebarOpen

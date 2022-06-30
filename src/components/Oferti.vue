@@ -5,7 +5,7 @@
       <div
         class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
         :class="
-          store.state.dashboardSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
+          store.state.ofertiSidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
         "
       >
         <!-- <DashboardBody /> -->
