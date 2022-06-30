@@ -3387,7 +3387,7 @@ const methods = {
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/offer.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/offer.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3408,7 +3408,9 @@ const methods = {
           methods.changeSuccessUpdateOffer(true)
         } else {
           methods.getOffers()
+          methods.getOferti()
           state.current_offer = JSON.parse(this.response).newid
+          state.current_oferti = JSON.parse(this.response).newid
           methods.changeSuccessUpdateOffer(true)
         }
       } else {

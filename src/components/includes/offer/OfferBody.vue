@@ -268,7 +268,7 @@ export default {
     const shablon2 = ref('')
 
     const offer = computed(() => {
-      if (store.state.current_offer == 0) {
+      if (store.state.current_oferti == 0) {
         return {
           id: 0,
           idnomber: 0,
@@ -282,8 +282,8 @@ export default {
           info2: '',
         }
       } else {
-        return store.state.offers.find(
-          (element) => element.idnomber == store.state.current_offer
+        return store.state.oferti.find(
+          (element) => element.idnomber == store.state.current_oferti
         )
       }
     })
