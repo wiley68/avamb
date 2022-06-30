@@ -24,6 +24,7 @@ const state = reactive({
   name: '',
   user: {},
   offers: [],
+  oferti: [],
   suboffers: [],
   offers_temp: [],
   tekushta:
@@ -593,6 +594,40 @@ const methods = {
         state.offers_temp = state.offers.filter(
           (element) => element.status == 'No'
         )
+        state.offer_clienti = JSON.parse(this.response).offer_clienti
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getOferti() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    const tekushta_start = state.tekushta.substring(0, 10)
+    const tekushta_end = state.tekushta.substring(14)
+    data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_end', tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_offers.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.oferti = JSON.parse(this.response).offers
         state.offer_clienti = JSON.parse(this.response).offer_clienti
       }
     }

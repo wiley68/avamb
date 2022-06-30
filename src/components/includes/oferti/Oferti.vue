@@ -12,32 +12,7 @@
   <div
     class="flex flex-wrap justify-center items-center space-y-2 p-4 sm:p-6 mb-2"
   >
-    <Datepicker class="mt-2" />
     <div>
-      <button
-        class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-        title="Покажи всички"
-        @click.stop="showAll()"
-      >
-        <svg class="w-6 h-6 fill-current text-blue-600" viewBox="0 0 24 24">
-          <path
-            fill="currentColor"
-            d="M3 4H21V8H19V20H17V8H7V20H5V8H3V4M8 9H16V11H8V9M8 12H16V14H8V12M8 15H16V17H8V15M8 18H16V20H8V18Z"
-          />
-        </svg>
-      </button>
-      <button
-        class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
-        title="Покажи активните"
-        @click.stop="showActive()"
-      >
-        <svg class="w-6 h-6 fill-current text-blue-600" viewBox="0 0 24 24">
-          <path
-            fill="currentColor"
-            d="M3 4H21V8H19V20H17V8H7V20H5V8H3V4M8 9H16V11H8V9Z"
-          />
-        </svg>
-      </button>
       <button
         class="p-1.5 shrink-0 rounded bg-white border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
         title="Създай оферта"
@@ -105,14 +80,9 @@
 
 <script>
 import { inject } from 'vue'
-import Datepicker from '../components/Datepicker.vue'
 
 export default {
   name: 'Oferti',
-
-  components: {
-    Datepicker,
-  },
 
   setup() {
     const store = inject('store')
@@ -147,18 +117,6 @@ export default {
       }
     }
 
-    const showAll = () => {
-      store.state.offers_filter_status = 'Yes'
-      store.state.offers_temp = store.state.offers
-    }
-
-    const showActive = () => {
-      store.state.offers_filter_status = 'No'
-      store.state.offers_temp = store.state.offers.filter(
-        (element) => element.status == 'No'
-      )
-    }
-
     const getOffers = () => {
       return store.state.offers_temp
     }
@@ -182,8 +140,6 @@ export default {
       store,
       changeDashboardOffer,
       typeUser,
-      showAll,
-      showActive,
       getOffers,
       openOffer,
       editOffer,

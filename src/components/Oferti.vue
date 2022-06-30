@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { inject } from 'vue'
+import { inject, onMounted } from 'vue'
 import OfertiSidebar from './includes/oferti/OfertiSidebar.vue'
 
 export default {
@@ -19,6 +19,10 @@ export default {
 
   setup() {
     const store = inject('store')
+
+    onMounted(() => {
+      store.methods.getOferti()
+    })
 
     return { store }
   },
