@@ -34,6 +34,26 @@
                 <li class="-mx-2 mb-1">
                   <button
                     class="w-full p-2 rounded-lg border-2 border-blue-600"
+                    @click.stop="store.methods.changePage('Oferti')"
+                  >
+                    <div class="flex items-center">
+                      <svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M7,4V8H17V4H7M7,10V12H9V10H7M11,10V12H13V10H11M15,10V12H17V10H15M7,14V16H9V14H7M11,14V16H13V14H11M15,14V16H17V14H15M7,18V20H9V18H7M11,18V20H13V18H11M15,18V20H17V18H15Z"
+                        />
+                      </svg>
+                      <div class="ml-3">
+                        <span class="text-lg font-medium text-gray-900"
+                          >Оферти</span
+                        >
+                      </div>
+                    </div>
+                  </button>
+                </li>
+                <li class="-mx-2 mb-1">
+                  <button
+                    class="w-full p-2 rounded-lg border-2 border-blue-600"
                     @click.stop="changePageRabotni()"
                   >
                     <div class="flex items-center">
