@@ -42,6 +42,7 @@ const state = reactive({
   shabloni: [],
   current_dashboard_offer: 0,
   current_offer: 0,
+  current_oferti: 0,
   current_suboffer: 0,
   razmeri: [],
   otclienti: [],
