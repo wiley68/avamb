@@ -4,9 +4,9 @@
       <h1 class="text-xl text-white font-medium">
         Оферта
         {{
-          store.state.current_offer == 0
+          store.state.current_oferti == 0
             ? ' - нова'
-            : ' - ' + store.state.current_offer
+            : ' - ' + store.state.current_oferti
         }}
       </h1>
     </div>
@@ -32,7 +32,7 @@
             </div>
           </button>
         </li>
-        <li v-if="store.state.current_offer != 0" class="-mx-2 mb-1">
+        <li v-if="store.state.current_oferti != 0" class="-mx-2 mb-1">
           <button
             class="w-full p-2 rounded-lg border-2 border-blue-600"
             @click.stop="goToEtap2()"
@@ -50,7 +50,7 @@
             </div>
           </button>
         </li>
-        <li v-if="store.state.current_offer != 0" class="-mx-2 mb-1">
+        <li v-if="store.state.current_oferti != 0" class="-mx-2 mb-1">
           <button
             class="w-full p-2 rounded-lg border-2 border-blue-600"
             @click.stop="goToEtap4()"
