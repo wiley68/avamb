@@ -412,7 +412,7 @@ export default {
     }
 
     const refreshPrice = () => {
-      console.log('refresh')
+      store.methods.getEdcenanew(suboffer.value)
     }
 
     return {

@@ -3582,6 +3582,41 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  getEdcenanew(suboffer) {
+    var data = new FormData()
+    data.append('firm_id', state.user.firm_id)
+    data.append('products_code', suboffer.products_code)
+    data.append('h', suboffer.h)
+    data.append('l', suboffer.l)
+    data.append('p', suboffer.p)
+    data.append('price', suboffer.price)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_edcenanew.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        let suboffer_current = state.suboffers.find(
+          (element) => (element.id = suboffer.id)
+        )
+        suboffer_current.price = JSON.parse(this.response).edcena
+      }
+    }
+    xmlhttpro.send(data)
+  },
 }
 
 export default { state, methods }
