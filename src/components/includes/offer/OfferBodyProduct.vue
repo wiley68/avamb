@@ -205,6 +205,7 @@
           placeholder="Ед. цена"
           v-model="suboffer.price"
         /><button
+          v-if="suboffer.id != 0"
           @click.stop="refreshPrice()"
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           aria-controls="success-modal"
@@ -278,6 +279,9 @@ export default {
     const product_search_div = ref(false)
     const products = ref(store.state.produkti_main)
     const product = ref({})
+    const current_oferti = store.state.oferti.find(
+      (element) => element.idnomber == store.state.current_oferti
+    )
 
     const suboffer = computed(() => {
       if (store.state.current_suboffer == 0) {
@@ -287,8 +291,8 @@ export default {
           grupa1: null,
           grupa2: null,
           grupa3: '',
-          quantity: '0.00',
-          dds: '-1',
+          quantity: '1.00',
+          dds: current_oferti.dds,
           h: '1',
           l: '1',
           p: '1',
@@ -411,8 +415,11 @@ export default {
       }
     }
 
-    const refreshPrice = () => {
+    const refreshPrice = async () => {
       store.methods.getEdcenanew(suboffer.value)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      updateProduct()
+      calculatePrice()
     }
 
     return {
