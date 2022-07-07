@@ -65,6 +65,9 @@
                           raboten.sluzitel_name
                         }}&nbsp;-&nbsp;{{ raboten.mps_regnomer }}
                       </div>
+                      <div class="text-red-600 text-sm font-medium">
+                        {{ raboten.zaplata_all }}
+                      </div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
