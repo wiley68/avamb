@@ -7,7 +7,7 @@
       >
         <option value="0">Избери оферта</option>
         <option
-          v-for="offer in store.state.offers"
+          v-for="offer in store.state.alloffers"
           :key="offer.id"
           :value="offer.idnomber"
         >
