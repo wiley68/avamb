@@ -1,15 +1,38 @@
 <template>
-  <div class="relative bg-sky-700 p-2 rounded overflow-hidden mb-2">
-    <div class="relative">
-      <h1 class="text-xl text-white font-medium">
-        Оферта
-        {{
-          store.state.current_oferti == 0
-            ? ' - нова'
-            : ' - ' + store.state.current_oferti
-        }}
-      </h1>
+  <div class="flex w-full items-center">
+    <div class="relative bg-sky-700 p-2 rounded overflow-hidden flex-grow">
+      <div class="relative">
+        <h1 class="text-xl text-white font-medium">
+          Оферта
+          {{
+            store.state.current_oferti == 0
+              ? ' - нова'
+              : ' - ' + store.state.current_oferti
+          }}
+        </h1>
+      </div>
     </div>
+    <a
+      class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+      aria-controls="success-modal"
+      :href="
+        '/print_offer.php?oid=' +
+        store.state.oferti.find(
+          (element) => element.idnomber == store.state.current_oferti
+        ).id
+      "
+      target="_blank"
+    >
+      <svg
+        class="w-8 h-8 fill-current text-blue-600 shrink-0"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          d="M18,3H6V7H18M19,12A1,1 0 0,1 18,11A1,1 0 0,1 19,10A1,1 0 0,1 20,11A1,1 0 0,1 19,12M16,19H8V14H16M19,8H5A3,3 0 0,0 2,11V17H6V21H18V17H22V11A3,3 0 0,0 19,8Z"
+        />
+      </svg>
+    </a>
   </div>
   <div>
     <div class="px-5 py-4">
