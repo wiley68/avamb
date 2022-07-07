@@ -1,12 +1,17 @@
 <template>
   <div class="flex flex-col justify-center">
-    <div class="flex">
+    <div class="flex w-full">
       <input
         readonly
         type="text"
-        class="w-full text-sm border rounded-sm border-gray-100 p-1"
-        placeholder="Избери оферта"
+        class="w-12 text-sm border rounded-sm border-gray-100 p-1"
         v-model="poseshtenie.offer_id"
+      /><input
+        readonly
+        type="text"
+        class="flex-grow text-sm border rounded-sm border-gray-100 p-1"
+        placeholder="Избери оферта"
+        :value="getOfferName(poseshtenie.offer_id)"
       /><button
         @click.stop="offer_search_div = !offer_search_div"
         class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
@@ -47,24 +52,9 @@
         </option>
       </select>
     </div>
-    <div class="mb-1">
-      <select
-        class="w-full border rounded-sm border-gray-100 p-1 text-sm"
-        v-model="poseshtenie.offer_id"
-      >
-        <option value="0">Избери оферта</option>
-        <option
-          v-for="offer in store.state.alloffers"
-          :key="offer.id"
-          :value="offer.idnomber"
-        >
-          {{ offer.idnomber }}&nbsp;-&nbsp;{{ offer.client_name }}
-        </option>
-      </select>
-    </div>
     <div
       v-if="raboten.isdriver == 1"
-      class="flex flex-row justify-between items-center mb-1"
+      class="flex flex-row justify-between items-center mb-1 mt-2"
     >
       <span class="p-1 text-sm w-3/12">Час на тр.</span>
       <input
@@ -573,6 +563,16 @@ export default {
       }
     })
 
+    const getOfferName = (offer_idnomber) => {
+      if (offer_idnomber > 0) {
+        return store.state.alloffers.find(
+          (element) => element.idnomber == offer_idnomber
+        ).client_name
+      } else {
+        return ''
+      }
+    }
+
     return {
       store,
       poseshtenie,
@@ -592,6 +592,7 @@ export default {
       offer_search_div,
       offer_search,
       alloffers,
+      getOfferName,
     }
   },
 }
