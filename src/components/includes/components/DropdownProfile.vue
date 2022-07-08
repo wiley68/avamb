@@ -54,7 +54,7 @@
             <a
               href="/login/logout.php"
               class="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
-              @click="dropdownOpen = false"
+              @click="logout()"
               >Изход</a
             >
           </li>
@@ -110,12 +110,18 @@ export default {
       dropdownOpen.value = false
     }
 
+    const logout = () => {
+      localStorage.removeItem('tekushta')
+      dropdownOpen.value = false
+    }
+
     return {
       store,
       gotToSettings,
       dropdownOpen,
       trigger,
       dropdown,
+      logout,
     }
   },
 }

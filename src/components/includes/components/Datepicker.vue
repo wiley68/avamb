@@ -50,6 +50,7 @@ export default {
         onChange: (selectedDates, dateStr, instance) => {
           instance.element.value = dateStr.replace('to', '-')
           props.changeDate()
+          localStorage.setItem('tekushta', props.store.state.tekushta)
         },
       },
     }
