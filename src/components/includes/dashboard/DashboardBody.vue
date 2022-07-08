@@ -184,6 +184,7 @@
             </div>
             <div
               class="flex flex-row justify-center items-center w-20 h-7 bg-blue-600 border border-blue-800 text-white"
+              @click.stop="editOffer(offer().idnomber)"
             ></div>
           </div>
         </div>
@@ -685,6 +686,12 @@ export default {
       store.methods.changePage('Fakturip')
     }
 
+    const editOffer = (offer_idnomber) => {
+      store.methods.openOfferSidebar()
+      store.state.current_oferti = offer_idnomber
+      store.methods.changePage('Offer')
+    }
+
     return {
       store,
       offer,
@@ -706,6 +713,7 @@ export default {
       goToZadaci,
       goToRabotni,
       goToDocPoseshtenia,
+      editOffer,
     }
   },
 }
