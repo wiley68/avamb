@@ -354,6 +354,7 @@ export default {
     watch(product, async (newProduct, oldProduct) => {
       suboffer.value.products_code = newProduct.code
       suboffer.value.product_name = newProduct.name
+      suboffer.value.description = newProduct.description
       suboffer.value.price = (
         parseFloat(newProduct.price) *
         ((100 - parseFloat(suboffer.value.otstapka)) / 100)
