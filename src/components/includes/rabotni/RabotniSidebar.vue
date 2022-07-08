@@ -59,14 +59,14 @@
                   <div class="grow truncate">
                     <div class="flex items-center justify-between mb-0.5">
                       <div
-                        class="flex text-sm text-gray-500 font-medium truncate"
+                        class="flex flex-grow text-sm text-gray-500 font-medium truncate"
                       >
                         {{ formatDateTime(raboten.dateon) }}&nbsp;-&nbsp;{{
                           raboten.sluzitel_name
                         }}&nbsp;-&nbsp;{{ raboten.mps_regnomer }}
                       </div>
                       <div class="text-red-600 text-sm font-medium">
-                        {{ raboten.zaplata_all }}
+                        {{ raboten.vremezarabota_all }}
                       </div>
                     </div>
                     <div
