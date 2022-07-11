@@ -13,6 +13,7 @@
       </div>
     </div>
     <a
+      v-if="store.state.current_oferti != 0"
       class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
       aria-controls="success-modal"
       :href="
