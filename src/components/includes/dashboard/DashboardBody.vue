@@ -554,7 +554,7 @@ export default {
     const store = inject('store')
 
     const offer = () => {
-      return store.state.offers.find(
+      return store.state.offers_temp.find(
         (element) => element.id == store.state.current_dashboard_offer
       )
     }

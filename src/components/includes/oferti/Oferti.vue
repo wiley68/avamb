@@ -96,7 +96,7 @@ export default {
     }
 
     const getOffers = () => {
-      return store.state.oferti
+      return store.state.oferti_temp
     }
 
     const createOffer = () => {

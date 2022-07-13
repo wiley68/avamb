@@ -281,7 +281,7 @@ export default {
           info2: '',
         }
       } else {
-        return store.state.oferti.find(
+        return store.state.oferti_temp.find(
           (element) => element.idnomber == store.state.current_oferti
         )
       }

@@ -193,6 +193,22 @@ export default {
           store.state.zadaci_temp = store.state.zadaci
         }
       }
+      if (store.state.page == 'Oferti' && store.state.current_oferti == 0) {
+        if (searchInput.value.value != '') {
+          store.state.oferti_temp = store.state.oferti.filter((element) => {
+            return (
+              element.client_name
+                .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase()) ||
+              element.idnomber
+                .toLowerCase()
+                .includes(searchInput.value.value.toLowerCase())
+            )
+          })
+        } else {
+          store.state.oferti_temp = store.state.oferti
+        }
+      }
     }
 
     return {

@@ -126,7 +126,7 @@ export default {
     }
 
     const getOffers = () => {
-      return store.state.offers
+      return store.state.offers_temp
     }
 
     const openOffer = (offer_id) => {

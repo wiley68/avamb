@@ -14,7 +14,7 @@
     </div>
     <a
       v-if="
-        store.state.oferti.find(
+        store.state.oferti_temp.find(
           (element) => element.idnomber == store.state.current_oferti
         )
       "
@@ -22,7 +22,7 @@
       aria-controls="success-modal"
       :href="
         '/print_offer.php?oid=' +
-        store.state.oferti.find(
+        store.state.oferti_temp.find(
           (element) => element.idnomber == store.state.current_oferti
         ).id
       "

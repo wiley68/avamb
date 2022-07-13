@@ -279,7 +279,7 @@ export default {
     const product_search_div = ref(false)
     const products = ref(store.state.produkti_main)
     const product = ref({})
-    const current_oferti = store.state.oferti.find(
+    const current_oferti = store.state.oferti_temp.find(
       (element) => element.idnomber == store.state.current_oferti
     )
 
