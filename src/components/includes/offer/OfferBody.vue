@@ -63,17 +63,57 @@
     <div
       class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 mb-3"
     >
-      <div class="flex flex-col mt-5 w-full">
+      <div class="flex flex-col mt-2 w-full">
+        <div class="flex justify-between items-center">
+          <input
+            readonly
+            type="text"
+            class="w-12 text-sm border rounded-sm border-gray-100 p-1"
+            placeholder="Избери клиент"
+            v-model="offer.client_id"
+          /><input
+            readonly
+            type="text"
+            class="flex-grow text-sm border rounded-sm border-gray-100 p-1"
+            placeholder="Избери клиент"
+            v-model="offer.client_name"
+          /><button
+            @click.stop="client_search_div = !client_search_div"
+            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            aria-controls="success-modal"
+          >
+            <svg
+              class="w-6 h-6 fill-current text-blue-600 shrink-0"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L6.04,7.5L12,10.85L17.96,7.5L12,4.15Z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        v-show="client_search_div"
+        class="bg-red-50 w-full mt-2 rounded p-2 border border-red-300 flex flex-col items-center justify-center"
+      >
+        <input
+          type="text"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          placeholder="Търси клиент ..."
+          v-model="client_search"
+        />
         <select
-          class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
-          v-model="offer.client_id"
+          size="8"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          v-model="client"
           @change.stop="changeClient()"
         >
-          <option value="0">Избери клиент</option>
           <option
             v-for="client in store.state.offer_clienti"
             :key="client.id"
-            :value="client.id"
+            :value="client"
           >
             {{ clentName(client.first_name, client.last_name, client.name) }}
           </option>
@@ -250,7 +290,7 @@
 </template>
 
 <script>
-import { inject, computed, ref, onMounted } from 'vue'
+import { inject, computed, ref, onMounted, watch } from 'vue'
 import ModalBlank from '../components/ModalBlank.vue'
 import OfferSidebarProduct from './OfferSidebarProduct.vue'
 import OfferBodyProduct from './OfferBodyProduct.vue'
@@ -265,6 +305,10 @@ export default {
 
     const shablon1 = ref('')
     const shablon2 = ref('')
+    const client_search_div = ref(false)
+    const client_search = ref('')
+    const clients = ref(store.state.offer_clienti)
+    const client = ref({})
 
     const offer = computed(() => {
       if (store.state.current_oferti == 0) {
@@ -341,6 +385,28 @@ export default {
       store.methods.closeOfferSidebarProduct()
     }
 
+    watch(client_search, async (newSearch, oldSearch) => {
+      if (newSearch.length > 0) {
+        clients.value = store.state.offer_clienti.filter((element) => {
+          return element.first_name
+            .toLowerCase()
+            .includes(newSearch.toLowerCase())
+        })
+      } else {
+        clients.value = store.state.offer_clienti
+      }
+    })
+
+    watch(client, async (newClient, oldClient) => {
+      offer.value.client_id = newClient.id
+      offer.value.client_name = clentName(
+        newClient.first_name,
+        newClient.last_name,
+        newClient.name
+      )
+      console.log(offer.value)
+    })
+
     return {
       store,
       offer,
@@ -352,6 +418,10 @@ export default {
       shablon2,
       changeInfo2,
       addProduct,
+      client_search_div,
+      client_search,
+      clients,
+      client,
     }
   },
 }

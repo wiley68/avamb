@@ -768,7 +768,10 @@ const methods = {
     data.append('products_code', suboffer.products_code)
     data.append('l', suboffer.l)
     data.append('h', suboffer.h)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/check_l2.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/check_l2.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
