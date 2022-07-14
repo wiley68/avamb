@@ -3415,8 +3415,9 @@ const methods = {
         if (offer.id > 0) {
           methods.changeSuccessUpdateOffer(true)
         } else {
+          methods.getOferti()
           state.current_oferti = JSON.parse(this.response).newid
-          methods.changeSuccessUpdateOffer(true)
+          methods.changeSuccessUpdateOffer(false)
         }
       } else {
         methods.changeSuccessUpdateOffer(false)
