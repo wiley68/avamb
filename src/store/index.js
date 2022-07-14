@@ -634,12 +634,9 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        return new Promise((resolve, reject) => {
-          state.oferti = JSON.parse(this.response).offers
-          state.oferti_temp = JSON.parse(this.response).offers
-          state.offer_clienti = JSON.parse(this.response).offer_clienti
-          resolve()
-        })
+        state.oferti = JSON.parse(this.response).offers
+        state.oferti_temp = JSON.parse(this.response).offers
+        state.offer_clienti = JSON.parse(this.response).offer_clienti
       }
     }
     xmlhttpro.send(data)
