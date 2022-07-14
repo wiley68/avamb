@@ -357,7 +357,7 @@ export default {
       store.methods.getObekti(offer.value.client_id)
     }
 
-    const updateOffer = async () => {
+    const updateOffer = () => {
       if (offer.value.client_id == 0) {
         alert('Моля изберете клиент!')
         return
@@ -370,10 +370,10 @@ export default {
         alert('Моля изберете статус!')
         return
       }
-      const result = await store.methods.saveOffer(offer.value)
-      console.log(result)
-      console.log(store.state.current_oferti)
-      console.log(offer.value)
+      store.methods.saveOffer(offer.value)
+      setTimeout(() => {
+        console.log('Delayed for 1 second.')
+      }, '1000')
     }
 
     const changeInfo1 = () => {
