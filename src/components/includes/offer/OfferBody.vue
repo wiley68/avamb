@@ -316,6 +316,7 @@ export default {
           id: 0,
           idnomber: 0,
           client_id: 0,
+          client_name: '',
           obekt_id: 0,
           text1: '',
           text2: '',
@@ -404,7 +405,6 @@ export default {
         newClient.last_name,
         newClient.name
       )
-      console.log(offer.value)
     })
 
     return {
