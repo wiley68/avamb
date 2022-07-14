@@ -371,6 +371,16 @@ export default {
         return
       }
       store.methods.saveOffer(offer.value)
+      if (store.state.current_oferti == 0) {
+        store.methods.changePage('Landing')
+      }
+      setTimeout(
+        () => {
+          store.methods.changePage('Offer')
+        },
+        '1000',
+        store
+      )
     }
 
     const changeInfo1 = () => {
