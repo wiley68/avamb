@@ -9,9 +9,9 @@
     "
   >
     <div
-      class="bg-white overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 border-r border-gray-200 md:w-72 xl:w-80 h-[calc(100vh-160px)]"
+      class="bg-white overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 border-r border-gray-200 md:w-72 xl:w-80 h-full"
     >
-      <ul class="mb-6 p-2">
+      <ul class="p-2">
         <li
           v-for="suboffer in store.state.suboffers"
           :key="suboffer.id"
