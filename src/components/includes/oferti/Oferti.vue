@@ -101,6 +101,7 @@ export default {
 
     const createOffer = () => {
       store.state.current_oferti = 0
+      store.state.current_suboffer = 0
       store.methods.changePage('Offer')
     }
 
