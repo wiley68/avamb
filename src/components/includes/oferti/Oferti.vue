@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
 
 export default {
   name: 'Oferti',
@@ -102,13 +102,17 @@ export default {
     const createOffer = () => {
       store.state.current_oferti = 0
       store.state.current_suboffer = 0
-      store.methods.changePage('Offer')
+      setTimeout(() => {
+        store.methods.changePage('Offer')
+      }, 500)
     }
 
     const editOffer = (offer_idnomber) => {
       store.state.current_oferti = offer_idnomber
       store.state.current_suboffer = 0
-      store.methods.changePage('Offer')
+      setTimeout(() => {
+        store.methods.changePage('Offer')
+      }, 500)
     }
 
     return {
