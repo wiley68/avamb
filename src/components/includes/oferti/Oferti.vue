@@ -106,6 +106,7 @@ export default {
 
     const editOffer = (offer_idnomber) => {
       store.state.current_oferti = offer_idnomber
+      store.state.current_suboffer = 0
       store.methods.changePage('Offer')
     }
 

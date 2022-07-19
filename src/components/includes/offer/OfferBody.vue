@@ -20,7 +20,8 @@
         </svg>
       </button>
       <div class="flex items-center ml-16">
-        Етап {{ store.state.offerEtap }}
+        Оферта-{{ store.state.current_oferti }} Етап
+        {{ store.state.offerEtap }}
       </div>
       <div class="flex items-center">
         <button
