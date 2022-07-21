@@ -292,7 +292,7 @@ export default {
           grupa2: null,
           grupa3: '',
           quantity: '1.00',
-          dds: current_oferti.dds,
+          dds: current_oferti ? current_oferti.dds : '-1',
           h: '1',
           l: '1',
           p: '1',
