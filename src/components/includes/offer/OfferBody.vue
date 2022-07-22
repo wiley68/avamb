@@ -111,11 +111,7 @@
           v-model="client"
           @change.stop="changeClient()"
         >
-          <option
-            v-for="client in store.state.offer_clienti"
-            :key="client.id"
-            :value="client"
-          >
+          <option v-for="client in clients" :key="client.id" :value="client">
             {{ clentName(client.first_name, client.last_name, client.name) }}
           </option>
         </select>

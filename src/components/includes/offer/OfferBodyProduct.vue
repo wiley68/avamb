@@ -73,6 +73,7 @@
         <button
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           aria-controls="success-modal"
+          @click.stop="addNull()"
         >
           <svg
             class="w-6 h-6 fill-current text-blue-600 shrink-0"
@@ -423,6 +424,14 @@ export default {
       calculatePrice()
     }
 
+    const addNull = () => {
+      product_search_div.value = true
+      const product_null = store.state.produkti_main.find((element) => {
+        return element.name.includes('/')
+      })
+      product.value = product_null ? product_null : {}
+    }
+
     return {
       store,
       suboffer,
@@ -435,6 +444,7 @@ export default {
       changeQuantity,
       changeDds,
       refreshPrice,
+      addNull,
     }
   },
 }

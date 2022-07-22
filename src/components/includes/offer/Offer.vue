@@ -24,7 +24,8 @@
         '/print_offer.php?oid=' +
         store.state.oferti_temp.find(
           (element) => element.idnomber == store.state.current_oferti
-        ).id
+        ).id +
+        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
       "
       target="_blank"
     >
