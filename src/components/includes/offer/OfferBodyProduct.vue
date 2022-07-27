@@ -29,7 +29,7 @@
       <button
         class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
         aria-controls="success-modal"
-        @click.stop="updateProduct()"
+        @click.stop="updateProductButton()"
       >
         <svg
           class="w-6 h-6 fill-current text-blue-600 shrink-0"
@@ -417,6 +417,11 @@ export default {
       }
     }
 
+    const updateProductButton = () => {
+      updateProduct()
+      calculatePrice()
+    }
+
     const refreshPrice = async () => {
       store.methods.getEdcenanew(suboffer.value)
       await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -440,6 +445,7 @@ export default {
       products,
       product,
       updateProduct,
+      updateProductButton,
       calculatePrice,
       changeQuantity,
       changeDds,
