@@ -3404,6 +3404,12 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  checkPicture(image_url) {
+    var http = new XMLHttpRequest()
+    http.open('HEAD', image_url, false)
+    http.send()
+    return http.status != 404
+  },
   saveSubOffer(suboffer) {
     if (
       typeof suboffer.price === 'string' ||
@@ -3416,6 +3422,17 @@ const methods = {
     var offer_id = state.oferti_temp.find(
       (element) => element.idnomber == state.current_oferti
     ).id
+    var newurl =
+      '/dist/img/products/product_' +
+      suboffer.products_code.slice(3, 6) +
+      suboffer.products_code.slice(-4) +
+      '.jpg'
+    var oldurl = '/dist/img/products/product_.jpg'
+    if (methods.checkPicture(newurl)) {
+      suboffer.picture_url = newurl
+    } else {
+      suboffer.picture_url = oldurl
+    }
     var data = new FormData()
     var info = []
     info[0] = 'SAVE'
