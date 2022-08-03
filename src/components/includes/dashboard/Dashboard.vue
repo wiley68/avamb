@@ -1,12 +1,9 @@
 <template>
   <div class="relative bg-sky-700 p-2 rounded overflow-hidden mb-2">
     <div class="relative">
-      <h1 class="text-xl text-white font-medium">
-        AVAMB-LOGICIEL - {{ typeUser() }}
+      <h1 class="text-xl text-white font-medium text-center">
+        Етапна визуализация
       </h1>
-      <p class="text-xl text-white">
-        {{ store.state.user.username }}
-      </p>
     </div>
   </div>
   <div
