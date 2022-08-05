@@ -41,8 +41,10 @@ const state = reactive({
       moment().format('DD.MM.YYYY'),
   dashboardSidebarOpen: true,
   offerSidebarOpen: true,
+  dogovorSidebarOpen: true,
   offerSidebarProductOpen: true,
   offerEtap: 1,
+  dogovorEtap: 1,
   obekti: [],
   ddsfirm: [],
   statusi: [],
@@ -112,6 +114,7 @@ const state = reactive({
   current_zadaca_id: 0,
   successUpdateZadaca: false,
   successUpdateOffer: false,
+  successUpdateDogovor: false,
   successUpdateSuboffer: false,
   deleteZadacaModal: false,
   messages: [],
@@ -172,11 +175,17 @@ const methods = {
   toggleOfferSidebar() {
     state.offerSidebarOpen = !state.offerSidebarOpen
   },
+  toggleDogovorSidebar() {
+    state.dogovorSidebarOpen = !state.dogovorSidebarOpen
+  },
   toggleOfferSidebarProduct() {
     state.offerSidebarProductOpen = !state.offerSidebarProductOpen
   },
   closeOfferSidebar() {
     state.offerSidebarOpen = false
+  },
+  closeDogovorSidebar() {
+    state.dogovorSidebarOpen = false
   },
   closeOfferSidebarProduct() {
     state.offerSidebarProductOpen = false
@@ -459,6 +468,9 @@ const methods = {
   changeSuccessUpdateOffer(successUpdateOffer) {
     state.successUpdateOffer = successUpdateOffer
   },
+  changeSuccessUpdateDogovor(successUpdateDogovor) {
+    state.successUpdateDogovor = successUpdateDogovor
+  },
   changeSuccessUpdateSuboffer(successUpdateSuboffer) {
     state.successUpdateSuboffer = successUpdateSuboffer
   },
@@ -548,7 +560,10 @@ const methods = {
   },
   loadData() {
     var data = new FormData()
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/getparams.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/getparams.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -580,7 +595,10 @@ const methods = {
     data.append('tekushta_start', tekushta_start)
     data.append('tekushta_end', tekushta_end)
     data.append('finished_offers', state.finished_offers)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_offers.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_offers.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -613,7 +631,10 @@ const methods = {
     const tekushta_end = state.tekushta.substring(14)
     data.append('tekushta_start', tekushta_start)
     data.append('tekushta_end', tekushta_end)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_oferti.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_oferti.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -647,7 +668,7 @@ const methods = {
     data.append('tekushta_end', tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_dogovori.php'
+      'https://dograma.avalonbg.com/function/mobile/get_dogovori.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -703,7 +724,10 @@ const methods = {
   getObekti(contragent_id) {
     var data = new FormData()
     data.append('contragent_id', contragent_id)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_obekti.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_obekti.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -731,7 +755,7 @@ const methods = {
     data.append('offer_id', offer_id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_suboffers.php'
+      'https://dograma.avalonbg.com/function/mobile/get_suboffers.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -765,7 +789,7 @@ const methods = {
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/getproductiadd.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/getproductiadd.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -819,7 +843,10 @@ const methods = {
   getDds() {
     var data = new FormData()
     data.append('firm_id', state.user.firm_id)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_dds.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_dds.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -847,7 +874,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_statusi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_statusi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -876,7 +903,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_shabloni.php'
+      'https://dograma.avalonbg.com/function/mobile/get_shabloni.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -962,7 +989,7 @@ const methods = {
     data.append('offer_id', state.current_dashboard_offer)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_doc_poseshtenia_all.php'
+      'https://dograma.avalonbg.com/function/mobile/get_doc_poseshtenia_all.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2320,7 +2347,7 @@ const methods = {
     data.append('tekushta_end', tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_rabotni.php'
+      'https://dograma.avalonbg.com/function/mobile/get_rabotni.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2352,7 +2379,10 @@ const methods = {
     const tekushta_end = state.tekushta.substring(14)
     data.append('tekushta_start', tekushta_start)
     data.append('tekushta_end', tekushta_end)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_zadaci.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_zadaci.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -2804,7 +2834,7 @@ const methods = {
     data.append('user_id', state.user.id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/get_messages.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/get_messages.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2906,7 +2936,7 @@ const methods = {
     data.append('tekushta_end', tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_storeminusi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_storeminusi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2941,7 +2971,7 @@ const methods = {
     data.append('tekushta_end', tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_storeplusi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_storeplusi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3209,7 +3239,7 @@ const methods = {
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/getproductiaddstoreminus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/getproductiaddstoreminus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3247,7 +3277,7 @@ const methods = {
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/getproductiaddstore.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/getproductiaddstore.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3413,6 +3443,111 @@ const methods = {
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/offer.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        if (offer.id > 0) {
+          methods.changeSuccessUpdateOffer(true)
+        } else {
+          methods.getOferti()
+          state.current_oferti = JSON.parse(this.response).newid
+          methods.changeSuccessUpdateOffer(false)
+        }
+      } else {
+        methods.changeSuccessUpdateOffer(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveDogovor(dogovor) {
+    var data = new FormData()
+    var info = []
+    if (offer.id > 0) {
+      info[0] = 'SAVE'
+      info[1] = offer.id
+      info[2] = offer.client_id
+      info[3] = offer.dateon
+      info[4] = offer.dateto
+      info[5] = state.user.id
+      info[6] = offer.obekt_id
+      info[7] = offer.info1
+      info[8] = offer.info2
+      info[9] = ''
+      info[10] = ''
+      info[11] = ''
+      info[12] = ''
+      info[13] = '/dist/img/products/product_.jpg'
+      info[14] = '/dist/img/products/product_.jpg'
+      info[15] = '/dist/img/products/product_.jpg'
+      info[16] = '/dist/img/products/product_.jpg'
+      info[17] = 0
+      info[18] = '0.00'
+      info[19] = offer.idnomber
+      info[20] = state.user.firm_id
+      info[21] = state.user.id
+      info[22] = ''
+      info[23] = offer.dds
+      info[24] = offer.status_offer
+      info[25] = ''
+      info[26] = '0.00'
+      info[27] = ''
+      info[28] = 0
+      info[29] = offer.text1
+      info[30] = offer.text2
+      info[31] = 1
+      info[32] = 1
+    } else {
+      info[0] = 'SAVE'
+      info[1] = offer.id
+      info[2] = offer.client_id
+      info[3] = moment().format('YYYY-MM-DD HH:mm:ss')
+      info[4] = moment().format('YYYY-MM-DD HH:mm:ss')
+      info[5] = state.user.id
+      info[6] = offer.obekt_id
+      info[7] = ''
+      info[8] = ''
+      info[9] = ''
+      info[10] = ''
+      info[11] = ''
+      info[12] = ''
+      info[13] = '/dist/img/products/product_.jpg'
+      info[14] = '/dist/img/products/product_.jpg'
+      info[15] = '/dist/img/products/product_.jpg'
+      info[16] = '/dist/img/products/product_.jpg'
+      info[17] = 0
+      info[18] = '0.00'
+      info[19] = offer.idnomber
+      info[20] = state.user.firm_id
+      info[21] = state.user.id
+      info[22] = ''
+      info[23] = offer.dds
+      info[24] = offer.status_offer
+      info[25] = ''
+      info[26] = '0.00'
+      info[27] = ''
+      info[28] = 0
+      info[29] = offer.text1
+      info[30] = offer.text2
+      info[31] = 1
+      info[32] = 1
+    }
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      '/function/offer1.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {

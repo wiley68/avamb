@@ -90,9 +90,8 @@ export default {
 
     const editDogovor = (dogovor_idnomber) => {
       store.state.current_dogovori = dogovor_idnomber
-      //   store.state.current_suboffer = 0
       setTimeout(() => {
-        // store.methods.changePage('Offer')
+        store.methods.changePage('Dogovor')
       }, 500)
     }
 
