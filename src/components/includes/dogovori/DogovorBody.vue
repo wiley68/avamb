@@ -20,7 +20,7 @@
         </svg>
       </button>
       <div class="flex items-center ml-16">
-        Договор-{{ store.state.current_dogovori }} Етап
+        Дог. по оферта - {{ dogovor.offer_idnomber }} Етап
         {{ store.state.dogovorEtap }}
       </div>
       <div class="flex items-center">
@@ -49,13 +49,13 @@
   </div>
   <div v-if="store.state.dogovorEtap == 2" class="grow p-4">
     <div
-      class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 mb-3"
+      class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 pb-6 mb-3"
     >
       <div class="flex flex-col mt-5 w-full">
         <select
           class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
           v-model="shablon1"
-          @change.stop="changeInfo1()"
+          @change.stop="changeDescription2()"
         >
           <option value="">Избери от моите шаблони</option>
           <option
@@ -71,14 +71,14 @@
         <textarea
           rows="8"
           class="w-full text-sm border rounded-sm border-gray-100 p-1"
-          v-model="offer.info1"
+          v-model="dogovor.description2"
         />
       </div>
       <div class="flex flex-col mt-5 w-full">
         <select
           class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
           v-model="shablon2"
-          @change.stop="changeInfo2()"
+          @change.stop="changeDescription()"
         >
           <option value="">Избери от моите шаблони</option>
           <option
@@ -89,6 +89,13 @@
             {{ shablon.name }}
           </option>
         </select>
+      </div>
+      <div class="flex flex-col mt-1 w-full">
+        <textarea
+          rows="8"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          v-model="dogovor.description"
+        />
       </div>
     </div>
   </div>
@@ -148,16 +155,9 @@ export default {
     const shablon2 = ref('')
 
     const dogovor = computed(() => {
-      if (store.state.current_dogovori == 0) {
-        return {
-          id: 0,
-          idnomber: 0,
-        }
-      } else {
-        return store.state.dogovori_temp.find(
-          (element) => element.idnomber == store.state.current_dogovori
-        )
-      }
+      return store.state.dogovori_temp.find(
+        (element) => element.idnomber == store.state.current_dogovori
+      )
     })
 
     const updateDogovor = () => {
@@ -174,22 +174,22 @@ export default {
       )
     }
 
-    const changeInfo1 = () => {
-      offer.value.info1 = shablon1.value
+    const changeDescription2 = () => {
+      dogovor.value.description2 = shablon1.value
     }
 
-    const changeInfo2 = () => {
-      offer.value.info2 = shablon2.value
+    const changeDescription = () => {
+      dogovor.value.description = shablon2.value
     }
 
     return {
       store,
       dogovor,
       updateDogovor,
-      changeInfo1,
+      changeDescription2,
       shablon1,
       shablon2,
-      changeInfo2,
+      changeDescription,
     }
   },
 }

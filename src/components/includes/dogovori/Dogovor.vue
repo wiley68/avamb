@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { inject, computed } from 'vue'
+import { inject, computed, onMounted } from 'vue'
 
 export default {
   name: 'Dogovor',
@@ -97,6 +97,10 @@ export default {
       store.state.dogovorEtap = 2
       store.methods.closeDogovorSidebar()
     }
+
+    onMounted(() => {
+      store.methods.getShabloni()
+    })
 
     return { store, goToEtap1, goToEtap2, dogovor }
   },

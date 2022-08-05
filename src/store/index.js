@@ -3475,79 +3475,41 @@ const methods = {
   saveDogovor(dogovor) {
     var data = new FormData()
     var info = []
-    if (offer.id > 0) {
-      info[0] = 'SAVE'
-      info[1] = offer.id
-      info[2] = offer.client_id
-      info[3] = offer.dateon
-      info[4] = offer.dateto
-      info[5] = state.user.id
-      info[6] = offer.obekt_id
-      info[7] = offer.info1
-      info[8] = offer.info2
-      info[9] = ''
-      info[10] = ''
-      info[11] = ''
-      info[12] = ''
-      info[13] = '/dist/img/products/product_.jpg'
-      info[14] = '/dist/img/products/product_.jpg'
-      info[15] = '/dist/img/products/product_.jpg'
-      info[16] = '/dist/img/products/product_.jpg'
-      info[17] = 0
-      info[18] = '0.00'
-      info[19] = offer.idnomber
-      info[20] = state.user.firm_id
-      info[21] = state.user.id
-      info[22] = ''
-      info[23] = offer.dds
-      info[24] = offer.status_offer
-      info[25] = ''
-      info[26] = '0.00'
-      info[27] = ''
-      info[28] = 0
-      info[29] = offer.text1
-      info[30] = offer.text2
-      info[31] = 1
-      info[32] = 1
-    } else {
-      info[0] = 'SAVE'
-      info[1] = offer.id
-      info[2] = offer.client_id
-      info[3] = moment().format('YYYY-MM-DD HH:mm:ss')
-      info[4] = moment().format('YYYY-MM-DD HH:mm:ss')
-      info[5] = state.user.id
-      info[6] = offer.obekt_id
-      info[7] = ''
-      info[8] = ''
-      info[9] = ''
-      info[10] = ''
-      info[11] = ''
-      info[12] = ''
-      info[13] = '/dist/img/products/product_.jpg'
-      info[14] = '/dist/img/products/product_.jpg'
-      info[15] = '/dist/img/products/product_.jpg'
-      info[16] = '/dist/img/products/product_.jpg'
-      info[17] = 0
-      info[18] = '0.00'
-      info[19] = offer.idnomber
-      info[20] = state.user.firm_id
-      info[21] = state.user.id
-      info[22] = ''
-      info[23] = offer.dds
-      info[24] = offer.status_offer
-      info[25] = ''
-      info[26] = '0.00'
-      info[27] = ''
-      info[28] = 0
-      info[29] = offer.text1
-      info[30] = offer.text2
-      info[31] = 1
-      info[32] = 1
-    }
+    info[0] = 'SAVE'
+    info[1] = dogovor.id
+    info[2] = dogovor.dateon
+    info[3] = dogovor.date_avans1
+    info[4] = dogovor.price_avans1
+    info[5] = dogovor.plashtane_avans1
+    info[6] = dogovor.date_avans2
+    info[7] = dogovor.price_avans2
+    info[8] = dogovor.plashtane_avans2
+    info[9] = dogovor.date_avans3
+    info[10] = dogovor.price_avans3
+    info[11] = dogovor.plashtane_avans3
+    info[12] = dogovor.date_ostatak
+    info[13] = dogovor.price_ostatak
+    info[14] = dogovor.plashtane_ostatak
+    info[15] = dogovor.vreme_dostavka
+    info[16] = dogovor.kraen_srok_dostavka
+    info[17] = dogovor.adress_dostavka
+    info[18] = dogovor.date_poracka
+    info[19] = dogovor.description
+    info[20] = dogovor.price_bezdds
+    info[21] = dogovor.dds20
+    info[22] = dogovor.dds55
+    info[23] = dogovor.price
+    info[24] = ''
+    info[25] = dogovor.adress_poracka
+    info[26] = dogovor.dds10
+    info[27] = dogovor.dds21
+    info[28] = dogovor.comment
+    info[29] = state.user.id
+    info[30] = dogovor.description2
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/offer1.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/dogovor.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3564,15 +3526,9 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        if (offer.id > 0) {
-          methods.changeSuccessUpdateOffer(true)
-        } else {
-          methods.getOferti()
-          state.current_oferti = JSON.parse(this.response).newid
-          methods.changeSuccessUpdateOffer(false)
-        }
+        methods.changeSuccessUpdateDogovor(true)
       } else {
-        methods.changeSuccessUpdateOffer(false)
+        methods.changeSuccessUpdateDogovor(false)
       }
     }
     xmlhttpro.send(data)
