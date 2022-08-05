@@ -44,8 +44,110 @@
   </div>
   <div v-if="store.state.dogovorEtap == 1" class="grow p-4">
     <div
-      class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 mb-3"
-    ></div>
+      class="flex flex-col items-start justify-between bg-indigo-50 shadow-lg rounded-t-sm border border-indigo-200 px-6 pb-3 mb-3"
+    >
+      <div class="flex flex-col mt-2 w-full">
+        <input
+          type="text"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          placeholder="Време за доставка"
+          v-model="dogovor.vreme_dostavka"
+        />
+      </div>
+      <div class="flex flex-col mt-2 w-full">
+        <input
+          type="text"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          placeholder="Адрес на доставка"
+          v-model="dogovor.adress_dostavka"
+        />
+      </div>
+      <div class="flex flex-col mt-2 w-full">
+        <input
+          type="text"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          placeholder="Коментар"
+          v-model="dogovor.comment"
+        />
+      </div>
+      <div class="flex flex-col mt-2 w-full">
+        <input
+          type="date"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          placeholder="Дата на аванс 1"
+          v-model="dogovor.date_avans1"
+        />
+      </div>
+      <div class="flex flex-col mt-2 w-full">
+        <input
+          type="text"
+          class="w-full text-sm border rounded-sm border-gray-100 p-1"
+          placeholder="Сума на аванс 1"
+          v-model="dogovor.price_avans1"
+        />
+      </div>
+      <div class="flex flex-col mt-2 w-full">
+        <select
+          class="w-full text-sm border rounded-sm border-gray-100 p-1 bg-blue-300"
+          v-model="dogovor.plashtane_avans1"
+        >
+          <option value="0">Избери начин на плащане</option>
+          <option value="check" :selected="dogovor.plashtane_avans1 == 'check'">
+            Чек
+          </option>
+          <option value="broi" :selected="dogovor.plashtane_avans1 == 'broi'">
+            В брой
+          </option>
+          <option value="banka" :selected="dogovor.plashtane_avans1 == 'banka'">
+            Банка
+          </option>
+        </select>
+      </div>
+      <div
+        class="flex items-center mt-2 w-full border border-gray-300 rounded-md shadow-md"
+      >
+        <div
+          class="bg-gray-50 w-1/2 px-2 py-1 border-l border-gray-300 rounded-l-md"
+        >
+          Цена без ддс
+        </div>
+        <div
+          class="bg-green-50 w-1/2 px-2 py-1 border-r border-gray-300 text-right rounded-r-md"
+        >
+          {{ dogovor.price_bezdds }}
+        </div>
+      </div>
+      <div
+        v-for="dds in dogovor.dds"
+        :key="dds.name"
+        class="flex items-center mt-2 w-full border border-gray-300 rounded-md shadow-md"
+      >
+        <div
+          class="bg-gray-50 w-1/2 px-2 py-1 border-l border-gray-300 rounded-l-md"
+        >
+          {{ dds.name }}
+        </div>
+        <div
+          class="bg-green-50 w-1/2 px-2 py-1 border-r border-gray-300 text-right rounded-r-md"
+        >
+          {{ dds.price.toFixed(2) }}
+        </div>
+      </div>
+      <div
+        class="flex items-center font-medium mt-2 w-full border border-gray-300 rounded-md shadow-md"
+      >
+        <div
+          class="bg-gray-50 w-1/2 px-2 py-1 border-l border-gray-300 rounded-l-md"
+        >
+          Крайна цена
+        </div>
+        <div
+          class="bg-green-50 w-1/2 px-2 py-1 border-r border-gray-300 text-right rounded-r-md"
+        >
+          {{ dogovor.price }}
+        </div>
+      </div>
+    </div>
   </div>
   <div v-if="store.state.dogovorEtap == 2" class="grow p-4">
     <div
