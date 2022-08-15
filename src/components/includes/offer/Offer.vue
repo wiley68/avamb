@@ -99,6 +99,64 @@
         </li>
       </ul>
     </div>
+    <hr />
+    <div class="px-5 py-4">
+      <ul class="mb-6">
+        <li class="-mx-2 mb-1">
+          <button
+            class="w-full p-2 rounded-lg border-2 border-orange-600"
+            @click.stop="
+              store.methods.createDogovor(
+                store.state.oferti_temp.find(
+                  (element) => element.idnomber == store.state.current_oferti
+                ).id
+              )
+            "
+          >
+            <div class="flex items-center">
+              <div
+                class="bg-orange-600 rounded-full h-6 flex justify-center items-center px-2 text-white text-sm font-medium"
+              >
+                {{ dogovoriNomber() }}
+              </div>
+              <div class="ml-3">
+                <span class="text-lg font-medium text-gray-900">Договори</span>
+              </div>
+            </div>
+          </button>
+        </li>
+        <li class="-mx-2 mb-1">
+          <button class="w-full p-2 rounded-lg border-2 border-orange-600">
+            <div class="flex items-center">
+              <div
+                class="bg-orange-600 rounded-full h-6 flex justify-center items-center px-2 text-white text-sm font-medium"
+              >
+                0
+              </div>
+              <div class="ml-3">
+                <span class="text-lg font-medium text-gray-900">Проформи</span>
+              </div>
+            </div>
+          </button>
+        </li>
+        <li class="-mx-2 mb-1">
+          <button class="w-full p-2 rounded-lg border-2 border-orange-600">
+            <div class="flex items-center">
+              <div
+                class="bg-orange-600 rounded-full h-6 flex justify-center items-center px-2 text-white text-sm font-medium"
+              >
+                0
+              </div>
+              <div class="ml-3">
+                <span class="text-lg font-medium text-gray-900"
+                  >Авансови фактури</span
+                >
+              </div>
+            </div>
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -126,13 +184,20 @@ export default {
       store.methods.closeOfferSidebar()
     }
 
+    const dogovoriNomber = () => {
+      const dogovori_nomber = store.state.dogovori.filter(
+        (element) => element.offer_idnomber == store.state.current_oferti
+      )
+      return dogovori_nomber ? dogovori_nomber.length : 0
+    }
+
     onMounted(() => {
       store.methods.getDds()
       store.methods.getStatusi()
       store.methods.getShabloni()
     })
 
-    return { store, goToEtap1, goToEtap2, goToEtap4 }
+    return { store, goToEtap1, goToEtap2, goToEtap4, dogovoriNomber }
   },
 }
 </script>
