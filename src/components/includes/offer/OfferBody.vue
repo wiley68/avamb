@@ -338,15 +338,15 @@ export default {
     })
 
     const clentName = (first_name, last_name, name) => {
-      let client_name = first_name
-      if (first_name != '') {
-        client_name += ' '
-      }
-      client_name += last_name
-      if ((first_name != '' || last_name != '') && name != '') {
+      let client_name = name
+      if (name != '') {
         client_name += ' - '
       }
-      client_name += name
+      client_name += last_name
+      if ((name != '' || last_name != '') && first_name != '') {
+        client_name += ' - '
+      }
+      client_name += first_name
       return client_name
     }
 
@@ -396,9 +396,13 @@ export default {
     watch(client_search, async (newSearch, oldSearch) => {
       if (newSearch.length > 0) {
         clients.value = store.state.offer_clienti.filter((element) => {
-          return element.first_name
-            .toLowerCase()
-            .includes(newSearch.toLowerCase())
+          return (
+            element.first_name
+              .toLowerCase()
+              .includes(newSearch.toLowerCase()) ||
+            element.last_name.toLowerCase().includes(newSearch.toLowerCase()) ||
+            element.name.toLowerCase().includes(newSearch.toLowerCase())
+          )
         })
       } else {
         clients.value = store.state.offer_clienti

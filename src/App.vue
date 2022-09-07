@@ -11,6 +11,7 @@
       <Dashboard v-if="store.state.page == 'Dashboard'"></Dashboard>
       <Oferti v-if="store.state.page == 'Oferti'"></Oferti>
       <Dogovori v-if="store.state.page == 'Dogovori'"></Dogovori>
+      <Proformi v-if="store.state.page == 'Proformi'"></Proformi>
       <Razmeri v-if="store.state.page == 'Razmeri'"></Razmeri>
       <Client v-if="store.state.page == 'Client'"></Client>
       <Zapitvane v-if="store.state.page == 'Zapitvane'"></Zapitvane>
@@ -48,6 +49,7 @@ import Landing from './components/Landing.vue'
 import Dashboard from './components/Dashboard.vue'
 import Oferti from './components/Oferti.vue'
 import Dogovori from './components/Dogovori.vue'
+import Proformi from './components/Proformi.vue'
 import Razmeri from './components/includes/etapna/Razmeri.vue'
 import Client from './components/includes/etapna/Client.vue'
 import Zapitvane from './components/includes/etapna/Zapitvane.vue'
@@ -81,6 +83,7 @@ export default {
     Dashboard,
     Oferti,
     Dogovori,
+    Proformi,
     Razmeri,
     Client,
     Zapitvane,

@@ -32,6 +32,8 @@ const state = reactive({
   oferti_temp: [],
   dogovori: [],
   dogovori_temp: [],
+  proformi: [],
+  proformi_temp: [],
   suboffers: [],
   finished_offers: 1,
   tekushta: tekushta_local
@@ -53,6 +55,7 @@ const state = reactive({
   current_offer: 0,
   current_oferti: 0,
   current_dogovori: 0,
+  current_proformi: 0,
   current_suboffer: 0,
   razmeri: [],
   otclienti: [],
@@ -273,6 +276,7 @@ const methods = {
       methods.getOffers()
       methods.getOferti()
       methods.getDogovori()
+      methods.getProformi()
       methods.getZadaci()
       methods.getRabotni()
       methods.getMessages()
@@ -678,6 +682,39 @@ const methods = {
       ) {
         state.dogovori = JSON.parse(this.response).dogovori
         state.dogovori_temp = JSON.parse(this.response).dogovori
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getProformi() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    const tekushta_start = state.tekushta.substring(0, 10)
+    const tekushta_end = state.tekushta.substring(14)
+    data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_end', tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      '/function/mobile/get_proformi.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.proformi = JSON.parse(this.response).proformi
+        state.proformi_temp = JSON.parse(this.response).proformi
       }
     }
     xmlhttpro.send(data)
