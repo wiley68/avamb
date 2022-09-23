@@ -2,9 +2,7 @@
   <div class="flex flex-row h-screen bg-white">
     <Sidebar></Sidebar>
     <!-- Content area -->
-    <div
-      class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden"
-    >
+    <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
       <!-- Site header -->
       <Header />
       <Landing v-if="store.state.page == 'Landing'"></Landing>
@@ -12,6 +10,7 @@
       <Oferti v-if="store.state.page == 'Oferti'"></Oferti>
       <Dogovori v-if="store.state.page == 'Dogovori'"></Dogovori>
       <Proformi v-if="store.state.page == 'Proformi'"></Proformi>
+      <Avansovi v-if="store.state.page == 'Avansovi'"></Avansovi>
       <Razmeri v-if="store.state.page == 'Razmeri'"></Razmeri>
       <Client v-if="store.state.page == 'Client'"></Client>
       <Zapitvane v-if="store.state.page == 'Zapitvane'"></Zapitvane>
@@ -33,9 +32,7 @@
       <Storeplusi v-if="store.state.page == 'Storeplusi'"></Storeplusi>
       <Offer v-if="store.state.page == 'Offer'"></Offer>
       <Dogovor v-if="store.state.page == 'Dogovor'"></Dogovor>
-      <Docposeshtenia
-        v-if="store.state.page == 'Docposeshtenia'"
-      ></Docposeshtenia>
+      <Docposeshtenia v-if="store.state.page == 'Docposeshtenia'"></Docposeshtenia>
     </div>
   </div>
 </template>
@@ -50,6 +47,7 @@ import Dashboard from './components/Dashboard.vue'
 import Oferti from './components/Oferti.vue'
 import Dogovori from './components/Dogovori.vue'
 import Proformi from './components/Proformi.vue'
+import Avansovi from './components/Avansovi.vue'
 import Razmeri from './components/includes/etapna/Razmeri.vue'
 import Client from './components/includes/etapna/Client.vue'
 import Zapitvane from './components/includes/etapna/Zapitvane.vue'
@@ -84,6 +82,7 @@ export default {
     Oferti,
     Dogovori,
     Proformi,
+    Avansovi,
     Razmeri,
     Client,
     Zapitvane,
