@@ -16,8 +16,7 @@
       store.state.oferti_temp.find(
         (element) => element.idnomber == store.state.current_oferti
       )
-    "
-      class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+    " class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
       aria-controls="success-modal" :href="
         '/print_offer.php?oid=' +
         store.state.oferti_temp.find(
@@ -103,7 +102,7 @@
             <div class="flex items-center">
               <div
                 class="bg-orange-600 rounded-full h-6 flex justify-center items-center px-2 text-white text-sm font-medium">
-                0
+                {{ proformiNomber() }}
               </div>
               <div class="ml-3">
                 <span class="text-lg font-medium text-gray-900">Проформи</span>
@@ -173,13 +172,20 @@ export default {
       return dogovori_nomber ? dogovori_nomber.length : 0
     }
 
+    const proformiNomber = () => {
+      const proformi_nomber = store.state.proformi.filter(
+        (element) => element.offer_idnomber == store.state.current_oferti
+      )
+      return proformi_nomber ? proformi_nomber.length : 0
+    }
+
     onMounted(() => {
       store.methods.getDds()
       store.methods.getStatusi()
       store.methods.getShabloni()
     })
 
-    return { store, goToEtap1, goToEtap2, goToEtap4, dogovoriNomber }
+    return { store, goToEtap1, goToEtap2, goToEtap4, dogovoriNomber, proformiNomber }
   },
 }
 </script>

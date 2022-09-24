@@ -32,6 +32,7 @@
       <Storeplusi v-if="store.state.page == 'Storeplusi'"></Storeplusi>
       <Offer v-if="store.state.page == 'Offer'"></Offer>
       <Dogovor v-if="store.state.page == 'Dogovor'"></Dogovor>
+      <Proforma v-if="store.state.page == 'Proforma'"></Proforma>
       <Docposeshtenia v-if="store.state.page == 'Docposeshtenia'"></Docposeshtenia>
     </div>
   </div>
@@ -70,6 +71,7 @@ import Storeplusi from './components/Storeplusi.vue'
 import Docposeshtenia from './components/includes/etapna/Docposeshtenia.vue'
 import Offer from './components/Offer.vue'
 import Dogovor from './components/Dogovor.vue'
+import Proforma from './components/Proforma.vue'
 
 export default {
   name: 'App',
@@ -104,7 +106,7 @@ export default {
     Storeplusi,
     Docposeshtenia,
     Offer,
-    Dogovor,
+    Dogovor, Proforma
   },
 
   setup() {
