@@ -140,9 +140,10 @@ export default {
         const shablon1 = ref('')
 
         const proforma = computed(() => {
-            return store.state.proformi_temp.find(
+            const pf = store.state.proformi_temp.find(
                 (element) => element.idnomber == store.state.current_proformi
             )
+            return pf
         })
 
         onMounted(() => {

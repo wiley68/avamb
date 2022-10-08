@@ -3918,7 +3918,9 @@ const methods = {
     xmlhttpro.send(data)
   },
   createProforma(oid) {
-    const offer_id = state.offers.find((element) => element.idnomber == oid).id
+    const offer_id = state.alloffers.find(
+      (element) => element.idnomber == oid
+    ).id
     var data = new FormData()
     var info = []
     info[0] = offer_id
