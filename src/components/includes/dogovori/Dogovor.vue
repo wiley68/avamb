@@ -18,10 +18,7 @@
       "
       target="_blank"
     >
-      <svg
-        class="w-8 h-8 fill-current text-blue-600 shrink-0"
-        viewBox="0 0 24 24"
-      >
+      <svg class="w-8 h-8 fill-current text-blue-600 shrink-0" viewBox="0 0 24 24">
         <path
           fill="currentColor"
           d="M18,3H6V7H18M19,12A1,1 0 0,1 18,11A1,1 0 0,1 19,10A1,1 0 0,1 20,11A1,1 0 0,1 19,12M16,19H8V14H16M19,8H5A3,3 0 0,0 2,11V17H6V21H18V17H22V11A3,3 0 0,0 19,8Z"
@@ -74,35 +71,36 @@
 </template>
 
 <script>
-import { inject, computed, onMounted } from 'vue'
+import { inject, computed, onMounted } from "vue";
 
 export default {
-  name: 'Dogovor',
+  name: "Dogovor",
 
   setup() {
-    const store = inject('store')
+    const store = inject("store");
 
     const dogovor = computed(() => {
-      return store.state.dogovori_temp.find(
+      const dg = store.state.dogovori_temp.find(
         (element) => element.idnomber == store.state.current_dogovori
-      )
-    })
+      );
+      return dg;
+    });
 
     const goToEtap1 = () => {
-      store.state.dogovorEtap = 1
-      store.methods.closeDogovorSidebar()
-    }
+      store.state.dogovorEtap = 1;
+      store.methods.closeDogovorSidebar();
+    };
 
     const goToEtap2 = () => {
-      store.state.dogovorEtap = 2
-      store.methods.closeDogovorSidebar()
-    }
+      store.state.dogovorEtap = 2;
+      store.methods.closeDogovorSidebar();
+    };
 
     onMounted(() => {
-      store.methods.getShabloni()
-    })
+      store.methods.getShabloni();
+    });
 
-    return { store, goToEtap1, goToEtap2, dogovor }
+    return { store, goToEtap1, goToEtap2, dogovor };
   },
-}
+};
 </script>
