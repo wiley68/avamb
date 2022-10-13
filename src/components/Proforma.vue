@@ -1,27 +1,26 @@
 <template>
-    <main>
-        <div class="relative flex">
-            <ProformaSidebar />
-        </div>
-    </main>
+  <main>
+    <div class="relative flex">
+      <ProformaSidebar />
+    </div>
+  </main>
 </template>
-  
+
 <script>
-import { inject } from 'vue'
-import ProformaSidebar from './includes/proformi/ProformaSidebar.vue'
+import { inject } from "vue";
+import ProformaSidebar from "./includes/proformi/ProformaSidebar.vue";
 
 export default {
-    name: 'Proforma',
+  name: "Proforma",
 
-    components: {
-        ProformaSidebar,
-    },
+  components: {
+    ProformaSidebar,
+  },
 
-    setup() {
-        const store = inject('store')
+  setup() {
+    const store = inject("store");
 
-        return { store }
-    },
-}
+    return { store };
+  },
+};
 </script>
-  

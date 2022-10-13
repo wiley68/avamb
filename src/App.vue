@@ -33,48 +33,50 @@
       <Offer v-if="store.state.page == 'Offer'"></Offer>
       <Dogovor v-if="store.state.page == 'Dogovor'"></Dogovor>
       <Proforma v-if="store.state.page == 'Proforma'"></Proforma>
+      <Avansova v-if="store.state.page == 'Avansova'"></Avansova>
       <Docposeshtenia v-if="store.state.page == 'Docposeshtenia'"></Docposeshtenia>
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted, provide } from 'vue'
-import store from './store'
-import Sidebar from './components/includes/Sidebar.vue'
-import Header from './components/includes/Header.vue'
-import Landing from './components/Landing.vue'
-import Dashboard from './components/Dashboard.vue'
-import Oferti from './components/Oferti.vue'
-import Dogovori from './components/Dogovori.vue'
-import Proformi from './components/Proformi.vue'
-import Avansovi from './components/Avansovi.vue'
-import Razmeri from './components/includes/etapna/Razmeri.vue'
-import Client from './components/includes/etapna/Client.vue'
-import Zapitvane from './components/includes/etapna/Zapitvane.vue'
-import Otgovor from './components/includes/etapna/Otgovor.vue'
-import Eoffers from './components/includes/etapna/Eoffers.vue'
-import Pdogovori from './components/includes/etapna/Pdogovori.vue'
-import Ddsta from './components/includes/etapna/Ddsta.vue'
-import Poffers from './components/includes/etapna/Poffers.vue'
-import Casti from './components/includes/etapna/Casti.vue'
-import Poracki from './components/includes/etapna/Poracki.vue'
-import Pps from './components/includes/etapna/Pps.vue'
-import Pprs from './components/includes/etapna/Pprs.vue'
-import Snimki from './components/includes/etapna/Snimki.vue'
-import Fakturip from './components/includes/etapna/Fakturip.vue'
-import Rabotni from './components/Rabotni.vue'
-import Zadaci from './components/Zadaci.vue'
-import Messages from './components/Messages.vue'
-import Storeminusi from './components/Storeminusi.vue'
-import Storeplusi from './components/Storeplusi.vue'
-import Docposeshtenia from './components/includes/etapna/Docposeshtenia.vue'
-import Offer from './components/Offer.vue'
-import Dogovor from './components/Dogovor.vue'
-import Proforma from './components/Proforma.vue'
+import { onMounted, provide } from "vue";
+import store from "./store";
+import Sidebar from "./components/includes/Sidebar.vue";
+import Header from "./components/includes/Header.vue";
+import Landing from "./components/Landing.vue";
+import Dashboard from "./components/Dashboard.vue";
+import Oferti from "./components/Oferti.vue";
+import Dogovori from "./components/Dogovori.vue";
+import Proformi from "./components/Proformi.vue";
+import Avansovi from "./components/Avansovi.vue";
+import Razmeri from "./components/includes/etapna/Razmeri.vue";
+import Client from "./components/includes/etapna/Client.vue";
+import Zapitvane from "./components/includes/etapna/Zapitvane.vue";
+import Otgovor from "./components/includes/etapna/Otgovor.vue";
+import Eoffers from "./components/includes/etapna/Eoffers.vue";
+import Pdogovori from "./components/includes/etapna/Pdogovori.vue";
+import Ddsta from "./components/includes/etapna/Ddsta.vue";
+import Poffers from "./components/includes/etapna/Poffers.vue";
+import Casti from "./components/includes/etapna/Casti.vue";
+import Poracki from "./components/includes/etapna/Poracki.vue";
+import Pps from "./components/includes/etapna/Pps.vue";
+import Pprs from "./components/includes/etapna/Pprs.vue";
+import Snimki from "./components/includes/etapna/Snimki.vue";
+import Fakturip from "./components/includes/etapna/Fakturip.vue";
+import Rabotni from "./components/Rabotni.vue";
+import Zadaci from "./components/Zadaci.vue";
+import Messages from "./components/Messages.vue";
+import Storeminusi from "./components/Storeminusi.vue";
+import Storeplusi from "./components/Storeplusi.vue";
+import Docposeshtenia from "./components/includes/etapna/Docposeshtenia.vue";
+import Offer from "./components/Offer.vue";
+import Dogovor from "./components/Dogovor.vue";
+import Proforma from "./components/Proforma.vue";
+import Avansova from "./components/Avansova.vue";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     Sidebar,
@@ -106,17 +108,19 @@ export default {
     Storeplusi,
     Docposeshtenia,
     Offer,
-    Dogovor, Proforma
+    Dogovor,
+    Proforma,
+    Avansova,
   },
 
   setup() {
-    provide('store', store)
+    provide("store", store);
 
     onMounted(() => {
-      store.methods.loadData()
-    })
+      store.methods.loadData();
+    });
 
-    return { store }
+    return { store };
   },
-}
+};
 </script>
