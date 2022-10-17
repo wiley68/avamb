@@ -11,6 +11,7 @@
       <Dogovori v-if="store.state.page == 'Dogovori'"></Dogovori>
       <Proformi v-if="store.state.page == 'Proformi'"></Proformi>
       <Avansovi v-if="store.state.page == 'Avansovi'"></Avansovi>
+      <Fakturi v-if="store.state.page == 'Fakturi'"></Fakturi>
       <Razmeri v-if="store.state.page == 'Razmeri'"></Razmeri>
       <Client v-if="store.state.page == 'Client'"></Client>
       <Zapitvane v-if="store.state.page == 'Zapitvane'"></Zapitvane>
@@ -50,6 +51,7 @@ import Oferti from "./components/Oferti.vue";
 import Dogovori from "./components/Dogovori.vue";
 import Proformi from "./components/Proformi.vue";
 import Avansovi from "./components/Avansovi.vue";
+import Fakturi from "./components/Fakturi.vue";
 import Razmeri from "./components/includes/etapna/Razmeri.vue";
 import Client from "./components/includes/etapna/Client.vue";
 import Zapitvane from "./components/includes/etapna/Zapitvane.vue";
@@ -87,6 +89,7 @@ export default {
     Dogovori,
     Proformi,
     Avansovi,
+    Fakturi,
     Razmeri,
     Client,
     Zapitvane,
