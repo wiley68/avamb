@@ -12,6 +12,7 @@
       <Proformi v-if="store.state.page == 'Proformi'"></Proformi>
       <Avansovi v-if="store.state.page == 'Avansovi'"></Avansovi>
       <Fakturi v-if="store.state.page == 'Fakturi'"></Fakturi>
+      <Faktura v-if="store.state.page == 'Faktura'"></Faktura>
       <Razmeri v-if="store.state.page == 'Razmeri'"></Razmeri>
       <Client v-if="store.state.page == 'Client'"></Client>
       <Zapitvane v-if="store.state.page == 'Zapitvane'"></Zapitvane>
@@ -76,6 +77,7 @@ import Offer from "./components/Offer.vue";
 import Dogovor from "./components/Dogovor.vue";
 import Proforma from "./components/Proforma.vue";
 import Avansova from "./components/Avansova.vue";
+import Faktura from "./components/Faktura.vue";
 
 export default {
   name: "App",
@@ -114,6 +116,7 @@ export default {
     Dogovor,
     Proforma,
     Avansova,
+    Faktura,
   },
 
   setup() {

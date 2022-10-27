@@ -50,6 +50,7 @@ const state = reactive({
   dogovorSidebarOpen: true,
   proformaSidebarOpen: true,
   avansovaSidebarOpen: true,
+  fakturaSidebarOpen: true,
   offerSidebarProductOpen: true,
   offerEtap: 1,
   dogovorEtap: 1,
@@ -128,6 +129,7 @@ const state = reactive({
   successUpdateDogovor: false,
   successUpdateProforma: false,
   successUpdateAvansova: false,
+  successUpdateFaktura: false,
   successUpdateSuboffer: false,
   deleteZadacaModal: false,
   messages: [],
@@ -197,6 +199,9 @@ const methods = {
   toggleAvansovaSidebar() {
     state.avansovaSidebarOpen = !state.avansovaSidebarOpen
   },
+  toggleFakturaSidebar() {
+    state.fakturaSidebarOpen = !state.fakturaSidebarOpen
+  },
   toggleOfferSidebarProduct() {
     state.offerSidebarProductOpen = !state.offerSidebarProductOpen
   },
@@ -211,6 +216,9 @@ const methods = {
   },
   closeAvansovaSidebar() {
     state.avansovaSidebarOpen = false
+  },
+  closeFakturaSidebar() {
+    state.fakturaSidebarOpen = false
   },
   closeOfferSidebarProduct() {
     state.offerSidebarProductOpen = false
@@ -504,6 +512,9 @@ const methods = {
   },
   changeSuccessUpdateAvansova(successUpdateAvansova) {
     state.successUpdateAvansova = successUpdateAvansova
+  },
+  changeSuccessUpdateFaktura(successUpdateFaktura) {
+    state.successUpdateFaktura = successUpdateFaktura
   },
   changeSuccessUpdateSuboffer(successUpdateSuboffer) {
     state.successUpdateSuboffer = successUpdateSuboffer
@@ -3966,6 +3977,41 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  createFaktura(offer) {
+    var data = new FormData()
+    var info = []
+    info[0] = offer.id
+    info[1] = offer.allprice_after_to
+    info[2] = offer.allprice_bez_dds_after_to
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      '/function/createfaktura.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.getFakturi()
+        setTimeout(() => {
+          state.current_fakturi = JSON.parse(this.response).newid
+          methods.changePage('Faktura')
+        }, 500)
+      }
+    }
+    xmlhttpro.send(data)
+  },
   createProforma(oid) {
     const offer_id = state.alloffers.find(
       (element) => element.idnomber == oid
@@ -4081,6 +4127,55 @@ const methods = {
         methods.changeSuccessUpdateAvansova(true)
       } else {
         methods.changeSuccessUpdateAvansova(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveFaktura(faktura) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'SAVE'
+    info[1] = faktura.id
+    info[2] = faktura.dateon
+    info[3] = faktura.price
+    info[4] = faktura.price_bezdds
+    info[5] = faktura.dds20
+    info[6] = faktura.dds55
+    info[19] = faktura.description
+    info[20] = faktura.dds10
+    info[21] = faktura.dds21
+    info[22] = state.user.id
+    info[23] = faktura.dateonprevod
+    info[24] = faktura.nacinplashtane
+    info[25] = faktura.datedanacno
+    info[26] = faktura.city
+    info[27] = faktura.smetka_id
+    info[28] = faktura.valuta
+    info[29] = faktura.kurs_valuta
+    info[30] = faktura.grif
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      '/function/fakturi.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.changeSuccessUpdateFaktura(true)
+      } else {
+        methods.changeSuccessUpdateFaktura(false)
       }
     }
     xmlhttpro.send(data)

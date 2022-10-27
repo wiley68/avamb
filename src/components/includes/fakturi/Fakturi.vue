@@ -90,9 +90,9 @@ export default {
 
     const editFaktura = (faktura_idnomber) => {
       store.state.current_fakturi = faktura_idnomber;
-      //   setTimeout(() => {
-      //     store.methods.changePage("Faktura");
-      //   }, 500);
+      setTimeout(() => {
+        store.methods.changePage("Faktura");
+      }, 500);
     };
 
     const formatDateTime = (value) => {
