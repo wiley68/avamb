@@ -9,7 +9,22 @@
   <div
     class="flex flex-wrap justify-center items-center space-y-2 p-4 sm:p-6 mb-2"
   >
-    <Datepicker class="mt-2" />
+    <div class="flex w-full justify-between items-center">
+      <input
+        v-model="store.state.tekushta_start"
+        class="text-gray-500 hover:text-gray-600 font-medium border rounded p-1 focus:border-gray-300"
+        @change="changeDateStart()"
+        type="date"
+      />
+      <input
+        v-model="store.state.tekushta_end"
+        class="text-gray-500 hover:text-gray-600 font-medium border rounded p-1 focus:border-gray-300"
+        @change="changeDateEnd()"
+        type="date"
+      />
+    </div>
+
+    <!-- <Datepicker class="mt-2" /> -->
     <div>
       <button
         class="p-1.5 shrink-0 rounded border shadow-sm ml-2"
@@ -92,13 +107,13 @@
 
 <script>
 import { inject } from 'vue'
-import Datepicker from '../components/Datepicker.vue'
+// import Datepicker from '../components/Datepicker.vue'
 
 export default {
   name: 'Dashboard',
 
   components: {
-    Datepicker,
+    // Datepicker,
   },
 
   setup() {
@@ -153,6 +168,14 @@ export default {
       store.methods.closeDashboardSidebar()
     }
 
+    const changeDateStart = () => {
+      store.methods.getOffers()
+    }
+
+    const changeDateEnd = () => {
+      store.methods.getOffers()
+    }
+
     return {
       store,
       changeDashboardOffer,
@@ -161,6 +184,8 @@ export default {
       showActive,
       getOffers,
       openOffer,
+      changeDateStart,
+      changeDateEnd,
     }
   },
 }
