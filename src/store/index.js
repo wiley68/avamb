@@ -3013,12 +3013,13 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  createMessage(from_user_id, to_user_id, body) {
+  createMessage(from_user_id, to_user_id, body, offer_id) {
     var data = new FormData()
     data.append('token', '2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z')
     data.append('from_user_id', from_user_id)
     data.append('to_user_id', to_user_id)
     data.append('body', body)
+    data.append('offer_id', offer_id)
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/create_message.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
@@ -3040,9 +3041,13 @@ const methods = {
       ) {
         const newMessage = {
           id: JSON.parse(this.response).id,
+          firm_id: JSON.parse(this.response).firm_id,
+          offer_id: JSON.parse(this.response).offer_id,
+          offer_idnomber: JSON.parse(this.response).offer_idnomber,
           from_user_id: JSON.parse(this.response).from_user_id,
           to_user_id: JSON.parse(this.response).to_user_id,
           body: JSON.parse(this.response).body,
+          status: JSON.parse(this.response).status,
           created_at: JSON.parse(this.response).created_at,
           updated_at: JSON.parse(this.response).updated_at,
         }
