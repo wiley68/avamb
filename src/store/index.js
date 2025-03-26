@@ -18,7 +18,7 @@ function createCORSRequest(method, url) {
   return xhr
 }
 
-const tekushta_local = localStorage.getItem('tekushta')
+// const tekushta_local = localStorage.getItem('tekushta')
 
 const state = reactive({
   page: 'Landing',
@@ -40,11 +40,13 @@ const state = reactive({
   fakturi_temp: [],
   suboffers: [],
   finished_offers: 1,
-  tekushta: tekushta_local
-    ? tekushta_local
-    : moment().startOf('year').format('DD.MM.YYYY') +
-      ' to ' +
-      moment().format('DD.MM.YYYY'),
+  tekushta_start: moment().startOf('year').format('YYYY-MM-DD'),
+  tekushta_end: moment().format('YYYY-MM-DD'),
+  // tekushta: tekushta_local
+  //   ? tekushta_local
+  //   : moment().startOf('year').format('DD.MM.YYYY') +
+  //     ' to ' +
+  //     moment().format('DD.MM.YYYY'),
   dashboardSidebarOpen: true,
   offerSidebarOpen: true,
   dogovorSidebarOpen: true,
@@ -632,10 +634,12 @@ const methods = {
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
     data.append('role', state.user.role)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     data.append('finished_offers', state.finished_offers)
     var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_offers.php')
     const loader = $loading.show(loader_params)
@@ -666,10 +670,12 @@ const methods = {
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
     data.append('role', state.user.role)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_oferti.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -698,10 +704,12 @@ const methods = {
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
     data.append('role', state.user.role)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/mobile/get_dogovori.php'
@@ -731,10 +739,12 @@ const methods = {
     var data = new FormData()
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/mobile/get_proformi.php'
@@ -764,10 +774,12 @@ const methods = {
     var data = new FormData()
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/mobile/get_avansovi.php'
@@ -797,10 +809,12 @@ const methods = {
     var data = new FormData()
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/mobile/get_fakturi.php'
@@ -2470,10 +2484,12 @@ const methods = {
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
     data.append('role', state.user.role)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/mobile/get_rabotni.php'
@@ -2504,10 +2520,12 @@ const methods = {
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
     data.append('role', state.user.role)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_zadaci.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3061,10 +3079,12 @@ const methods = {
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
     data.append('role', state.user.role)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/mobile/get_storeminusi.php'
@@ -3096,10 +3116,12 @@ const methods = {
     data.append('user_id', state.user.id)
     data.append('firm_id', state.user.firm_id)
     data.append('role', state.user.role)
-    const tekushta_start = state.tekushta.substring(0, 10)
-    const tekushta_end = state.tekushta.substring(14)
-    data.append('tekushta_start', tekushta_start)
-    data.append('tekushta_end', tekushta_end)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/mobile/get_storeplusi.php'
