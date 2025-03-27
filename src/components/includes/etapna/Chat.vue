@@ -1,17 +1,17 @@
 <template>
   <main>
-    <RazmeriBody />
+    <ChatBody />
   </main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import RazmeriBody from './razmeri/RazmeriBody.vue'
+import ChatBody from './chat/ChatBody.vue'
 
 export default {
-  name: 'Razmeri',
+  name: 'Chat',
 
-  components: { RazmeriBody },
+  components: { ChatBody },
 
   setup() {
     const store = inject('store')

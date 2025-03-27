@@ -68,7 +68,7 @@ const state = reactive({
   current_avansovi: 0,
   current_fakturi: 0,
   current_suboffer: 0,
-  razmeri: [],
+  chat: [],
   otclienti: [],
   doc_poseshtenia: [],
   doc_poseshtenia_view: [],
@@ -576,6 +576,9 @@ const methods = {
     state.messages = state.messages.filter((element) => {
       return element.id != id
     })
+    state.chat = state.chat.filter((element) => {
+      return element.id != id
+    })
   },
   changeDeleteStoreminusModal(deleteStoreminusModal) {
     state.deleteStoreminusModal = deleteStoreminusModal
@@ -840,14 +843,11 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  getRazmeri(offer_id) {
+  getChat(offer_id) {
     var data = new FormData()
     data.append('firm_id', state.user.firm_id)
     data.append('offer_id', offer_id)
-    var xmlhttpro = createCORSRequest(
-      'POST',
-      '/function/mobile/get_razmeri.php'
-    )
+    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_chat.php')
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -863,9 +863,9 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        state.razmeri = JSON.parse(this.response).razmeri
+        state.chat = JSON.parse(this.response).chat
       } else {
-        state.razmeri = []
+        state.chat = []
       }
     }
     xmlhttpro.send(data)
@@ -1007,7 +1007,7 @@ const methods = {
       ) {
         state.ddsfirm = JSON.parse(this.response).ddsfirm
       } else {
-        state.razmeri = []
+        state.ddsfirm = []
       }
     }
     xmlhttpro.send(data)

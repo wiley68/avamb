@@ -78,15 +78,15 @@
             >
               <button
                 class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
-                :class="offer().razmeri_broi > 0 ? 'bg-blue-600' : 'bg-white'"
-                @click.stop="goToRazmeri()"
+                :class="offer().chat_broi > 0 ? 'bg-orange-600' : 'bg-white'"
+                @click.stop="goToChat()"
               >
-                {{ offer().razmeri_broi }}
+                {{ offer().chat_broi }}
               </button>
             </div>
           </div>
         </div>
-        <div class="text-sm mr-1">Екземпляр за вземане на размери</div>
+        <div class="text-sm mr-1">Съобщения към офертата</div>
       </div>
       <div
         v-if="store.state.user.etapna4 == '1'"
@@ -605,9 +605,9 @@ export default {
       store.methods.changePage('Rabotni')
     }
 
-    const goToRazmeri = () => {
-      store.methods.getRazmeri(store.state.current_dashboard_offer)
-      store.methods.changePage('Razmeri')
+    const goToChat = () => {
+      store.methods.getChat(store.state.current_dashboard_offer)
+      store.methods.changePage('Chat')
     }
 
     const goToOtclienti = () => {
@@ -696,7 +696,7 @@ export default {
       store,
       offer,
       colorTasksRaboti,
-      goToRazmeri,
+      goToChat,
       goToOtclienti,
       goToZapitvane,
       goToOtgovor,
