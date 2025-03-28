@@ -44,6 +44,7 @@
       <Modul1 v-if="store.state.page == 'Modul1'"></Modul1>
       <Modul2 v-if="store.state.page == 'Modul2'"></Modul2>
       <Modul3 v-if="store.state.page == 'Modul3'"></Modul3>
+      <Modul4 v-if="store.state.page == 'Modul4'"></Modul4>
     </div>
   </div>
 </template>
@@ -88,6 +89,7 @@ import Faktura from './components/Faktura.vue'
 import Modul1 from './components/Modul1.vue'
 import Modul2 from './components/Modul2.vue'
 import Modul3 from './components/Modul3.vue'
+import Modul4 from './components/Modul4.vue'
 
 export default {
   name: 'App',
@@ -130,6 +132,7 @@ export default {
     Modul1,
     Modul2,
     Modul3,
+    Modul4,
   },
 
   setup() {
