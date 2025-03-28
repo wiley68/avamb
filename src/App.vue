@@ -45,6 +45,7 @@
       <Modul2 v-if="store.state.page == 'Modul2'"></Modul2>
       <Modul3 v-if="store.state.page == 'Modul3'"></Modul3>
       <Modul4 v-if="store.state.page == 'Modul4'"></Modul4>
+      <Modul5 v-if="store.state.page == 'Modul5'"></Modul5>
     </div>
   </div>
 </template>
@@ -90,6 +91,7 @@ import Modul1 from './components/Modul1.vue'
 import Modul2 from './components/Modul2.vue'
 import Modul3 from './components/Modul3.vue'
 import Modul4 from './components/Modul4.vue'
+import Modul5 from './components/Modul5.vue'
 
 export default {
   name: 'App',
@@ -133,6 +135,7 @@ export default {
     Modul2,
     Modul3,
     Modul4,
+    Modul5,
   },
 
   setup() {
