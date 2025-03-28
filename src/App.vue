@@ -41,6 +41,7 @@
       <Docposeshtenia
         v-if="store.state.page == 'Docposeshtenia'"
       ></Docposeshtenia>
+      <Modul1 v-if="store.state.page == 'Modul1'"></Modul1>
     </div>
   </div>
 </template>
@@ -82,6 +83,7 @@ import Dogovor from './components/Dogovor.vue'
 import Proforma from './components/Proforma.vue'
 import Avansova from './components/Avansova.vue'
 import Faktura from './components/Faktura.vue'
+import Modul1 from './components/Modul1.vue'
 
 export default {
   name: 'App',
@@ -121,6 +123,7 @@ export default {
     Proforma,
     Avansova,
     Faktura,
+    Modul1,
   },
 
   setup() {
