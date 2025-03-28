@@ -1,12 +1,12 @@
 <template>
-  <div>Modul 1</div>
+  <div>Modul 2</div>
 </template>
 
 <script>
 import { inject } from 'vue'
 
 export default {
-  name: 'Modul1',
+  name: 'Modul2',
 
   setup() {
     const store = inject('store')

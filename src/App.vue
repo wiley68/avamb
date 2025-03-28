@@ -42,6 +42,7 @@
         v-if="store.state.page == 'Docposeshtenia'"
       ></Docposeshtenia>
       <Modul1 v-if="store.state.page == 'Modul1'"></Modul1>
+      <Modul2 v-if="store.state.page == 'Modul2'"></Modul2>
     </div>
   </div>
 </template>
@@ -84,6 +85,7 @@ import Proforma from './components/Proforma.vue'
 import Avansova from './components/Avansova.vue'
 import Faktura from './components/Faktura.vue'
 import Modul1 from './components/Modul1.vue'
+import Modul2 from './components/Modul2.vue'
 
 export default {
   name: 'App',
@@ -124,6 +126,7 @@ export default {
     Avansova,
     Faktura,
     Modul1,
+    Modul2,
   },
 
   setup() {
