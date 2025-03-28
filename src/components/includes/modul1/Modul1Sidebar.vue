@@ -10,7 +10,7 @@
       class="sticky top-16 bg-white overflow-x-hidden overflow-y-auto no-scrollbar shrink-0 border-r border-gray-200 md:w-72 xl:w-80 h-[calc(100vh-64px)]"
     >
       <div>
-        <div class="px-5 py-4"><Model1 /></div>
+        <div class="px-5 py-4"><Modul1 /></div>
       </div>
     </div>
   </div>
