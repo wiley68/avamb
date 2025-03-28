@@ -18,12 +18,12 @@
 
 <script>
 import { inject } from 'vue'
-import Model3 from './Model3.vue'
+import Modul3 from './Modul3.vue'
 
 export default {
   name: 'Modul3Sidebar',
 
-  components: { Model3 },
+  components: { Modul3 },
 
   setup() {
     const store = inject('store')
