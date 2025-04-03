@@ -129,9 +129,24 @@ const state = reactive({
   successUpdatePoseshtenie: false,
   deletePoseshtenieModal: false,
   zadaci: [],
+  moduli1: [],
+  moduli2: [],
+  moduli3: [],
+  moduli4: [],
+  moduli5: [],
   zadaci_temp: [],
+  moduli1_temp: [],
+  moduli2_temp: [],
+  moduli3_temp: [],
+  moduli4_temp: [],
+  moduli5_temp: [],
   zadaciSidebarOpen: true,
   current_zadaca_id: 0,
+  current_modul1_id: 0,
+  current_modul2_id: 0,
+  current_modul3_id: 0,
+  current_modul4_id: 0,
+  current_modul5_id: 0,
   successUpdateZadaca: false,
   successUpdateOffer: false,
   successUpdateDogovor: false,
@@ -303,6 +318,21 @@ const methods = {
   toggleZadaciSidebar() {
     state.zadaciSidebarOpen = !state.zadaciSidebarOpen
   },
+  toggleModul1Sidebar() {
+    state.modul1SidebarOpen = !state.modul1SidebarOpen
+  },
+  toggleModul2Sidebar() {
+    state.modul2SidebarOpen = !state.modul2SidebarOpen
+  },
+  toggleModul3Sidebar() {
+    state.modul3SidebarOpen = !state.modul3SidebarOpen
+  },
+  toggleModul4Sidebar() {
+    state.modul4SidebarOpen = !state.modul4SidebarOpen
+  },
+  toggleModul5Sidebar() {
+    state.modul5SidebarOpen = !state.modul5SidebarOpen
+  },
   toggleStoreminusiSidebar() {
     state.storeminusiSidebarOpen = !state.storeminusiSidebarOpen
   },
@@ -311,6 +341,21 @@ const methods = {
   },
   closeZadaciSidebar() {
     state.zadaciSidebarOpen = false
+  },
+  closeModul1Sidebar() {
+    state.modul1SidebarOpen = false
+  },
+  closeModul2Sidebar() {
+    state.modul2SidebarOpen = false
+  },
+  closeModul3Sidebar() {
+    state.modul3SidebarOpen = false
+  },
+  closeModul4Sidebar() {
+    state.modul4SidebarOpen = false
+  },
+  closeModul5Sidebar() {
+    state.modul5SidebarOpen = false
   },
   closeStoreminusiSidebar() {
     state.storeminusiSidebarOpen = false
@@ -321,6 +366,21 @@ const methods = {
   openZadaciSidebar() {
     state.zadaciSidebarOpen = true
   },
+  openModul1Sidebar() {
+    state.modul1SidebarOpen = true
+  },
+  openModul2Sidebar() {
+    state.modul2SidebarOpen = true
+  },
+  openModul3Sidebar() {
+    state.modul1SidebarOpen = true
+  },
+  openModul4Sidebar() {
+    state.modul4SidebarOpen = true
+  },
+  openModul5Sidebar() {
+    state.modul5SidebarOpen = true
+  },
   openStoreminusiSidebar() {
     state.storeminusiSidebarOpen = true
   },
@@ -329,6 +389,21 @@ const methods = {
   },
   changeZadaci(zadaca_id) {
     state.current_zadaca_id = zadaca_id
+  },
+  changeModul1(modul1_id) {
+    state.current_modul1_id = modul1_id
+  },
+  changeModul2(modul2_id) {
+    state.current_modul2_id = modul2_id
+  },
+  changeModul3(modul3_id) {
+    state.current_modul3_id = modul3_id
+  },
+  changeModul4(modul4_id) {
+    state.current_modul4_id = modul4_id
+  },
+  changeModul5(modul5_id) {
+    state.current_modul5_id = modul5_id
   },
   changeStoreminusi(storeminus_id) {
     state.current_sub_storeminus_id = 0
@@ -363,6 +438,11 @@ const methods = {
       methods.getAvansovi()
       methods.getFakturi()
       methods.getZadaci()
+      methods.getModuli1()
+      methods.getModuli2()
+      methods.getModuli3()
+      methods.getModuli4()
+      methods.getModuli5()
       methods.getRabotni()
       methods.getMessages()
       methods.getStoreminusi()
@@ -589,6 +669,46 @@ const methods = {
       return element.id != id
     })
   },
+  deleteModul1ById(id) {
+    state.moduli1 = state.moduli1.filter((element) => {
+      return element.id != id
+    })
+    state.moduli1_temp = state.moduli1_temp.filter((element) => {
+      return element.id != id
+    })
+  },
+  deleteModul2ById(id) {
+    state.moduli2 = state.moduli2.filter((element) => {
+      return element.id != id
+    })
+    state.moduli2_temp = state.moduli2_temp.filter((element) => {
+      return element.id != id
+    })
+  },
+  deleteModul3ById(id) {
+    state.moduli3 = state.moduli3.filter((element) => {
+      return element.id != id
+    })
+    state.moduli3_temp = state.moduli3_temp.filter((element) => {
+      return element.id != id
+    })
+  },
+  deleteModul4ById(id) {
+    state.moduli4 = state.moduli4.filter((element) => {
+      return element.id != id
+    })
+    state.moduli4_temp = state.moduli4_temp.filter((element) => {
+      return element.id != id
+    })
+  },
+  deleteModul5ById(id) {
+    state.moduli5 = state.moduli5.filter((element) => {
+      return element.id != id
+    })
+    state.moduli5_temp = state.moduli5_temp.filter((element) => {
+      return element.id != id
+    })
+  },
   deleteProductById(id) {
     state.suboffers = state.suboffers.filter((element) => {
       return element.id != id
@@ -661,7 +781,10 @@ const methods = {
   },
   loadData() {
     var data = new FormData()
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/getparams.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/getparams.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -695,7 +818,10 @@ const methods = {
     // data.append('tekushta_end', tekushta_end)
     data.append('tekushta_end', state.tekushta_end)
     data.append('finished_offers', state.finished_offers)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_offers.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_offers.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -730,7 +856,10 @@ const methods = {
     data.append('tekushta_start', state.tekushta_start)
     // data.append('tekushta_end', tekushta_end)
     data.append('tekushta_end', state.tekushta_end)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_oferti.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_oferti.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -766,7 +895,7 @@ const methods = {
     data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_dogovori.php'
+      'https://dograma.avalonbg.com/function/mobile/get_dogovori.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -801,7 +930,7 @@ const methods = {
     data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_proformi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_proformi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -836,7 +965,7 @@ const methods = {
     data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_avansovi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_avansovi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -871,7 +1000,7 @@ const methods = {
     data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_fakturi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_fakturi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -1183,7 +1312,7 @@ const methods = {
     data.append('offer_id', state.current_dashboard_offer)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_doc_poseshtenia_all.php'
+      'https://dograma.avalonbg.com/function/mobile/get_doc_poseshtenia_all.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2543,7 +2672,7 @@ const methods = {
     data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_rabotni.php'
+      'https://dograma.avalonbg.com/function/mobile/get_rabotni.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2577,7 +2706,10 @@ const methods = {
     data.append('tekushta_start', state.tekushta_start)
     // data.append('tekushta_end', tekushta_end)
     data.append('tekushta_end', state.tekushta_end)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_zadaci.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_zadaci.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -2595,6 +2727,186 @@ const methods = {
       ) {
         state.zadaci = JSON.parse(this.response).zadaci
         state.zadaci_temp = JSON.parse(this.response).zadaci
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getModuli1() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_moduli1.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.moduli1 = JSON.parse(this.response).moduli1
+        state.moduli1_temp = JSON.parse(this.response).moduli1
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getModuli2() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_moduli2.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.moduli2 = JSON.parse(this.response).moduli2
+        state.moduli2_temp = JSON.parse(this.response).moduli2
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getModuli3() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_moduli3.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.moduli3 = JSON.parse(this.response).moduli3
+        state.moduli3_temp = JSON.parse(this.response).moduli3
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getModuli4() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_moduli4.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.moduli4 = JSON.parse(this.response).moduli4
+        state.moduli4_temp = JSON.parse(this.response).moduli4
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  getModuli5() {
+    var data = new FormData()
+    data.append('user_id', state.user.id)
+    data.append('firm_id', state.user.firm_id)
+    data.append('role', state.user.role)
+    // const tekushta_start = state.tekushta.substring(0, 10)
+    // const tekushta_end = state.tekushta.substring(14)
+    // data.append('tekushta_start', tekushta_start)
+    data.append('tekushta_start', state.tekushta_start)
+    // data.append('tekushta_end', tekushta_end)
+    data.append('tekushta_end', state.tekushta_end)
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_moduli5.php'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        state.moduli5 = JSON.parse(this.response).moduli5
+        state.moduli5_temp = JSON.parse(this.response).moduli5
       }
     }
     xmlhttpro.send(data)
@@ -2957,6 +3269,11 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  saveModul1(modul1_id) {},
+  saveModul2(modul2_id) {},
+  saveModul3(modul3_id) {},
+  saveModul4(modul4_id) {},
+  saveModul5(modul5_id) {},
   deleteZadaca(zadaca_id) {
     var data = new FormData()
     var info = []
@@ -2990,6 +3307,11 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
+  deleteModul1(modul1_id) {},
+  deleteModul2(modul2_id) {},
+  deleteModul3(modul3_id) {},
+  deleteModul4(modul4_id) {},
+  deleteModul5(modul5_id) {},
   deleteProduct(suboffer_id) {
     var data = new FormData()
     var info = []
@@ -3029,7 +3351,7 @@ const methods = {
     data.append('user_id', state.user.id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/get_messages.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/get_messages.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3138,7 +3460,7 @@ const methods = {
     data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_storeminusi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_storeminusi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3175,7 +3497,7 @@ const methods = {
     data.append('tekushta_end', state.tekushta_end)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_storeplusi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_storeplusi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3443,7 +3765,7 @@ const methods = {
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/getproductiaddstoreminus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/getproductiaddstoreminus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3481,7 +3803,7 @@ const methods = {
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/getproductiaddstore.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/getproductiaddstore.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
