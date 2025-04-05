@@ -59,51 +59,33 @@
                       <div>
                         <span class="text-red-600">№&nbsp;{{ modul1.id }}</span>
                       </div>
-                      <div>
-                        {{ modul1.sazdadena }}&nbsp;-&nbsp;{{ modul1.srok }}
-                      </div>
+                      <div>Оферта - {{ modul1.offer_id_txt }}</div>
+                      <div>{{ modul1.output_date }}</div>
                     </div>
                     <div
-                      class="flex justify-between text-sm text-gray-500 font-medium truncate mb-2"
+                      class="flex justify-between text-sm text-gray-500 font-medium truncate"
                     >
                       <div>
-                        <span>Оферта&nbsp;-&nbsp;{{ modul1.idnomber }}</span
-                        ><span class="text-gray-300">&nbsp;|&nbsp;</span
-                        >{{ modul1.tasks_users_txt }}
+                        {{ modul1.name }}
                       </div>
                       <div
                         class="bg-green-600 w-32 flex flex-row justify-center items-center text-white"
                         :style="{
-                          color: modul1.stat_color,
-                          backgroundColor: modul1.stat_bg,
+                          backgroundColor: modul1.status_color,
                         }"
                       >
-                        {{ modul1.stat }}
+                        {{ modul1.status_name }}
                       </div>
                     </div>
                     <div
-                      class="flex justify-between text-sm text-gray-500 font-medium truncate mb-2"
+                      class="flex justify-between text-sm text-gray-500 font-medium truncate"
                     >
                       <div class="overflow-clip">
-                        <span>{{ modul1.subject }}</span>
+                        <span>{{ modul1.client_id_txt }}</span>
                       </div>
-                      <button @click.stop="show = modul1.id">
-                        <svg
-                          class="w-6 h-6 shrink text-blue-600"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-                          />
-                        </svg>
-                      </button>
                     </div>
-                    <div
-                      class="break-all text-sm text-gray-500 font-medium border-t border-indigo-200 border-dot pt-2"
-                      v-if="show == modul1.id"
-                    >
-                      {{ modul1.description }}
+                    <div class="break-all text-sm text-gray-500 font-medium">
+                      {{ modul1.modul1_info1 }} - {{ modul1.info1 }}
                     </div>
                   </div>
                 </button>
@@ -128,8 +110,6 @@ export default {
   setup() {
     const store = inject('store')
 
-    const show = ref(0)
-
     const formatDateTime = (value) => {
       if (value) {
         return moment(String(value)).format('DD.MM.YYYY HH:mm')
@@ -140,11 +120,11 @@ export default {
       const modul1 = store.state.moduli1_temp.find(
         (element) => element.id == modul1_id
       )
-      store.methods.changeModuli1(modul1_id)
+      store.methods.changeModul1(modul1_id)
       store.methods.closeModul1Sidebar()
     }
 
-    return { store, formatDateTime, changeModul1, show }
+    return { store, formatDateTime, changeModul1 }
   },
 }
 </script>
