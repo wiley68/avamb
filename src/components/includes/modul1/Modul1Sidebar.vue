@@ -46,9 +46,7 @@
                   :class="
                     modul1.id == store.state.current_modul1_id
                       ? 'bg-indigo-100 border-indigo-200'
-                      : modul1.status == 0 || modul1.status == 2
-                      ? 'bg-yellow-100 border-yellow-200'
-                      : 'bg-gray-100 border-gray-200'
+                      : 'bg-yellow-100 border-yellow-200'
                   "
                   @click.stop="changeModul1(modul1.id)"
                 >
@@ -99,7 +97,7 @@
 </template>
 
 <script>
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 import Modul1 from './Modul1.vue'
 
 export default {
