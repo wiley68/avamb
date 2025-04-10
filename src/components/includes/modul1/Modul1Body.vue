@@ -8,7 +8,7 @@
       <div
         class="flex items-center justify-between bg-gray-50 border-b border-gray-200 px-4 sm:px-6 md:px-5 h-16"
       >
-        <div class="flex">
+        <div class="flex w-full items-center justify-between">
           <button
             class="md:hidden text-gray-400 hover:text-gray-500 mr-4"
             @click.stop="store.methods.toggleModul1Sidebar()"
@@ -143,6 +143,15 @@
               </div>
             </div>
           </ModalBlank>
+          <div class="grow"></div>
+          <div class="flex flex-row justify-between items-center mb-1">
+            <span class="p-1 text-sm w-3/12">№</span>
+            <div
+              class="w-7/12 text-sm border rounded-sm border-gray-100 p-1 text-red-600 font-medium"
+            >
+              {{ modul1.id }}
+            </div>
+          </div>
         </div>
       </div>
     </div>

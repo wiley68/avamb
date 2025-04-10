@@ -48,7 +48,7 @@
                       ? 'bg-indigo-100 border-indigo-200'
                       : 'bg-yellow-100 border-yellow-200'
                   "
-                  @click.stop="changeModul1(modul1.id)"
+                  @click.stop="changeModul1Page(modul1.id)"
                 >
                   <div class="grow">
                     <div
@@ -57,8 +57,10 @@
                       <div>
                         <span class="text-red-600">№&nbsp;{{ modul1.id }}</span>
                       </div>
-                      <div>Оферта - {{ modul1.offer_id_txt }}</div>
-                      <div>{{ modul1.output_date }}</div>
+                      <div>
+                        Оферта - {{ getOfferIdNomber(modul1.offer_id) }}
+                      </div>
+                      <div>{{ modul1.dateon }}</div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
@@ -79,7 +81,7 @@
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
                     >
                       <div class="overflow-clip">
-                        <span>{{ modul1.client_id_txt }}</span>
+                        <span>{{ getOfferClientName(modul1.offer_id) }}</span>
                       </div>
                     </div>
                     <div class="break-all text-sm text-gray-500 font-medium">
@@ -114,10 +116,7 @@ export default {
       }
     }
 
-    const changeModul1 = (modul1_id) => {
-      const modul1 = store.state.moduli1_temp.find(
-        (element) => element.id == modul1_id
-      )
+    const changeModul1Page = (modul1_id) => {
       store.methods.changeModul1(modul1_id)
       store.methods.closeModul1Sidebar()
     }
@@ -136,12 +135,24 @@ export default {
       return status_color ? status_color.color : ''
     }
 
+    const getOfferIdNomber = (offer_id) => {
+      const offer = store.state.offers.find((element) => element.id == offer_id)
+      return offer ? offer.idnomber : ''
+    }
+
+    const getOfferClientName = (offer_id) => {
+      const offer = store.state.offers.find((element) => element.id == offer_id)
+      return offer ? offer.client_name : ''
+    }
+
     return {
       store,
       formatDateTime,
-      changeModul1,
+      changeModul1Page,
       getStatusName,
       getStatusColor,
+      getOfferIdNomber,
+      getOfferClientName,
     }
   },
 }

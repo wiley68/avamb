@@ -781,7 +781,10 @@ const methods = {
   },
   loadData() {
     var data = new FormData()
-    var xmlhttpro = createCORSRequest('POST', 'https://dograma.avalonbg.com/function/mobile/getparams.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/getparams.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -815,7 +818,10 @@ const methods = {
     // data.append('tekushta_end', tekushta_end)
     data.append('tekushta_end', state.tekushta_end)
     data.append('finished_offers', state.finished_offers)
-    var xmlhttpro = createCORSRequest('POST', 'https://dograma.avalonbg.com/function/mobile/get_offers.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_offers.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -850,7 +856,10 @@ const methods = {
     data.append('tekushta_start', state.tekushta_start)
     // data.append('tekushta_end', tekushta_end)
     data.append('tekushta_end', state.tekushta_end)
-    var xmlhttpro = createCORSRequest('POST', 'https://dograma.avalonbg.com/function/mobile/get_oferti.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_oferti.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1122,7 +1131,7 @@ const methods = {
       let result = []
       try {
         result = JSON.parse(this.response)
-      } catch (err) { }
+      } catch (err) {}
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti_main = result.data
       }
@@ -1217,7 +1226,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_shabloni.php'
+      'https://dograma.avalonbg.com/function/mobile/get_shabloni.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -1435,17 +1444,17 @@ const methods = {
       var xmlhttpro = createCORSRequest(
         'POST',
         '/function/submit_snimki.php?oid=' +
-        offer_id +
-        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+          offer_id +
+          '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
       )
     } else {
       var xmlhttpro = createCORSRequest(
         'POST',
         '/function/submit_doc.php?oid=' +
-        offer_id +
-        '&doc=' +
-        type +
-        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+          offer_id +
+          '&doc=' +
+          type +
+          '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
       )
     }
     const loader = $loading.show(loader_params)
@@ -1515,8 +1524,8 @@ const methods = {
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/submit_visit.php?vid=' +
-      poseshtenie_id +
-      '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+        poseshtenie_id +
+        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -2697,7 +2706,10 @@ const methods = {
     data.append('tekushta_start', state.tekushta_start)
     // data.append('tekushta_end', tekushta_end)
     data.append('tekushta_end', state.tekushta_end)
-    var xmlhttpro = createCORSRequest('POST', 'https://dograma.avalonbg.com/function/mobile/get_zadaci.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_zadaci.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -3141,10 +3153,10 @@ const methods = {
     var xmlhttpro = createCORSRequest(
       'GET',
       'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
-      lat +
-      ',' +
-      long +
-      '&key=AIzaSyBdHJScZ3v012SHvqhMZWrT-OV1UgGnvdc'
+        lat +
+        ',' +
+        long +
+        '&key=AIzaSyBdHJScZ3v012SHvqhMZWrT-OV1UgGnvdc'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3257,11 +3269,91 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  saveModul1(modul1_id) { },
-  saveModul2(modul2_id) { },
-  saveModul3(modul3_id) { },
-  saveModul4(modul4_id) { },
-  saveModul5(modul5_id) { },
+  saveModul1(modul1_id) {
+    var data = new FormData()
+    var info = []
+    if (modul1_id > 0) {
+      const modul1 = state.moduli1_temp.find(
+        (element) => element.id == modul1_id
+      )
+      info[0] = 'SAVE'
+      info[1] = modul1_id
+      info[2] = modul1.firm_id
+      info[3] = modul1.text1
+      info[4] = modul1.text2
+      info[5] = modul1.name
+      info[6] = modul1.offer_id
+      info[7] = modul1.client_id
+      info[8] = moment(modul1.dateon).format('HH:mm:ss')
+      info[9] = $('#info1').val()
+      info[10] = zadaca.firm_id
+      info[11] = zadaca.currentmembers
+      info[12] = moment(zadaca.start).format('HH:mm:ss')
+      info[13] = moment(zadaca.stop).format('HH:mm:ss')
+      info[14] = zadaca.offer_id
+      info[15] = zadaca.ending
+      info[16] = zadaca.endingtime
+      info[17] = zadaca.reminder
+      info[18] = state.user.id
+    } else {
+      info[0] = 'SAVE'
+      info[1] = 0
+      info[2] = ''
+      info[3] = ''
+      info[4] = moment().format('YYYY-MM-DD')
+      info[5] = moment().add(5, 'days').format('YYYY-MM-DD')
+      info[6] = 1
+      info[7] = 0
+      info[8] = ''
+      info[9] = state.user.id
+      info[10] = state.user.firm_id
+      info[11] = []
+      info[12] = moment().format('HH:mm:ss')
+      info[13] = moment().format('HH:mm:ss')
+      info[14] = 0
+      info[15] = '1970-01-01'
+      info[16] = moment().format('HH:mm:ss')
+      info[17] = 10
+      info[18] = state.user.id
+    }
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/modul1.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        if (zadaca_id > 0) {
+          methods.changeSuccessUpdateZadaca(true)
+        } else {
+          const zadaca_id = JSON.parse(this.response).newid
+          methods.getZadaci()
+          methods.changeZadaci(zadaca_id)
+          methods.toggleZadaciSidebar()
+        }
+      } else {
+        methods.changeSuccessUpdateZadaca(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
+  saveModul2(modul2_id) {},
+  saveModul3(modul3_id) {},
+  saveModul4(modul4_id) {},
+  saveModul5(modul5_id) {},
   deleteZadaca(zadaca_id) {
     var data = new FormData()
     var info = []
@@ -3295,11 +3387,11 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  deleteModul1(modul1_id) { },
-  deleteModul2(modul2_id) { },
-  deleteModul3(modul3_id) { },
-  deleteModul4(modul4_id) { },
-  deleteModul5(modul5_id) { },
+  deleteModul1(modul1_id) {},
+  deleteModul2(modul2_id) {},
+  deleteModul3(modul3_id) {},
+  deleteModul4(modul4_id) {},
+  deleteModul5(modul5_id) {},
   deleteProduct(suboffer_id) {
     var data = new FormData()
     var info = []
@@ -3769,7 +3861,7 @@ const methods = {
       let result = []
       try {
         result = JSON.parse(this.response)
-      } catch (err) { }
+      } catch (err) {}
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti = result.data
       }
@@ -3807,7 +3899,7 @@ const methods = {
       let result = []
       try {
         result = JSON.parse(this.response)
-      } catch (err) { }
+      } catch (err) {}
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti_plus = result.data
       }
