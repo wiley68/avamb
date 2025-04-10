@@ -69,10 +69,10 @@
                       <div
                         class="bg-green-600 w-32 flex flex-row justify-center items-center text-white"
                         :style="{
-                          backgroundColor: modul1.status_color,
+                          backgroundColor: getStatusColor(modul1),
                         }"
                       >
-                        {{ modul1.status_name }}
+                        {{ getStatusName(modul1) }}
                       </div>
                     </div>
                     <div
@@ -122,7 +122,27 @@ export default {
       store.methods.closeModul1Sidebar()
     }
 
-    return { store, formatDateTime, changeModul1 }
+    const getStatusName = (modul1) => {
+      const status_name = modul1.select_statusi.find(
+        (element) => element.id == modul1.statusi_id
+      )
+      return status_name ? status_name.name : ''
+    }
+
+    const getStatusColor = (modul1) => {
+      const status_color = modul1.select_statusi.find(
+        (element) => element.id == modul1.statusi_id
+      )
+      return status_color ? status_color.color : ''
+    }
+
+    return {
+      store,
+      formatDateTime,
+      changeModul1,
+      getStatusName,
+      getStatusColor,
+    }
   },
 }
 </script>

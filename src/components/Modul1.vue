@@ -2,14 +2,7 @@
   <main>
     <div class="relative flex">
       <Modul1Sidebar />
-      <div
-        class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
-        :class="
-          store.state.modul1SidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
-        "
-      >
-        <Modul1Body />
-      </div>
+      <Modul1Body v-if="store.state.current_modul1_id != 0" />
     </div>
   </main>
 </template>
