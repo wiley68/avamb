@@ -16,7 +16,7 @@
       >
         <option value="0">Избери оферта</option>
         <option
-          v-for="offer in store.state.offers"
+          v-for="offer in store.state.oferti_temp"
           :key="offer.id"
           :value="offer.id"
         >
@@ -138,7 +138,9 @@ export default {
     }
 
     const getOfferClientName = (offer_id) => {
-      const offer = store.state.offers.find((element) => element.id == offer_id)
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
       return offer ? offer.client_name : ''
     }
 

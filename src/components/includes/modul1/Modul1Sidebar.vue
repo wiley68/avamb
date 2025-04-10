@@ -136,12 +136,16 @@ export default {
     }
 
     const getOfferIdNomber = (offer_id) => {
-      const offer = store.state.offers.find((element) => element.id == offer_id)
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
       return offer ? offer.idnomber : ''
     }
 
     const getOfferClientName = (offer_id) => {
-      const offer = store.state.offers.find((element) => element.id == offer_id)
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
       return offer ? offer.client_name : ''
     }
 
