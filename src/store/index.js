@@ -148,6 +148,11 @@ const state = reactive({
   current_modul4_id: 0,
   current_modul5_id: 0,
   successUpdateZadaca: false,
+  successUpdateModul1: false,
+  successUpdateModul2: false,
+  successUpdateModul3: false,
+  successUpdateModul4: false,
+  successUpdateModul5: false,
   successUpdateOffer: false,
   successUpdateDogovor: false,
   successUpdateProforma: false,
@@ -634,6 +639,21 @@ const methods = {
   changeSuccessUpdateZadaca(successUpdateZadaca) {
     state.successUpdateZadaca = successUpdateZadaca
   },
+  changeSuccessUpdateModul1(successUpdateModul1) {
+    state.successUpdateModul1 = successUpdateModul1
+  },
+  changeSuccessUpdateModul2(successUpdateModul2) {
+    state.successUpdateModul2 = successUpdateModul2
+  },
+  changeSuccessUpdateModul3(successUpdateModul3) {
+    state.successUpdateModul3 = successUpdateModul3
+  },
+  changeSuccessUpdateModul4(successUpdateModul4) {
+    state.successUpdateModul4 = successUpdateModul4
+  },
+  changeSuccessUpdateModul5(successUpdateModul5) {
+    state.successUpdateModul5 = successUpdateModul5
+  },
   changeSuccessUpdateOffer(successUpdateOffer) {
     state.successUpdateOffer = successUpdateOffer
   },
@@ -1053,7 +1073,10 @@ const methods = {
   getObekti(contragent_id) {
     var data = new FormData()
     data.append('contragent_id', contragent_id)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_obekti.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_obekti.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1081,7 +1104,7 @@ const methods = {
     data.append('offer_id', offer_id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_suboffers.php'
+      'https://dograma.avalonbg.com/function/mobile/get_suboffers.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -1115,7 +1138,7 @@ const methods = {
     data.append('info', JSON.stringify(info))
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/getproductiadd.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      'https://dograma.avalonbg.com/function/getproductiadd.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -1169,7 +1192,10 @@ const methods = {
   getDds() {
     var data = new FormData()
     data.append('firm_id', state.user.firm_id)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_dds.php')
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/mobile/get_dds.php'
+    )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
       loader.hide()
@@ -1197,7 +1223,7 @@ const methods = {
     data.append('firm_id', state.user.firm_id)
     var xmlhttpro = createCORSRequest(
       'POST',
-      '/function/mobile/get_statusi.php'
+      'https://dograma.avalonbg.com/function/mobile/get_statusi.php'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3283,8 +3309,8 @@ const methods = {
       info[4] = modul1.text2
       info[5] = modul1.name
       info[6] = modul1.offer_id
-      info[7] = modul1.client_id_id
-      info[8] = moment(modul1.dateon).format('HH:mm:ss')
+      info[7] = modul1.client_id
+      info[8] = moment(modul1.dateon).format('YYYY-MM-DD')
       info[9] = modul1.info1
       info[10] = modul1.user_id
       info[11] = modul1.tablica_id
@@ -3337,16 +3363,16 @@ const methods = {
         this.readyState == 4 &&
         JSON.parse(this.response).success == 'success'
       ) {
-        if (zadaca_id > 0) {
-          methods.changeSuccessUpdateZadaca(true)
+        if (modul1_id > 0) {
+          methods.changeSuccessUpdateModul1(true)
         } else {
-          const zadaca_id = JSON.parse(this.response).newid
-          methods.getZadaci()
-          methods.changeZadaci(zadaca_id)
-          methods.toggleZadaciSidebar()
+          const modul1_id = JSON.parse(this.response).newid
+          methods.getModuli1()
+          methods.changeModul1(modul1_id)
+          methods.toggleModul1Sidebar()
         }
       } else {
-        methods.changeSuccessUpdateZadaca(false)
+        methods.changeSuccessUpdateModul1(false)
       }
     }
     xmlhttpro.send(data)
