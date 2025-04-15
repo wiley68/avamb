@@ -3475,7 +3475,93 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  saveModul3(modul3_id) {},
+  saveModul3(modul3_id) {
+    var data = new FormData()
+    var info = []
+    if (modul3_id > 0) {
+      const modul3 = state.moduli3_temp.find(
+        (element) => element.id == modul3_id
+      )
+      info[0] = 'SAVE'
+      info[1] = modul3_id
+      info[2] = modul3.firm_id
+      info[3] = modul3.text1
+      info[4] = modul3.text2
+      info[5] = modul3.name
+      info[6] = modul3.offer_id
+      info[7] = modul3.client_id
+      info[8] = moment(modul3.dateon).format('YYYY-MM-DD')
+      info[9] = modul3.info1
+      info[10] = modul3.user_id
+      info[11] = modul3.tablica_id
+      info[12] = modul3.info1_id
+      info[13] = modul3.info2_id
+      info[14] = modul3.sastavil_id
+      info[15] = modul3.status_id
+      info[16] = modul3.offernomber_id
+      info[17] = modul3.info2
+      info[18] = modul3.info3
+      info[19] = modul3.creator_id
+      info[20] = modul3.nomber
+      info[21] = modul3.statusi_id
+    } else {
+      info[0] = 'SAVE'
+      info[1] = 0
+      info[2] = state.user.firm_id
+      info[3] = ''
+      info[4] = ''
+      info[5] = ''
+      info[6] = 0
+      info[7] = state.offer_clienti[0]?.id
+      info[8] = moment().format('YYYY-MM-DD')
+      info[9] = ''
+      info[10] = state.user.id
+      info[11] = 0
+      info[12] = 0
+      info[13] = 0
+      info[14] = 0
+      info[15] = 0
+      info[16] = 0
+      info[17] = ''
+      info[18] = ''
+      info[19] = state.user.id
+      info[20] = ''
+      info[21] = 0
+    }
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/modul3.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        if (modul3_id > 0) {
+          methods.changeSuccessUpdateModul3(true)
+        } else {
+          const new_modul3_id = JSON.parse(this.response).newid
+          methods.getModuli3()
+          methods.changeModul3(new_modul3_id)
+          methods.closeModul3Sidebar()
+        }
+      } else {
+        methods.changeSuccessUpdateModul3(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
   saveModul4(modul4_id) {},
   saveModul5(modul5_id) {},
   deleteZadaca(zadaca_id) {
@@ -3577,7 +3663,39 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  deleteModul3(modul3_id) {},
+  deleteModul3(modul3_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'DELETE'
+    info[1] = modul3_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/modul3.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteModul3ById(modul3_id)
+        state.deleteModul3Modal = false
+        state.current_modul3_id = state.moduli3[0] ? state.moduli3[0].id : 0
+        methods.toggleModul3Sidebar()
+      }
+    }
+    xmlhttpro.send(data)
+  },
   deleteModul4(modul4_id) {},
   deleteModul5(modul5_id) {},
   deleteProduct(suboffer_id) {
