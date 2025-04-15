@@ -48,7 +48,7 @@
                       ? 'bg-indigo-100 border-indigo-200'
                       : 'bg-yellow-100 border-yellow-200'
                   "
-                  @click.stop="changeModul4(modul4.id)"
+                  @click.stop="changeModul4Page(modul4.id)"
                 >
                   <div class="grow">
                     <div
@@ -57,8 +57,10 @@
                       <div>
                         <span class="text-red-600">№&nbsp;{{ modul4.id }}</span>
                       </div>
-                      <div>Оферта - {{ modul4.offer_id_txt }}</div>
-                      <div>{{ modul4.output_date }}</div>
+                      <div>
+                        Оферта - {{ getOfferIdNomber(modul4.offer_id) }}
+                      </div>
+                      <div>{{ modul4.dateon }}</div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
@@ -69,21 +71,30 @@
                       <div
                         class="bg-green-600 w-32 flex flex-row justify-center items-center text-white"
                         :style="{
-                          backgroundColor: modul4.status_color,
+                          backgroundColor: getStatusColor(modul4),
                         }"
                       >
-                        {{ modul4.status_name }}
+                        {{ getStatusName(modul4) }}
                       </div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
                     >
                       <div class="overflow-clip">
-                        <span>{{ modul4.client_id_txt }}</span>
+                        <span>{{ getOfferClientName(modul4.offer_id) }}</span>
                       </div>
                     </div>
                     <div class="break-all text-sm text-gray-500 font-medium">
                       {{ modul4.modul4_info1 }} - {{ modul4.info1 }}
+                    </div>
+                    <div class="break-all text-sm text-gray-500 font-medium">
+                      {{ modul4.modul4_info2 }} - {{ modul4.info2 }}
+                    </div>
+                    <div class="break-all text-sm text-gray-500 font-medium">
+                      {{ modul4.modul4_info3 }} - {{ modul4.info3 }}
+                    </div>
+                    <div class="break-all text-sm text-gray-500 font-medium">
+                      {{ modul4.modul4_info4 }} - {{ modul4.info4 }}
                     </div>
                   </div>
                 </button>
@@ -114,15 +125,48 @@ export default {
       }
     }
 
-    const changeModul4 = (modul4_id) => {
-      const modul4 = store.state.moduli4_temp.find(
-        (element) => element.id == modul4_id
-      )
+    const changeModul4Page = (modul4_id) => {
       store.methods.changeModul4(modul4_id)
       store.methods.closeModul4Sidebar()
     }
 
-    return { store, formatDateTime, changeModul4 }
+    const getStatusName = (modul4) => {
+      const status_name = modul4.select_statusi.find(
+        (element) => element.id == modul4.statusi_id
+      )
+      return status_name ? status_name.name : ''
+    }
+
+    const getStatusColor = (modul4) => {
+      const status_color = modul4.select_statusi.find(
+        (element) => element.id == modul4.statusi_id
+      )
+      return status_color ? status_color.color : ''
+    }
+
+    const getOfferIdNomber = (offer_id) => {
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
+      return offer ? offer.idnomber : ''
+    }
+
+    const getOfferClientName = (offer_id) => {
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
+      return offer ? offer.client_name : ''
+    }
+
+    return {
+      store,
+      formatDateTime,
+      changeModul4Page,
+      getStatusName,
+      getStatusColor,
+      getOfferIdNomber,
+      getOfferClientName,
+    }
   },
 }
 </script>
