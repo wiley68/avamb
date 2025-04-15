@@ -48,7 +48,7 @@
                       ? 'bg-indigo-100 border-indigo-200'
                       : 'bg-yellow-100 border-yellow-200'
                   "
-                  @click.stop="changeModul5(modul5.id)"
+                  @click.stop="changeModul5Page(modul5.id)"
                 >
                   <div class="grow">
                     <div
@@ -57,8 +57,10 @@
                       <div>
                         <span class="text-red-600">№&nbsp;{{ modul5.id }}</span>
                       </div>
-                      <div>Оферта - {{ modul5.offer_id_txt }}</div>
-                      <div>{{ modul5.output_date }}</div>
+                      <div>
+                        Оферта - {{ getOfferIdNomber(modul5.offer_id) }}
+                      </div>
+                      <div>{{ modul5.dateon }}</div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
@@ -69,21 +71,33 @@
                       <div
                         class="bg-green-600 w-32 flex flex-row justify-center items-center text-white"
                         :style="{
-                          backgroundColor: modul5.status_color,
+                          backgroundColor: getStatusColor(modul5),
                         }"
                       >
-                        {{ modul5.status_name }}
+                        {{ getStatusName(modul5) }}
                       </div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
                     >
                       <div class="overflow-clip">
-                        <span>{{ modul5.client_id_txt }}</span>
+                        <span>{{ getOfferClientName(modul5.offer_id) }}</span>
                       </div>
                     </div>
                     <div class="break-all text-sm text-gray-500 font-medium">
                       {{ modul5.modul5_info1 }} - {{ modul5.info1 }}
+                    </div>
+                    <div class="break-all text-sm text-gray-500 font-medium">
+                      {{ modul5.modul5_info2 }} - {{ modul5.info2 }}
+                    </div>
+                    <div class="break-all text-sm text-gray-500 font-medium">
+                      {{ modul5.modul5_info3 }} - {{ modul5.info3 }}
+                    </div>
+                    <div class="break-all text-sm text-gray-500 font-medium">
+                      {{ modul5.modul5_info4 }} - {{ modul5.info4 }}
+                    </div>
+                    <div class="break-all text-sm text-gray-500 font-medium">
+                      {{ modul5.modul5_info5 }} - {{ modul5.info5 }}
                     </div>
                   </div>
                 </button>
@@ -114,15 +128,48 @@ export default {
       }
     }
 
-    const changeModul5 = (modul5_id) => {
-      const modul5 = store.state.moduli5_temp.find(
-        (element) => element.id == modul5_id
-      )
+    const changeModul5Page = (modul5_id) => {
       store.methods.changeModul5(modul5_id)
       store.methods.closeModul5Sidebar()
     }
 
-    return { store, formatDateTime, changeModul5 }
+    const getStatusName = (modul5) => {
+      const status_name = modul5.select_statusi.find(
+        (element) => element.id == modul5.statusi_id
+      )
+      return status_name ? status_name.name : ''
+    }
+
+    const getStatusColor = (modul5) => {
+      const status_color = modul5.select_statusi.find(
+        (element) => element.id == modul5.statusi_id
+      )
+      return status_color ? status_color.color : ''
+    }
+
+    const getOfferIdNomber = (offer_id) => {
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
+      return offer ? offer.idnomber : ''
+    }
+
+    const getOfferClientName = (offer_id) => {
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
+      return offer ? offer.client_name : ''
+    }
+
+    return {
+      store,
+      formatDateTime,
+      changeModul5Page,
+      getStatusName,
+      getStatusColor,
+      getOfferIdNomber,
+      getOfferClientName,
+    }
   },
 }
 </script>

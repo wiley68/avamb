@@ -3651,7 +3651,97 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  saveModul5(modul5_id) {},
+  saveModul5(modul5_id) {
+    var data = new FormData()
+    var info = []
+    if (modul5_id > 0) {
+      const modul5 = state.moduli5_temp.find(
+        (element) => element.id == modul5_id
+      )
+      info[0] = 'SAVE'
+      info[1] = modul5_id
+      info[2] = modul5.firm_id
+      info[3] = modul5.text1
+      info[4] = modul5.text2
+      info[5] = modul5.name
+      info[6] = modul5.offer_id
+      info[7] = modul5.client_id
+      info[8] = moment(modul5.dateon).format('YYYY-MM-DD')
+      info[9] = modul5.info1
+      info[10] = modul5.user_id
+      info[11] = modul5.tablica_id
+      info[12] = modul5.info1_id
+      info[13] = modul5.info2_id
+      info[14] = modul5.sastavil_id
+      info[15] = modul5.status_id
+      info[16] = modul5.offernomber_id
+      info[17] = modul5.info2
+      info[18] = modul5.info3
+      info[19] = modul5.info4
+      info[20] = modul5.info5
+      info[21] = modul5.creator_id
+      info[22] = modul5.nomber
+      info[23] = modul5.statusi_id
+    } else {
+      info[0] = 'SAVE'
+      info[1] = 0
+      info[2] = state.user.firm_id
+      info[3] = ''
+      info[4] = ''
+      info[5] = ''
+      info[6] = 0
+      info[7] = state.offer_clienti[0]?.id
+      info[8] = moment().format('YYYY-MM-DD')
+      info[9] = ''
+      info[10] = state.user.id
+      info[11] = 0
+      info[12] = 0
+      info[13] = 0
+      info[14] = 0
+      info[15] = 0
+      info[16] = 0
+      info[17] = ''
+      info[18] = ''
+      info[19] = ''
+      info[20] = ''
+      info[21] = state.user.id
+      info[22] = ''
+      info[23] = 0
+    }
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/modul5.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        if (modul5_id > 0) {
+          methods.changeSuccessUpdateModul5(true)
+        } else {
+          const new_modul5_id = JSON.parse(this.response).newid
+          methods.getModuli5()
+          methods.changeModul5(new_modul5_id)
+          methods.closeModul5Sidebar()
+        }
+      } else {
+        methods.changeSuccessUpdateModul5(false)
+      }
+    }
+    xmlhttpro.send(data)
+  },
   deleteZadaca(zadaca_id) {
     var data = new FormData()
     var info = []
@@ -3817,7 +3907,39 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  deleteModul5(modul5_id) {},
+  deleteModul5(modul5_id) {
+    var data = new FormData()
+    var info = []
+    info[0] = 'DELETE'
+    info[1] = modul5_id
+    data.append('info', JSON.stringify(info))
+    var xmlhttpro = createCORSRequest(
+      'POST',
+      'https://dograma.avalonbg.com/function/modul5.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+    )
+    const loader = $loading.show(loader_params)
+    xmlhttpro.addEventListener('loadend', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('error', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.addEventListener('abort', (e) => {
+      loader.hide()
+    })
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == 'success'
+      ) {
+        methods.deleteModul5ById(modul5_id)
+        state.deleteModul5Modal = false
+        state.current_modul5_id = state.moduli5[0] ? state.moduli5[0].id : 0
+        methods.toggleModul5Sidebar()
+      }
+    }
+    xmlhttpro.send(data)
+  },
   deleteProduct(suboffer_id) {
     var data = new FormData()
     var info = []
