@@ -1,16 +1,9 @@
 <template>
   <main>
-    <div class="relative flex">
+    <!-- <div class="relative flex">
       <Modul3Sidebar />
-      <div
-        class="grow flex flex-col md:translate-x-0 transform transition-transform duration-300 ease-in-out"
-        :class="
-          store.state.modul3SidebarOpen ? 'translate-x-1/3' : 'translate-x-0'
-        "
-      >
-        <Modul3Body />
-      </div>
-    </div>
+      <Modul3Body v-if="store.state.current_modul3_id != 0" />
+    </div> -->
   </main>
 </template>
 
