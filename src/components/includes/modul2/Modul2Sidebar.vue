@@ -48,7 +48,7 @@
                       ? 'bg-indigo-100 border-indigo-200'
                       : 'bg-yellow-100 border-yellow-200'
                   "
-                  @click.stop="changeModul2(modul2.id)"
+                  @click.stop="changeModul2Page(modul2.id)"
                 >
                   <div class="grow">
                     <div
@@ -57,8 +57,10 @@
                       <div>
                         <span class="text-red-600">№&nbsp;{{ modul2.id }}</span>
                       </div>
-                      <div>Оферта - {{ modul2.offer_id_txt }}</div>
-                      <div>{{ modul2.output_date }}</div>
+                      <div>
+                        Оферта - {{ getOfferIdNomber(modul2.offer_id) }}
+                      </div>
+                      <div>{{ modul2.dateon }}</div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
@@ -69,17 +71,17 @@
                       <div
                         class="bg-green-600 w-32 flex flex-row justify-center items-center text-white"
                         :style="{
-                          backgroundColor: modul2.status_color,
+                          backgroundColor: getStatusColor(modul2),
                         }"
                       >
-                        {{ modul2.status_name }}
+                        {{ getStatusName(modul2) }}
                       </div>
                     </div>
                     <div
                       class="flex justify-between text-sm text-gray-500 font-medium truncate"
                     >
                       <div class="overflow-clip">
-                        <span>{{ modul2.client_id_txt }}</span>
+                        <span>{{ getOfferClientName(modul2.offer_id) }}</span>
                       </div>
                     </div>
                     <div class="break-all text-sm text-gray-500 font-medium">
@@ -117,15 +119,48 @@ export default {
       }
     }
 
-    const changeModul2 = (modul2_id) => {
-      const modul2 = store.state.moduli2_temp.find(
-        (element) => element.id == modul2_id
-      )
+    const changeModul2Page = (modul2_id) => {
       store.methods.changeModul2(modul2_id)
       store.methods.closeModul2Sidebar()
     }
 
-    return { store, formatDateTime, changeModul2 }
+    const getStatusName = (modul2) => {
+      const status_name = modul2.select_statusi.find(
+        (element) => element.id == modul2.statusi_id
+      )
+      return status_name ? status_name.name : ''
+    }
+
+    const getStatusColor = (modul2) => {
+      const status_color = modul2.select_statusi.find(
+        (element) => element.id == modul2.statusi_id
+      )
+      return status_color ? status_color.color : ''
+    }
+
+    const getOfferIdNomber = (offer_id) => {
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
+      return offer ? offer.idnomber : ''
+    }
+
+    const getOfferClientName = (offer_id) => {
+      const offer = store.state.oferti_temp.find(
+        (element) => element.id == offer_id
+      )
+      return offer ? offer.client_name : ''
+    }
+
+    return {
+      store,
+      formatDateTime,
+      changeModul2Page,
+      getStatusName,
+      getStatusColor,
+      getOfferIdNomber,
+      getOfferClientName,
+    }
   },
 }
 </script>
