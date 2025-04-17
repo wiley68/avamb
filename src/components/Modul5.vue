@@ -1,9 +1,9 @@
 <template>
   <main>
-    <!-- <div class="relative flex">
+    <div class="relative flex">
       <Modul5Sidebar />
       <Modul5Body v-if="store.state.current_modul5_id != 0" />
-    </div> -->
+    </div>
   </main>
 </template>
 
