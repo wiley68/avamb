@@ -19,4 +19,13 @@ export default defineConfig({
       },
     ],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assetsmobile/[name].[hash][extname]',
+        chunkFileNames: 'assetsmobile/[name].[hash].js',
+        entryFileNames: 'assetsmobile/[name].[hash].js',
+      },
+    },
+  },
 })

@@ -173,11 +173,7 @@
             width="15"
             height="3"
           >
-            <circle
-              cx="1.5"
-              cy="1.5"
-              r="1.5"
-            >
+            <circle cx="1.5" cy="1.5" r="1.5">
               <animate
                 attributeName="opacity"
                 dur="1s"
@@ -186,11 +182,7 @@
                 begin="0.1"
               />
             </circle>
-            <circle
-              cx="7.5"
-              cy="1.5"
-              r="1.5"
-            >
+            <circle cx="7.5" cy="1.5" r="1.5">
               <animate
                 attributeName="opacity"
                 dur="1s"
@@ -199,11 +191,7 @@
                 begin="0.2"
               />
             </circle>
-            <circle
-              cx="13.5"
-              cy="1.5"
-              r="1.5"
-            >
+            <circle cx="13.5" cy="1.5" r="1.5">
               <animate
                 attributeName="opacity"
                 dur="1s"

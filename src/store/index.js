@@ -73,7 +73,6 @@ const state = reactive({
   current_avansovi: 0,
   current_fakturi: 0,
   current_suboffer: 0,
-  chat: [],
   otclienti: [],
   doc_poseshtenia: [],
   doc_poseshtenia_view: [],
@@ -782,9 +781,6 @@ const methods = {
     state.messages = state.messages.filter((element) => {
       return element.id != id
     })
-    state.chat = state.chat.filter((element) => {
-      return element.id != id
-    })
   },
   changeDeleteStoreminusModal(deleteStoreminusModal) {
     state.deleteStoreminusModal = deleteStoreminusModal
@@ -1049,33 +1045,6 @@ const methods = {
     }
     xmlhttpro.send(data)
   },
-  getChat(offer_id) {
-    var data = new FormData()
-    data.append('firm_id', state.user.firm_id)
-    data.append('offer_id', offer_id)
-    var xmlhttpro = createCORSRequest('POST', '/function/mobile/get_chat.php')
-    const loader = $loading.show(loader_params)
-    xmlhttpro.addEventListener('loadend', (e) => {
-      loader.hide()
-    })
-    xmlhttpro.addEventListener('error', (e) => {
-      loader.hide()
-    })
-    xmlhttpro.addEventListener('abort', (e) => {
-      loader.hide()
-    })
-    xmlhttpro.onreadystatechange = function () {
-      if (
-        this.readyState == 4 &&
-        JSON.parse(this.response).success == 'success'
-      ) {
-        state.chat = JSON.parse(this.response).chat
-      } else {
-        state.chat = []
-      }
-    }
-    xmlhttpro.send(data)
-  },
   getObekti(contragent_id) {
     var data = new FormData()
     data.append('contragent_id', contragent_id)
@@ -1157,7 +1126,7 @@ const methods = {
       let result = []
       try {
         result = JSON.parse(this.response)
-      } catch (err) {}
+      } catch (err) { }
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti_main = result.data
       }
@@ -1470,17 +1439,17 @@ const methods = {
       var xmlhttpro = createCORSRequest(
         'POST',
         '/function/submit_snimki.php?oid=' +
-          offer_id +
-          '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+        offer_id +
+        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
       )
     } else {
       var xmlhttpro = createCORSRequest(
         'POST',
         '/function/submit_doc.php?oid=' +
-          offer_id +
-          '&doc=' +
-          type +
-          '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+        offer_id +
+        '&doc=' +
+        type +
+        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
       )
     }
     const loader = $loading.show(loader_params)
@@ -1550,8 +1519,8 @@ const methods = {
     var xmlhttpro = createCORSRequest(
       'POST',
       '/function/submit_visit.php?vid=' +
-        poseshtenie_id +
-        '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
+      poseshtenie_id +
+      '&guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -3176,10 +3145,10 @@ const methods = {
     var xmlhttpro = createCORSRequest(
       'GET',
       'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
-        lat +
-        ',' +
-        long +
-        '&key=AIzaSyBdHJScZ3v012SHvqhMZWrT-OV1UgGnvdc'
+      lat +
+      ',' +
+      long +
+      '&key=AIzaSyBdHJScZ3v012SHvqhMZWrT-OV1UgGnvdc'
     )
     const loader = $loading.show(loader_params)
     xmlhttpro.addEventListener('loadend', (e) => {
@@ -4394,7 +4363,7 @@ const methods = {
       let result = []
       try {
         result = JSON.parse(this.response)
-      } catch (err) {}
+      } catch (err) { }
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti = result.data
       }
@@ -4432,7 +4401,7 @@ const methods = {
       let result = []
       try {
         result = JSON.parse(this.response)
-      } catch (err) {}
+      } catch (err) { }
       if (this.readyState == 4 && result.success == 'success') {
         state.produkti_plus = result.data
       }

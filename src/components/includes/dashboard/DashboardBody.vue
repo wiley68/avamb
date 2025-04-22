@@ -79,7 +79,7 @@
               <button
                 class="flex flex-row justify-center items-center w-20 h-7 border border-blue-800 text-white"
                 :class="offer().chat_broi > 0 ? 'bg-orange-600' : 'bg-white'"
-                @click.stop="goToChat()"
+                @click.stop="goToMessages()"
               >
                 {{ offer().chat_broi }}
               </button>
@@ -605,9 +605,8 @@ export default {
       store.methods.changePage('Rabotni')
     }
 
-    const goToChat = () => {
-      store.methods.getChat(store.state.current_dashboard_offer)
-      store.methods.changePage('Chat')
+    const goToMessages = () => {
+      store.methods.changePage('Messages')
     }
 
     const goToOtclienti = () => {
@@ -696,7 +695,7 @@ export default {
       store,
       offer,
       colorTasksRaboti,
-      goToChat,
+      goToMessages,
       goToOtclienti,
       goToZapitvane,
       goToOtgovor,
