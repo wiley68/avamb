@@ -8,7 +8,7 @@
           <div>
             <div class="px-5 py-4">
               <ul class="mb-6">
-                <li class="-mx-2 mb-1">
+                <li v-if="store.state.user.role != 'sluz'" class="-mx-2 mb-1">
                   <button class="w-full p-2 rounded-lg border-2 border-blue-600"
                     @click.stop="store.methods.changePage('Dashboard')">
                     <div class="flex items-center">
@@ -22,7 +22,7 @@
                     </div>
                   </button>
                 </li>
-                <li class="-mx-2 mb-1">
+                <li v-if="store.state.user.role != 'sluz'" class="-mx-2 mb-1">
                   <button class="w-full p-2 rounded-lg border-2 border-blue-600"
                     @click.stop="store.methods.changePage('Oferti')">
                     <div class="flex items-center">
@@ -49,7 +49,7 @@
                     </div>
                   </button>
                 </li>
-                <li class="-mx-2 mb-1">
+                <li v-if="store.state.user.role != 'sluz' || store.state.user.role != 'targ' || store.state.user.role != 'client'" class="-mx-2 mb-1">
                   <button class="w-full p-2 rounded-lg border-2 border-blue-600" @click.stop="changePageZadaci()">
                     <div class="flex flex-row justify-between items-center">
                       <svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@
                     </div>
                   </button>
                 </li>
-                <li class="-mx-2 mb-1">
+                <li v-if="store.state.user.role != 'sluz'" class="-mx-2 mb-1">
                   <button class="w-full p-2 rounded-lg border-2 border-blue-600"
                     @click.stop="store.methods.changePage('Storeplusi')">
                     <div class="flex flex-row justify-between items-center">
@@ -104,7 +104,7 @@
                     </div>
                   </button>
                 </li>
-                <li class="-mx-2 mb-1">
+                <li v-if="store.state.user.role != 'sluz'" class="-mx-2 mb-1">
                   <button class="w-full p-2 rounded-lg border-2 border-blue-600"
                     @click.stop="store.methods.changePage('Storeminusi')">
                     <div class="flex flex-row justify-between items-center">

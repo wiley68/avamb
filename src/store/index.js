@@ -435,25 +435,30 @@ const methods = {
     state.page = page
     methods.closeSidebar()
     if (page == 'Landing') {
-      methods.getOffers()
-      methods.getOferti()
-      methods.getDogovori()
-      methods.getProformi()
-      methods.getAvansovi()
-      methods.getFakturi()
-      methods.getZadaci()
-      methods.getModuli1()
-      methods.getModuli2()
-      methods.getModuli3()
-      methods.getModuli4()
-      methods.getModuli5()
+      console.log(state.user.role)
+      if (state.user.role != 'sluz') {
+        methods.getOffers()
+        methods.getOferti()
+        methods.getDogovori()
+        methods.getProformi()
+        methods.getAvansovi()
+        methods.getFakturi()
+        methods.getModuli1()
+        methods.getModuli2()
+        methods.getModuli3()
+        methods.getModuli4()
+        methods.getModuli5()
+        methods.getStoreminusi()
+        methods.getStoreplusi()
+        methods.getProduktiPlus()
+        methods.getProdukti()
+        methods.getDocPoseshtenieView()
+      }
+      if (state.user.role != 'sluz' || state.user.role != 'targ' || state.user.role != 'client') {
+        methods.getZadaci()
+      }
       methods.getRabotni()
       methods.getMessages()
-      methods.getStoreminusi()
-      methods.getStoreplusi()
-      methods.getProduktiPlus()
-      methods.getDocPoseshtenieView()
-      methods.getProdukti()
     }
     if (page == 'Messages') {
       methods.getMessages()
