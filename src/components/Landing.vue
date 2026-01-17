@@ -8,7 +8,7 @@
           <div>
             <div class="px-5 py-4">
               <ul class="mb-6">
-                <li v-if="store.state.user.role != 'sluz'" class="-mx-2 mb-1">
+                <li class="-mx-2 mb-1">
                   <button class="w-full p-2 rounded-lg border-2 border-blue-600"
                     @click.stop="store.methods.changePage('Dashboard')">
                     <div class="flex items-center">
