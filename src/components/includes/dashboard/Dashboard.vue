@@ -92,7 +92,7 @@
             }}</span>
           </div>
         </div>
-        <div class="flex items-start justify-between">
+        <div v-if="store.state.user.role != 'sluz'" class="flex items-start justify-between">
           <div class="flex-grow text-left"></div>
           <div class="ml-1">
             <span class="text-sm font-medium text-red-700">{{
