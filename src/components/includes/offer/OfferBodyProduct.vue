@@ -22,7 +22,7 @@
       <div class="flex items-center ml-16">
         {{
           store.state.current_suboffer == 0
-            ? 'Нов продукт'
+            ? "Нов продукт"
             : suboffer.product_name
         }}
       </div>
@@ -206,7 +206,6 @@
           placeholder="Ед. цена"
           v-model="suboffer.price"
         /><button
-          v-if="suboffer.id != 0"
           @click.stop="refreshPrice()"
           class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
           aria-controls="success-modal"
@@ -265,46 +264,47 @@
 </template>
 
 <script>
-import { inject, computed, ref, watch } from 'vue'
-import ModalBlank from '../components/ModalBlank.vue'
+import { inject, computed, ref, watch } from "vue";
+import ModalBlank from "../components/ModalBlank.vue";
 
 export default {
-  name: 'OfferBodyProduct',
+  name: "OfferBodyProduct",
 
   components: { ModalBlank },
 
   setup() {
-    const store = inject('store')
+    const store = inject("store");
 
-    const product_code_search = ref('')
-    const product_search_div = ref(false)
-    const products = ref(store.state.produkti_main)
-    const product = ref({})
+    const product_code_search = ref("");
+    const product_search_div = ref(false);
+    const products = ref(store.state.produkti_main);
+    const product = ref({});
     const current_oferti = store.state.oferti_temp.find(
-      (element) => element.idnomber == store.state.current_oferti
-    )
+      (element) => element.idnomber == store.state.current_oferti,
+    );
 
     const suboffer = computed(() => {
       if (store.state.current_suboffer == 0) {
         return {
           id: 0,
-          products_code: '',
+          products_code: "",
           grupa1: null,
           grupa2: null,
-          grupa3: '',
-          quantity: '1.00',
-          dds: current_oferti ? current_oferti.dds : '-1',
-          h: '1',
-          l: '1',
-          p: '1',
-          description: '',
-          price: '0.00',
+          grupa3: "",
+          quantity: "1.00",
+          dds: current_oferti ? current_oferti.dds : "-1",
+          h: "1",
+          l: "1",
+          p: "1",
+          description: "",
+          price: "0.00",
           picture_url: null,
           picture_is: 1,
           description_is: 1,
+          print_is: 1,
           order_id: 0,
-          isstat: 'Yes',
-          isbroi: 'No',
+          isstat: "Yes",
+          isbroi: "No",
           subproducts_code_1: null,
           subproducts_code_1_q: null,
           subproducts_code_1_price: null,
@@ -325,51 +325,55 @@ export default {
           subproducts_code_3_description: null,
           subproducts_code_4_description: null,
           subproducts_code_5_description: null,
-          zakupnaprice: '0.00',
-          subproducts_code_1_zakupnaprice: '0.00',
-          subproducts_code_2_zakupnaprice: '0.00',
-          subproducts_code_3_zakupnaprice: '0.00',
-          subproducts_code_4_zakupnaprice: '0.00',
-          subproducts_code_5_zakupnaprice: '0.00',
-          otstapka: '0.00',
-          allprice: '0.00',
-        }
+          zakupnaprice: "0.00",
+          subproducts_code_1_zakupnaprice: "0.00",
+          subproducts_code_2_zakupnaprice: "0.00",
+          subproducts_code_3_zakupnaprice: "0.00",
+          subproducts_code_4_zakupnaprice: "0.00",
+          subproducts_code_5_zakupnaprice: "0.00",
+          otstapka: "0.00",
+          allprice: "0.00",
+        };
       } else {
         const suboffer_current = store.state.suboffers.find(
-          (element) => element.id == store.state.current_suboffer
-        )
-        return suboffer_current
+          (element) => element.id == store.state.current_suboffer,
+        );
+        return suboffer_current;
       }
-    })
+    });
 
     watch(product_code_search, async (newSearch, oldSearch) => {
       if (newSearch.length > 0) {
+        const search = newSearch.toLowerCase();
         products.value = store.state.produkti_main.filter((element) => {
-          return element.code.toLowerCase().includes(newSearch.toLowerCase())
-        })
+          return (
+            element.code.toLowerCase().includes(search) ||
+            element.name.toLowerCase().includes(search)
+          );
+        });
       } else {
-        products.value = store.state.produkti_main
+        products.value = store.state.produkti_main;
       }
-    })
+    });
 
     watch(product, async (newProduct, oldProduct) => {
-      suboffer.value.products_code = newProduct.code
-      suboffer.value.product_name = newProduct.name
-      suboffer.value.description = newProduct.description
+      suboffer.value.products_code = newProduct.code;
+      suboffer.value.product_name = newProduct.name;
+      suboffer.value.description = newProduct.description;
       suboffer.value.price = (
         parseFloat(newProduct.price) *
         ((100 - parseFloat(suboffer.value.otstapka)) / 100)
-      ).toFixed(2)
-      calculatePrice()
-    })
+      ).toFixed(2);
+      calculatePrice();
+    });
 
     const changeQuantity = () => {
-      calculatePrice()
-    }
+      calculatePrice();
+    };
 
     const changeDds = () => {
-      calculatePrice()
-    }
+      calculatePrice();
+    };
 
     const calculatePrice = () => {
       suboffer.value.allprice = (
@@ -377,65 +381,85 @@ export default {
           parseFloat(suboffer.value.price) *
             (parseFloat(suboffer.value.dds) / 100)) *
         parseFloat(suboffer.value.quantity)
-      ).toFixed(2)
-    }
+      ).toFixed(2);
+    };
+
+    const validateSuboffer = () => {
+      if (suboffer.value.products_code.length == 0) {
+        alert("Трябва да изберете Продукт!");
+        return false;
+      }
+      if (parseFloat(suboffer.value.quantity) == 0) {
+        alert("Трябва да въведете Количество!");
+        return false;
+      }
+      if (parseFloat(suboffer.value.dds) == -1) {
+        alert("Трябва да изберете ДДС!");
+        return false;
+      }
+      if (
+        suboffer.value.h.length == 0 ||
+        parseInt(suboffer.value.h) <= 0
+      ) {
+        alert("Трябва да изберете Височина!");
+        return false;
+      }
+      if (
+        suboffer.value.l.length == 0 ||
+        parseInt(suboffer.value.l) <= 0
+      ) {
+        alert("Трябва да изберете Ширина!");
+        return false;
+      }
+      if (
+        suboffer.value.p.length == 0 ||
+        parseInt(suboffer.value.p) <= 0
+      ) {
+        alert("Трябва да изберете Дълбочина!");
+        return false;
+      }
+      return true;
+    };
 
     const updateProduct = () => {
-      if (suboffer.value.products_code.length == 0) {
-        alert('Трябва да изберете Продукт!')
-      } else {
-        if (parseFloat(suboffer.value.quantity) == 0) {
-          alert('Трябва да въведете Количество!')
-        } else {
-          if (parseFloat(suboffer.value.dds) == -1) {
-            alert('Трябва да изберете ДДС!')
-          } else {
-            if (
-              suboffer.value.h.length == 0 ||
-              parseInt(suboffer.value.h) <= 0
-            ) {
-              alert('Трябва да изберете Височина!')
-            } else {
-              if (
-                suboffer.value.l.length == 0 ||
-                parseInt(suboffer.value.l) <= 0
-              ) {
-                alert('Трябва да изберете Ширина!')
-              } else {
-                if (
-                  suboffer.value.p.length == 0 ||
-                  parseInt(suboffer.value.p) <= 0
-                ) {
-                  alert('Трябва да изберете Дълбочина!')
-                } else {
-                  store.methods.checkL2(suboffer.value)
-                }
-              }
-            }
-          }
-        }
+      if (validateSuboffer()) {
+        store.methods.checkL2(suboffer.value);
       }
-    }
+    };
 
     const updateProductButton = () => {
-      updateProduct()
-      calculatePrice()
-    }
+      updateProduct();
+      calculatePrice();
+    };
 
-    const refreshPrice = async () => {
-      store.methods.getEdcenanew(suboffer.value)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      updateProduct()
-      calculatePrice()
-    }
+    const refreshPriceAfterSave = () => {
+      store.methods.getEdcenanew(suboffer.value, () => {
+        calculatePrice();
+        updateProduct();
+      });
+    };
+
+    const refreshPrice = () => {
+      if (!validateSuboffer()) {
+        return;
+      }
+      if (store.state.current_suboffer == 0) {
+        store.methods.checkL2(suboffer.value, {
+          editAfterSave: true,
+          onSaved: refreshPriceAfterSave,
+        });
+      } else {
+        refreshPriceAfterSave();
+      }
+    };
 
     const addNull = () => {
-      product_search_div.value = true
+      product_search_div.value = true;
       const product_null = store.state.produkti_main.find((element) => {
-        return element.name.includes('/')
-      })
-      product.value = product_null ? product_null : {}
-    }
+        return element.name.includes("/");
+      });
+      product.value = product_null ? product_null : {};
+    };
 
     return {
       store,
@@ -451,7 +475,7 @@ export default {
       changeDds,
       refreshPrice,
       addNull,
-    }
+    };
   },
-}
+};
 </script>
