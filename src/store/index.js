@@ -193,6 +193,8 @@ const state = reactive({
   code: "",
   category: "",
   deleteProductModal: false,
+  contragents: [],
+  contragents_temp: [],
 });
 
 const methods = {
@@ -435,7 +437,6 @@ const methods = {
     state.page = page;
     methods.closeSidebar();
     if (page == "Landing") {
-      console.log(state.user.role);
       if (state.user.role != "sluz") {
         methods.getOffers();
         methods.getOferti();
@@ -476,6 +477,9 @@ const methods = {
     }
     if (page == "Docposeshtenia") {
       methods.getDocPoseshtenieView();
+    }
+    if (page == "Contragents") {
+      methods.getContragents();
     }
   },
   changeDeleteClientModal(deleteClientModal) {
@@ -4164,6 +4168,36 @@ const methods = {
         state.storeplusi = JSON.parse(this.response).storeplusi;
         state.storeplusi_temp = JSON.parse(this.response).storeplusi;
         state.dostavcici = JSON.parse(this.response).dostavcici;
+      }
+    };
+    xmlhttpro.send(data);
+  },
+  getContragents() {
+    var data = new FormData();
+    data.append("user_id", state.user.id);
+    data.append("firm_id", state.user.firm_id);
+    data.append("role", state.user.role);
+    var xmlhttpro = createCORSRequest(
+      "POST",
+      "/function/mobile/get_contragents.php",
+    );
+    const loader = $loading.show(loader_params);
+    xmlhttpro.addEventListener("loadend", (e) => {
+      loader.hide();
+    });
+    xmlhttpro.addEventListener("error", (e) => {
+      loader.hide();
+    });
+    xmlhttpro.addEventListener("abort", (e) => {
+      loader.hide();
+    });
+    xmlhttpro.onreadystatechange = function () {
+      if (
+        this.readyState == 4 &&
+        JSON.parse(this.response).success == "success"
+      ) {
+        state.contragents = JSON.parse(this.response).contragents;
+        state.contragents_temp = JSON.parse(this.response).contragents;
       }
     };
     xmlhttpro.send(data);
