@@ -1,20 +1,20 @@
 <template>
   <main>
     <div class="relative flex">
-      <ContragentsSidebar />
+      <ContragentSidebar />
     </div>
   </main>
 </template>
 
 <script>
 import { inject } from 'vue'
-import ContragentsSidebar from './includes/contragents/ContragentsSidebar.vue'
+import ContragentSidebar from './includes/contragent/ContragentSidebar.vue'
 
 export default {
-  name: 'Contragents',
+  name: 'Contragent',
 
   components: {
-    ContragentsSidebar,
+    ContragentSidebar,
   },
 
   setup() {

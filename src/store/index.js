@@ -195,6 +195,10 @@ const state = reactive({
   deleteProductModal: false,
   contragents: [],
   contragents_temp: [],
+  categories: [],
+  current_contragent_id: 0,
+  contragentSidebarOpen: true,
+  successUpdateContragent: false,
 });
 
 const methods = {
@@ -807,6 +811,9 @@ const methods = {
   changeSuccessUpdateStoreplus(successUpdateStoreplus) {
     state.successUpdateStoreplus = successUpdateStoreplus;
   },
+  changeSuccessUpdateContragent(successUpdateContragent) {
+    state.successUpdateContragent = successUpdateContragent;
+  },
   deleteStoreminusById(id) {
     state.storeminusi = state.storeminusi.filter((element) => {
       return element.id != id;
@@ -825,7 +832,10 @@ const methods = {
   },
   loadData() {
     var data = new FormData();
-    var xmlhttpro = createCORSRequest("POST", "/function/mobile/getparams.php");
+    var xmlhttpro = createCORSRequest(
+      "POST",
+      "https://dograma.avalon-bg.eu/function/mobile/getparams.php",
+    );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
       loader.hide();
@@ -861,7 +871,7 @@ const methods = {
     data.append("finished_offers", state.finished_offers);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_offers.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_offers.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -899,7 +909,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_oferti.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_oferti.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -936,7 +946,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_dogovori.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_dogovori.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -971,7 +981,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_proformi.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_proformi.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -1006,7 +1016,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_avansovi.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_avansovi.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -1041,7 +1051,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_fakturi.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_fakturi.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -1303,7 +1313,7 @@ const methods = {
     data.append("poseshtenie_id", poseshtenie_id);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_doc_poseshtenia.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_doc_poseshtenia.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -1332,7 +1342,7 @@ const methods = {
     data.append("offer_id", state.current_dashboard_offer);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_doc_poseshtenia_all.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_doc_poseshtenia_all.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -2733,7 +2743,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_rabotni.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_rabotni.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -2769,7 +2779,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_zadaci.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_zadaci.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -2805,7 +2815,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_moduli1.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_moduli1.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -2841,7 +2851,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_moduli2.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_moduli2.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -2877,7 +2887,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_moduli3.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_moduli3.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -2913,7 +2923,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_moduli4.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_moduli4.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -2949,7 +2959,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_moduli5.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_moduli5.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -4002,7 +4012,7 @@ const methods = {
     data.append("user_id", state.user.id);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/get_messages.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z",
+      "https://dograma.avalon-bg.eu/function/get_messages.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -4111,7 +4121,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_storeminusi.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_storeminusi.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -4148,7 +4158,7 @@ const methods = {
     data.append("tekushta_end", state.tekushta_end);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_storeplusi.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_storeplusi.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -4179,7 +4189,7 @@ const methods = {
     data.append("role", state.user.role);
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/mobile/get_contragents.php",
+      "https://dograma.avalon-bg.eu/function/mobile/get_contragents.php",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -4198,6 +4208,135 @@ const methods = {
       ) {
         state.contragents = JSON.parse(this.response).contragents;
         state.contragents_temp = JSON.parse(this.response).contragents;
+        state.categories = JSON.parse(this.response).categories;
+      }
+    };
+    xmlhttpro.send(data);
+  },
+  saveContragent(contragent) {
+    if (!contragent.category_id || contragent.category_id == 0) {
+      alert("Моля изберете категория!");
+      return;
+    }
+    if (!contragent.contragent_name?.trim()) {
+      alert("Моля въведете наименование!");
+      return;
+    }
+    if (!contragent.last_name?.trim()) {
+      alert("Моля въведете фамилия!");
+      return;
+    }
+    if (!contragent.address?.trim()) {
+      alert("Моля въведете адрес!");
+      return;
+    }
+    if (!contragent.city?.trim()) {
+      alert("Моля въведете град!");
+      return;
+    }
+    if (!contragent.contragent_phone_m_o?.trim()) {
+      alert("Моля въведете телефон!");
+      return;
+    }
+    if (!contragent.contragent_mail?.trim()) {
+      alert("Моля въведете имейл!");
+      return;
+    }
+
+    var info = new Array(109);
+    info[0] = "SAVE";
+    info[1] = contragent.id || 0;
+    info[2] = contragent.category_id;
+    info[3] = contragent.contragent_name;
+    info[4] = contragent.address;
+    info[5] = "";
+    info[6] = contragent.city;
+    info[7] = "";
+    info[8] = "";
+    info[9] = "";
+    info[10] = contragent.contragent_phone_m_o;
+    info[11] = contragent.contragent_mail;
+    info[12] = "";
+    info[13] = "";
+    info[14] = "";
+    info[15] = "";
+    for (let i = 16; i <= 20; i++) info[i] = 1;
+    for (let i = 21; i <= 25; i++) info[i] = 1;
+    for (let i = 26; i <= 30; i++) info[i] = 0;
+    for (let i = 31; i <= 35; i++) info[i] = 1;
+    for (let i = 36; i <= 45; i++) info[i] = 0;
+    for (let i = 46; i <= 50; i++) info[i] = 0;
+    for (let i = 51; i <= 55; i++) info[i] = 1;
+    for (let i = 56; i <= 60; i++) info[i] = 1;
+    for (let i = 61; i <= 70; i++) info[i] = 0;
+    info[71] = contragent.last_name;
+    info[72] = "";
+    info[73] = "";
+    info[74] = "";
+    info[75] = "";
+    info[76] = "";
+    info[77] = "";
+    info[78] = "";
+    info[79] = "";
+    info[80] = "";
+    info[81] = "";
+    info[82] = "";
+    info[83] = "";
+    info[84] = "";
+    info[85] = "";
+    info[86] = "";
+    info[87] = "0";
+    info[88] = "0";
+    info[89] = "0";
+    info[90] = "";
+    info[91] = state.user.id;
+    info[92] = state.user.firm_id;
+    for (let i = 93; i <= 97; i++) info[i] = 1;
+    info[98] = "";
+    info[99] = "";
+    info[100] = "";
+    info[101] = "";
+    info[102] = "";
+    info[103] = "";
+    info[104] = "0.00";
+    info[105] = 0;
+    info[106] = 0;
+    info[107] = "#FFFFFF";
+    info[108] = "";
+
+    var data = new FormData();
+    for (let i = 0; i < info.length; i++) {
+      data.append(`info[${i}]`, info[i] ?? "");
+    }
+    var xmlhttpro = createCORSRequest(
+      "POST",
+      "https://dograma.avalon-bg.eu/function/contragents.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z",
+    );
+    const loader = $loading.show(loader_params);
+    xmlhttpro.addEventListener("loadend", (e) => {
+      loader.hide();
+    });
+    xmlhttpro.addEventListener("error", (e) => {
+      loader.hide();
+    });
+    xmlhttpro.addEventListener("abort", (e) => {
+      loader.hide();
+    });
+    xmlhttpro.onreadystatechange = function () {
+      if (this.readyState == 4) {
+        const response = JSON.parse(this.response);
+        if (response.status == 1) {
+          if (contragent.id > 0) {
+            methods.changeSuccessUpdateContragent(true);
+          } else {
+            methods.getContragents();
+            state.current_contragent_id = response.newid;
+            methods.changeSuccessUpdateContragent(true);
+          }
+        } else {
+          alert(response.status);
+          methods.changeSuccessUpdateContragent(false);
+        }
       }
     };
     xmlhttpro.send(data);
@@ -4446,7 +4585,7 @@ const methods = {
     data.append("info", JSON.stringify(info));
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/getproductiaddstoreminus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z",
+      "https://dograma.avalon-bg.eu/function/getproductiaddstoreminus.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
@@ -4484,7 +4623,7 @@ const methods = {
     data.append("info", JSON.stringify(info));
     var xmlhttpro = createCORSRequest(
       "POST",
-      "/function/getproductiaddstore.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z",
+      "https://dograma.avalon-bg.eu/function/getproductiaddstore.php?guid=2|2cEpMzPHz5mWtCaGqsER1Fe1t8YRBEg68CbfiU7Z",
     );
     const loader = $loading.show(loader_params);
     xmlhttpro.addEventListener("loadend", (e) => {
