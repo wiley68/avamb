@@ -1,5 +1,18 @@
 <template>
   <div v-if="contragent" class="flex w-full items-center">
+    <button
+      class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm mr-2"
+      title="Назад към контрагенти"
+      @click.stop="goBack()"
+    >
+      <svg
+        class="w-6 h-6 fill-current text-blue-600 shrink-0"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
+      </svg>
+    </button>
     <div class="relative bg-sky-700 p-2 rounded overflow-hidden flex-grow">
       <div class="relative">
         <h1 class="text-base text-white font-medium">
@@ -162,7 +175,11 @@ export default {
       store.methods.saveContragent(contragent.value)
     }
 
-    return { store, contragent, updateContragent }
+    const goBack = () => {
+      store.methods.changePage('Contragents')
+    }
+
+    return { store, contragent, updateContragent, goBack }
   },
 }
 </script>
