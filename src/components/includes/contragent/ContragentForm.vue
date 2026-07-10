@@ -2,7 +2,11 @@
   <div v-if="contragent" class="flex w-full items-center">
     <button
       class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm mr-2"
-      title="Назад към контрагенти"
+      :title="
+        store.state.contragentReturnToOffer
+          ? 'Назад към оферта'
+          : 'Назад към контрагенти'
+      "
       @click.stop="goBack()"
     >
       <svg
@@ -176,7 +180,11 @@ export default {
     }
 
     const goBack = () => {
-      store.methods.changePage('Contragents')
+      if (store.state.contragentReturnToOffer) {
+        store.methods.cancelContragentFromOffer()
+      } else {
+        store.methods.changePage('Contragents')
+      }
     }
 
     return { store, contragent, updateContragent, goBack }

@@ -199,6 +199,8 @@ const state = reactive({
   current_contragent_id: 0,
   contragentSidebarOpen: true,
   successUpdateContragent: false,
+  contragentReturnToOffer: false,
+  offerClientAfterContragent: null,
 });
 
 const methods = {
@@ -813,6 +815,68 @@ const methods = {
   },
   changeSuccessUpdateContragent(successUpdateContragent) {
     state.successUpdateContragent = successUpdateContragent;
+  },
+  openContragentFormFromOffer() {
+    state.contragentReturnToOffer = true;
+    methods.ensureNewContragentTemp();
+    state.current_contragent_id = 0;
+    state.contragentSidebarOpen = true;
+    if (state.categories.length == 0) {
+      methods.getContragents();
+    }
+    methods.changePage("Contragent");
+  },
+  ensureNewContragentTemp() {
+    const existing = state.contragents_temp.find((element) => element.id == 0);
+    if (!existing) {
+      const newContragent = {
+        id: 0,
+        category_id: 0,
+        last_name: "",
+        contragent_name: "",
+        address: "",
+        city: "",
+        contragent_phone_m_o: "",
+        contragent_mail: "",
+      };
+      state.contragents.unshift(newContragent);
+      state.contragents_temp.unshift(newContragent);
+    }
+  },
+  cancelContragentFromOffer() {
+    state.contragentReturnToOffer = false;
+    state.offerEtap = 1;
+    methods.changePage("Offer");
+  },
+  returnToOfferWithContragent(newId, contragent) {
+    state.contragentReturnToOffer = false;
+    const newClient = {
+      id: newId,
+      first_name: "",
+      last_name: contragent.last_name || "",
+      name: contragent.contragent_name || "",
+    };
+    if (!state.offer_clienti.find((element) => element.id == newId)) {
+      state.offer_clienti.unshift(newClient);
+    }
+    let clientName = newClient.name;
+    if (clientName != "") {
+      clientName += " - ";
+    }
+    clientName += newClient.last_name;
+    if (state.current_oferti != 0) {
+      const offer = state.oferti_temp.find(
+        (element) => element.idnomber == state.current_oferti,
+      );
+      if (offer) {
+        offer.client_id = newId;
+        offer.client_name = clientName;
+      }
+    }
+    state.offerClientAfterContragent = newClient;
+    state.offerEtap = 1;
+    methods.getObekti(newId);
+    methods.changePage("Offer");
   },
   deleteStoreminusById(id) {
     state.storeminusi = state.storeminusi.filter((element) => {
@@ -4206,6 +4270,9 @@ const methods = {
         state.contragents = JSON.parse(this.response).contragents;
         state.contragents_temp = JSON.parse(this.response).contragents;
         state.categories = JSON.parse(this.response).categories;
+        if (state.current_contragent_id == 0) {
+          methods.ensureNewContragentTemp();
+        }
       }
     };
     xmlhttpro.send(data);
@@ -4328,7 +4395,11 @@ const methods = {
           } else {
             methods.getContragents();
             state.current_contragent_id = response.newid;
-            methods.changeSuccessUpdateContragent(true);
+            if (state.contragentReturnToOffer) {
+              methods.returnToOfferWithContragent(response.newid, contragent);
+            } else {
+              methods.changeSuccessUpdateContragent(true);
+            }
           }
         } else {
           alert(response.status);
@@ -4717,8 +4788,8 @@ const methods = {
       info[0] = "SAVE";
       info[1] = offer.id;
       info[2] = offer.client_id;
-      info[3] = offer.dateon;
-      info[4] = offer.dateto;
+      info[3] = moment(offer.dateon).format("YYYY-MM-DD");
+      info[4] = moment(offer.dateto).format("YYYY-MM-DD");
       info[5] = state.user.id;
       info[6] = offer.obekt_id;
       info[7] = offer.info1;
@@ -4751,8 +4822,8 @@ const methods = {
       info[0] = "SAVE";
       info[1] = offer.id;
       info[2] = offer.client_id;
-      info[3] = moment().format("YYYY-MM-DD HH:mm:ss");
-      info[4] = moment().format("YYYY-MM-DD HH:mm:ss");
+      info[3] = moment().format("YYYY-MM-DD");
+      info[4] = moment().format("YYYY-MM-DD");
       info[5] = state.user.id;
       info[6] = offer.obekt_id;
       info[7] = "";

@@ -82,6 +82,7 @@
             @click.stop="client_search_div = !client_search_div"
             class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
             aria-controls="success-modal"
+            title="Избери клиент"
           >
             <svg
               class="w-6 h-6 fill-current text-blue-600 shrink-0"
@@ -90,6 +91,21 @@
               <path
                 fill="currentColor"
                 d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L6.04,7.5L12,10.85L17.96,7.5L12,4.15Z"
+              />
+            </svg>
+          </button>
+          <button
+            @click.stop="createNewContragent()"
+            class="flex flex-row justify-center items-center p-1.5 shrink-0 rounded border border-gray-200 hover:border-gray-300 shadow-sm ml-2"
+            title="Добави нов контрагент"
+          >
+            <svg
+              class="w-6 h-6 fill-current text-blue-600 shrink-0"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M19,11H15V15H13V11H9V9H13V5H15V9H19M20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M4,6H2V20A2,2 0 0,0 4,22H18V20H4V6Z"
               />
             </svg>
           </button>
@@ -354,6 +370,10 @@ export default {
       store.methods.getObekti(offer.value.client_id)
     }
 
+    const createNewContragent = () => {
+      store.methods.openContragentFormFromOffer()
+    }
+
     const updateOffer = () => {
       if (offer.value.client_id == 0) {
         alert('Моля изберете клиент!')
@@ -418,11 +438,30 @@ export default {
       )
     })
 
+    watch(
+      () => store.state.offerClientAfterContragent,
+      (newClient) => {
+        if (newClient) {
+          offer.value.client_id = newClient.id
+          offer.value.client_name = clentName(
+            newClient.first_name,
+            newClient.last_name,
+            newClient.name
+          )
+          client.value = newClient
+          clients.value = store.state.offer_clienti
+          client_search_div.value = false
+          store.state.offerClientAfterContragent = null
+        }
+      }
+    )
+
     return {
       store,
       offer,
       clentName,
       changeClient,
+      createNewContragent,
       updateOffer,
       changeInfo1,
       shablon1,
